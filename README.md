@@ -1,3 +1,4 @@
+```Text
 Run FastAPI backend in /backend directory:
     python -m venv .venv 
     .venv/Scripts/activate 
