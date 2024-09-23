@@ -1,15 +1,32 @@
-from typing import Union
+from fastapi import FastAPI, HTTPException
+from pymongo import MongoClient
+from pydantic import BaseModel
+import os
+from dotenv import load_dotenv
 
-from fastapi import FastAPI
+# Load environment variables from a .env file
+load_dotenv()
 
+# Connect MongoDB using environment variable for security
+MONGO_URI = os.getenv("MONGODB_URI")
+client = MongoClient(MONGO_URI)
+
+# Choose database and collection
+db = client["traffic-monitor"]
+user_collection = db["user"]
+
+# FastAPI
 app = FastAPI()
 
+class User(BaseModel):
+    username: str
+    password: str
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+@app.post("/login")
+async def check_login(user : User):
+    check_user = user_collection.find_one({"username": user.username, "password": user.password})
 
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+    if not check_user:
+        return {"success": False}
+    
+    return {"success": True}
