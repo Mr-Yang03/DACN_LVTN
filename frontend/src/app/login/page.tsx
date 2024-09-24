@@ -8,27 +8,28 @@ import { useState } from "react";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [alert, setAlert] = useState('')
 
     const login = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-          const response = await axios.post(
-            "http://localhost:8000/login",
-            { email, password },
-            {
-              headers: { "Content-Type": "application/json" },
+            const response = await axios.post(
+                "http://localhost:8000/login",
+                { email, password },
+                {
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+        
+            if (response.data.success) {
+                setAlert("Login successful");
+            } else {
+                setAlert("Login failed");
             }
-          );
-    
-          if (response.data.success) {
-            console.log("Login successful");
-          } else {
-            console.log("Login failed");
-          }
         } catch (error) {
-          console.log("Login Failed:", error);
+            console.log("Login Failed:", error);
         }
-      };
+    };
 
 
     return (
@@ -59,6 +60,9 @@ const Login = () => {
                         <Button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</Button>
                     </div>
                 </form>
+            </div>
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm my-5">
+                {alert}
             </div>
         </div>
     )
