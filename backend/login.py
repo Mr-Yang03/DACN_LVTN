@@ -14,12 +14,12 @@ db = client["traffic-monitor"]
 user_collection = db["user"]
 
 class User(BaseModel):
-    username: str
+    email: str
     password: str
 
 @login_router.post('/login')
 async def check_login(user : User) -> dict:
-    check_user = user_collection.find_one({"username": user.username, "password": user.password})
+    check_user = user_collection.find_one({"email": user.email, "password": user.password})
 
     if not check_user:
         return {"success": False}
