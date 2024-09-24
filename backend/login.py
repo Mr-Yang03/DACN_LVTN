@@ -13,13 +13,13 @@ client = MongoClient(MONGO_URI)
 db = client["traffic-monitor"]
 user_collection = db["user"]
 
-class User(BaseModel):
+class LoginInfo(BaseModel):
     email: str
     password: str
 
 @login_router.post('/login')
-async def check_login(user : User) -> dict:
-    check_user = user_collection.find_one({"email": user.email, "password": user.password})
+async def check_login(login_info : LoginInfo) -> dict:
+    check_user = user_collection.find_one({"email": login_info.email, "password": login_info.password})
 
     if not check_user:
         return {"success": False}
