@@ -1,16 +1,10 @@
 from fastapi import APIRouter
-from pymongo import MongoClient
 from pydantic import BaseModel
-import os
+from database.connection import get_database
 
 login_router = APIRouter()
 
-# Connect MongoDB using environment variable for security
-MONGO_URI = os.getenv("MONGODB_URI")
-client = MongoClient(MONGO_URI)
-
-# Choose database and collection
-db = client["traffic-monitor"]
+db = get_database()
 user_collection = db["user"]
 
 class LoginInfo(BaseModel):
