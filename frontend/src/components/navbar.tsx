@@ -42,7 +42,7 @@ function Navbar() {
     <nav className="relative">
       <div className="w-full flex items-center justify-between mx-auto p-4 pr-4">
         <Link href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <Image src={logo} alt="logo" width={40} className="h-8" />
+          <Image src={logo} alt="logo" width={35} className="h-8" />
           <span className="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">BK Traffic</span>
         </Link>
         <button
@@ -73,8 +73,12 @@ function Navbar() {
             <li>
               <Link href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Phản ánh</Link>
             </li>
+            <li>
+              <Link href="/login" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hidden md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Đăng nhập</Link>
+            </li>
           </ul>
         </div>
+        <div className="hidden md:static md:block md:w-auto bg-gray z-10 md:z-auto md:bg-transparent"><Link href="/login" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Đăng nhập</Link></div>
       </div>
     </nav>
   );

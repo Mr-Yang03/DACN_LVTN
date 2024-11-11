@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button"
 import axios from "axios";
 import { useState } from "react";
 
-const Login = () => {
-    const [email, setEmail] = useState("");
+const LoginForm = () => {
+  const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [alert, setAlert] = useState('')
 
@@ -31,41 +31,96 @@ const Login = () => {
         }
     };
 
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-center">Đăng nhập</h2>
+        <form onSubmit={login} method="POST" className="space-y-4">
+          <div>
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-medium text-black"
+            >
+              <i className="fas fa-envelope mr-2"></i>Email
+            </label>
+            <Input
+              type="text"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-black"
+              placeholder="Email Address"
+              required
+            />
+          </div>
 
-    return (
-        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+          <div>
+            <label
+              htmlFor="password"
+              className="block mb-2 text-sm font-medium text-black"
+            >
+              <i className="fas fa-lock mr-2"></i>Password
+            </label>
+            <Input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-black"
+              placeholder="Password"
+              required
+            />
+          </div>
+
+          <div className="flex justify-between">
+            <div className="flex items-center">
+              <input type="checkbox" id="remember" className="mr-2" />
+              <label htmlFor="remember" className="text-sm text-gray-700">
+                Remember me
+              </label>
             </div>
-
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST" onSubmit={login}>
-                    <div>
-                        <label className="block text-sm font-medium leading-6 text-gray-900">Email</label>
-                        <div className="mt-2">
-                            <Input type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className="flex items-center justify-between">
-                            <label className="block text-sm font-medium leading-6 text-gray-900">Password</label>
-                        </div>
-                        <div className="mt-2">
-                            <Input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                        </div>
-                    </div>
-
-                    <div>
-                        <Button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</Button>
-                    </div>
-                </form>
+            <div className="text-right">
+              <a href="#" className="text-sm text-blue-500 hover:underline">
+                Quên mật khẩu?
+              </a>
             </div>
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm my-5">
-                {alert}
-            </div>
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full py-2 text-white bg-black rounded-lg hover:bg-black focus:outline-none"
+          >
+            Đăng nhập
+          </Button>
+        </form>
+
+        <div className="text-center">
+          <span className="text-sm text-gray-700">or login with</span>
         </div>
-    )
-}
 
-export default Login;
+        <div className="flex justify-center space-x-4">
+          <button className="px-4 py-2 text-white bg-blue-800 rounded-lg">
+            Facebook
+          </button>
+          <button className="px-4 py-2 text-white bg-red-500 rounded-lg">
+            Google
+          </button>
+        </div>
+
+        <div className="text-center">
+          <span className="text-sm text-gray-700">
+            Bạn chưa có tài khoản?{" "}
+            <a href="#" className="text-blue-500 hover:underline">
+              Đăng ký
+            </a>
+          </span>
+        </div>
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm my-n">
+                {alert}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoginForm;
