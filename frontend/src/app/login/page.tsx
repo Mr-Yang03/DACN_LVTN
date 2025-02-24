@@ -1,13 +1,17 @@
 "use client";
 
+import { useEffect } from "react";
 import { useAuth } from "@/context/auth-context";
 // import { useRouter } from 'next/navigation';
 
 export default function Page() {
-  const {token, setToken, isAuthenticated} = useAuth();
+  const { token, setToken, isAuthenticated } = useAuth();
   // const router = useRouter();
-  setToken("hihi");
-  // router.push('/');
+
+  useEffect(() => {
+    setToken("hihi");
+  }, [setToken]); // Chạy 1 lần sau khi component mount
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       {isAuthenticated ? (
