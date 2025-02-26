@@ -19,3 +19,8 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.leaflet-control-zoom {
+  bottom: 20px !important;
+  right: 21px !important;
+}
