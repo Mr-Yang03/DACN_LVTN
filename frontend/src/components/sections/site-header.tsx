@@ -8,7 +8,7 @@ export function SiteHeader() {
   const [dropDownMenu, setDropDownMenu] = useState(false);
 
   return (
-    <div className="bg-black text-white flex flex-col">
+    <div className="bg-black text-white flex flex-col sticky top-0 left-0 w-full">
       <div className="bg-black text-white p-4 flex flex-row items-center justify-between relative">
         <div>
           <div className="font-bold text-xl">
@@ -19,7 +19,7 @@ export function SiteHeader() {
         {/* Menu cho màn hình lớn */}
         <div className="hidden lg:flex flex-row items-center space-x-8 text-base">
           <Link href="/" className="hover:text-gray-300">Trang chủ</Link>
-          <Link href="/" className="hover:text-gray-300">Bản đồ</Link>
+          <Link href="/map" className="hover:text-gray-300">Bản đồ</Link>
           <Link href="/" className="hover:text-gray-300">Tin tức</Link>
           <Link href="/" className="hover:text-gray-300">Phản ánh</Link>
           <Link href="/" className="hover:text-gray-300">Thống kê</Link>
