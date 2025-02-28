@@ -93,7 +93,9 @@ export default function FullScreenMap() {
         </div>
 
         {/* 🌍 Map Layer Control */}
-        <div className="absolute bottom-8 left-4 pointer-events-auto">
+        <div className={`absolute bottom-8 left-4 pointer-events-auto ${
+              isSidebarOpen ? "transform translate-x-80" : ""
+            }`}>
         <MapLayer selectedLayer={selectedLayer.name} setSelectedLayer={setSelectedLayer} />
         </div>
       </div>
