@@ -6,11 +6,18 @@ import { MapContainer, TileLayer, useMap, ZoomControl } from "react-leaflet";
 import { MapSearchBox } from "@/components/ui/MapSearchBox";
 import LocationButton from "@/components/ui/LocationButton";
 import { Menu } from "lucide-react";
+import Sidebar from "./components/sidebar";
+import MapLayer from "./components/MapLayer"; // Import component MapLayer
 
 const DEFAULT_LOCATION = { lat: 10.762622, lng: 106.660172 }; // Tọa độ Quận 10, TP.HCM
 
 export default function FullScreenMap() {
   const [location, setLocation] = useState(DEFAULT_LOCATION);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [selectedLayer, setSelectedLayer] = useState({
+    name: "Bản đồ",
+    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  });
 
   // Hàm lấy vị trí
   const getUserLocation = () => {
@@ -47,21 +54,35 @@ export default function FullScreenMap() {
         className="absolute w-full h-full z-0"
         zoomControl={false}
       >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer url={selectedLayer.url} />
         <UpdateMapView location={location} />
         <ZoomControl position="bottomright" />
       </MapContainer>
 
       {/* Lớp giao diện trên bản đồ */}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        <div className="flex flew-row m-4 space-x-4">
+        <div className="flex flex-row m-4 ml-0 space-x-4">
+          {/* Thanh bên */}
+          <div className="pointer-events-auto">
+            {isSidebarOpen && (
+              <Sidebar onClose={() => setIsSidebarOpen(false)} />
+            )}
+          </div>
+
           {/* Nút menu */}
-          <button className="bg-white p-3 rounded-full shadow-lg pointer-events-auto">
+          <button
+            className="bg-white p-3 rounded-full shadow-lg pointer-events-auto hover:bg-blue-200"
+            onClick={() => setIsSidebarOpen(true)}
+          >
             <Menu color="black" size={24} />
           </button>
 
           {/* Ô nhập địa điểm */}
-          <div className="bg-white shadow-xl rounded-full pointer-events-auto">
+          <div
+            className={`flex bg-white shadow-xl rounded-full pointer-events-auto transition-transform duration-300 ${
+              isSidebarOpen ? "transform translate-x-64" : ""
+            }`}
+          >
             <MapSearchBox />
           </div>
         </div>
@@ -69,6 +90,11 @@ export default function FullScreenMap() {
         {/* Nút định vị */}
         <div className="absolute bottom-40 right-16 pointer-events-auto">
           <LocationButton onClick={getUserLocation} />
+        </div>
+
+        {/* 🌍 Map Layer Control */}
+        <div className="absolute bottom-8 left-4 pointer-events-auto">
+        <MapLayer selectedLayer={selectedLayer.name} setSelectedLayer={setSelectedLayer} />
         </div>
       </div>
     </div>

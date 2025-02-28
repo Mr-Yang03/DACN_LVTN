@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search} from "lucide-react";
+import { Search, Navigation } from "lucide-react";
 
 export function MapSearchBox() {
   const [query, setQuery] = useState("");
@@ -15,7 +15,7 @@ export function MapSearchBox() {
   };
 
   return (
-    <div className="flex items-center bg-white rounded-full px-2 py-1 md:w-94 w-90">
+    <div className="flex items-center bg-white rounded-full px-2 py-1 md:w-94 w-90 items-center">
       {/* Ô nhập liệu */}
       <input
         type="text"
@@ -35,12 +35,12 @@ export function MapSearchBox() {
       </button>
 
       {/* Nút chỉ đường */}
-      {/* <button
-        className="p-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition ml-2"
+      <button
+        className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition ml-2"
         aria-label="Đường đi"
       >
         <Navigation size={20} />
-      </button> */}
+      </button>
     </div>
   );
 }

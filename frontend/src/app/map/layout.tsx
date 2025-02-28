@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { SiteHeader } from "@/components/sections/site-header";
+// import { SiteHeader } from "@/components/sections/site-header";
 
 export default function RootLayout({
   children,
