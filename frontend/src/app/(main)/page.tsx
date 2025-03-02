@@ -9,17 +9,24 @@ const Page: React.FC = () => {
   return (
     <>
       {/* Giới thiệu và hình ảnh minh họa */}
-      <div className="h-[auto] pb-4 relative w-full flex items-center">
+      <div className="h-[auto] p-4 relative w-full flex items-center bg-white">
         <div
-          className="w-2/3 "
+          className="w-1/2 "
         >
-          <h1 className="text-4xl font-bold p-4 text-center">Hệ thống giám sát giao thông đô thị</h1>
-          <p className="text-lg p-5 text-center">
+          <h1 className="text-5xl font-bold p-4 text-left">
+            Hệ thống giám sát
+            <div
+              className="pt-4"
+            >
+              giao thông đô thị
+            </div>
+          </h1>
+          <p className="text-lg p-5 text-justify">
             Theo dõi, phân tích và tối ưu hóa lưu thông một cách thông minh và hiệu quả. Cập nhật trạng thái giao thông theo thời gian thực để hỗ trợ di chuyển an toàn và tiện lợi.
           </p>
         </div>
         <div
-          className="w-1/3"
+          className="w-1/2"
         >
           <img 
             src="/image/giaothonghcm.jpg" 
@@ -31,7 +38,7 @@ const Page: React.FC = () => {
 
       {/* Tóm tắt dữ liệu giao thông */} 
       <div
-        className="w-full flex items-center"
+        className="w-full flex items-center p-4"
       >
         <div
           className="rounded-lg border bg-card text-card-foreground shadow-sm w-1/4 m-2"
@@ -70,11 +77,11 @@ const Page: React.FC = () => {
 
       {/* Xem bản đồ và camera an ninh */}
       <div
-        className="w-full flex items-center"
+        className="w-full flex items-center px-4"
       >
         {/* Bản đồ giao thông */}
         <div
-          className="w-7/12 m-2 p-5 border-2 rounded-lg border-gray-100"
+          className="w-7/12 m-2 p-5 border-2 rounded-lg bg-white"
         >
           <div
             className="py-3"
@@ -86,7 +93,7 @@ const Page: React.FC = () => {
             </p>
           </div>
           <div
-            className="h-[700] z-0"
+            className="h-[450] z-0"
           >
             <div
               className="h-full"
@@ -102,7 +109,7 @@ const Page: React.FC = () => {
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <ZoomControl position="topright"/>
+                <ZoomControl position="bottomright"/>
               </MapContainer>
             </div>
           </div>
@@ -110,7 +117,7 @@ const Page: React.FC = () => {
         
         {/* Xem camera an ninh */}
         <div
-          className="w-5/12 m-2 p-5 border-2 rounded-lg border-gray-100"
+          className="w-5/12 m-2 p-5 border-2 rounded-lg bg-white"
         >
           <div
             className="py-3"
@@ -122,7 +129,7 @@ const Page: React.FC = () => {
             </p>
           </div>
           <div
-            className="h-[700] overflow-y-auto"
+            className="h-[450] overflow-y-auto"
           >
             <p>Đang cập nhật dữ liệu ...</p>
           </div>
