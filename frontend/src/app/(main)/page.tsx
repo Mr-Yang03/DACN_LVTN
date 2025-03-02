@@ -1,12 +1,14 @@
 "use client";
 
 import React from "react";
-// import Image from 'next/image';
+import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
+
 // import "@/app/globals.css";
 
 const Page: React.FC = () => {
   return (
     <>
+      {/* Giới thiệu và hình ảnh minh họa */}
       <div className="h-[auto] pb-4 relative w-full flex items-center">
         <div
           className="w-2/3 "
@@ -26,7 +28,8 @@ const Page: React.FC = () => {
           />
         </div>
       </div>
-        
+
+      {/* Tóm tắt dữ liệu giao thông */} 
       <div
         className="w-full flex items-center"
       >
@@ -65,9 +68,11 @@ const Page: React.FC = () => {
         </div>
       </div>
 
+      {/* Xem bản đồ và camera an ninh */}
       <div
         className="w-full flex items-center"
       >
+        {/* Bản đồ giao thông */}
         <div
           className="w-7/12 m-2 p-5 border-2 rounded-lg border-gray-100"
         >
@@ -80,7 +85,30 @@ const Page: React.FC = () => {
               Bản đồ giao thông
             </p>
           </div>
+          <div
+            className="h-[700] z-0"
+          >
+            <div
+              className="h-full"
+            >
+              <MapContainer
+                center={[10.762622, 106.660172]}
+                zoom={15}
+                scrollWheelZoom={true}
+                className="w-full h-full z-0"
+                zoomControl={false}
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <ZoomControl position="topright"/>
+              </MapContainer>
+            </div>
+          </div>
         </div>
+        
+        {/* Xem camera an ninh */}
         <div
           className="w-5/12 m-2 p-5 border-2 rounded-lg border-gray-100"
         >
@@ -92,6 +120,11 @@ const Page: React.FC = () => {
             >
               Camera giao thông
             </p>
+          </div>
+          <div
+            className="h-[700] overflow-y-auto"
+          >
+            <p>Đang cập nhật dữ liệu ...</p>
           </div>
         </div>
       </div>  
