@@ -35,14 +35,14 @@ export default function Sidebar({ onClose }: { onClose: () => void }) {
             <div className="flex flex-row items-center justify-between my-3 space-x-4">
               <div className="flex flex-row items-center space-x-2">
                 <SquareActivity size={25} />
-                <div className="text-gray-600">Xem tình trạng giao thông</div>
+                <div>Xem tình trạng giao thông</div>
               </div>
               <Switch className="data-[state=checked]:bg-blue-500" />
             </div>
             <div className="flex flex-row items-center justify-between my-3 space-x-4">
               <div className="flex flex-row items-center space-x-2">
                 <Cctv size={25} />
-                <div className="text-gray-600">Xem camera giao thông</div>
+                <div>Xem camera giao thông</div>
               </div>
               <Switch className="data-[state=checked]:bg-blue-500" />
             </div>
