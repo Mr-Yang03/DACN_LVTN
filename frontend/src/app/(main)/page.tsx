@@ -2,6 +2,7 @@
 
 import React from "react";
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 // import "@/app/globals.css";
 
@@ -10,36 +11,28 @@ const Page: React.FC = () => {
     <>
       {/* Giới thiệu và hình ảnh minh họa */}
       <div className="h-[auto] p-4 relative w-full flex items-center bg-white">
-        <div
-          className="w-1/2 "
-        >
+        <div className="w-1/2 ">
           <h1 className="text-5xl font-bold p-4 text-left">
             Hệ thống giám sát
-            <div
-              className="pt-4"
-            >
-              giao thông đô thị
-            </div>
+            <div className="pt-4">giao thông đô thị</div>
           </h1>
           <p className="text-lg p-5 text-justify">
-            Theo dõi, phân tích và tối ưu hóa lưu thông một cách thông minh và hiệu quả. Cập nhật trạng thái giao thông theo thời gian thực để hỗ trợ di chuyển an toàn và tiện lợi.
+            Theo dõi, phân tích và tối ưu hóa lưu thông một cách thông minh và
+            hiệu quả. Cập nhật trạng thái giao thông theo thời gian thực để hỗ
+            trợ di chuyển an toàn và tiện lợi.
           </p>
         </div>
-        <div
-          className="w-1/2"
-        >
-          <img 
-            src="/image/giaothonghcm.jpg" 
-            alt="Giao thông HCM" 
-            className="w-full h-auto rounded-lg" 
+        <div className="w-1/2">
+          <img
+            src="/image/giaothonghcm.jpg"
+            alt="Giao thông HCM"
+            className="w-full h-auto rounded-lg"
           />
         </div>
       </div>
 
-      {/* Tóm tắt dữ liệu giao thông */} 
-      <div
-        className="w-full flex items-center p-4"
-      >
+      {/* Tóm tắt dữ liệu giao thông */}
+      <div className="w-full flex items-center p-4">
         <div
           className="rounded-lg border bg-card text-card-foreground shadow-sm w-1/4 m-2"
           data-v0-t="card"
@@ -76,65 +69,43 @@ const Page: React.FC = () => {
       </div>
 
       {/* Xem bản đồ và camera an ninh */}
-      <div
-        className="w-full flex items-center px-4"
-      >
+      <div className="w-full flex items-center px-4">
         {/* Bản đồ giao thông */}
-        <div
-          className="w-7/12 m-2 p-5 border-2 rounded-lg bg-white"
-        >
-          <div
-            className="py-3"
-          >
-            <p
-              className="text-2xl font-bold"
-            >
-              Bản đồ giao thông
-            </p>
+        <div className="w-7/12 m-2 p-5 border-2 rounded-lg bg-white">
+          <div className="py-3">
+            <p className="text-2xl font-bold">Bản đồ giao thông</p>
           </div>
-          <div
-            className="h-[450] z-0"
-          >
-            <div
-              className="h-full"
-            >
-              <MapContainer
-                center={[10.762622, 106.660172]}
-                zoom={15}
-                scrollWheelZoom={true}
-                className="w-full h-full z-0"
-                zoomControl={false}
-              >
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <ZoomControl position="bottomright"/>
-              </MapContainer>
+          <div className="h-[450] z-0">
+            <div className="h-full">
+              {typeof window !== "undefined" && (
+                <MapContainer
+                  center={[10.762622, 106.660172]}
+                  zoom={15}
+                  scrollWheelZoom={true}
+                  className="w-full h-full z-0"
+                  zoomControl={false}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <ZoomControl position="bottomright" />
+                </MapContainer>
+              )}
             </div>
           </div>
         </div>
-        
+
         {/* Xem camera an ninh */}
-        <div
-          className="w-5/12 m-2 p-5 border-2 rounded-lg bg-white"
-        >
-          <div
-            className="py-3"
-          >
-            <p
-              className="text-2xl font-bold"
-            >
-              Camera giao thông
-            </p>
+        <div className="w-5/12 m-2 p-5 border-2 rounded-lg bg-white">
+          <div className="py-3">
+            <p className="text-2xl font-bold">Camera giao thông</p>
           </div>
-          <div
-            className="h-[450] overflow-y-auto"
-          >
+          <div className="h-[450] overflow-y-auto">
             <p>Đang cập nhật dữ liệu ...</p>
           </div>
         </div>
-      </div>  
+      </div>
     </>
   );
 };
