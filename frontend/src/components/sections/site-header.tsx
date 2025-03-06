@@ -46,7 +46,7 @@ export function SiteHeader() {
         {/* Nút menu + dropdown cho màn hình nhỏ */}
         <div className="lg:hidden relative">
           <button onClick={() => setDropDownMenu(!dropDownMenu)}>
-            <Menu color="white" />
+            <Menu color="black" />
           </button>
         </div>
       </div>

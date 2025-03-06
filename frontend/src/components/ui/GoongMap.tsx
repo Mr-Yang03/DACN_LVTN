@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from "react";
+import { useEffect} from "react";
 import { useGoongMap } from "@/hooks/useGoongMap";
 import GoongMapLoader from "@/components/ui/GoongMapLoader";
 
@@ -7,6 +7,7 @@ interface MapPageProps {
   controls?: {
     navigation?: boolean;
     geolocate?: boolean;
+    search?: boolean;
   };
 }
 
@@ -17,14 +18,13 @@ export default function MapPage({ controls = {} }: MapPageProps) {
   useEffect(() => {
     if (!map) return;
     const goongjs = (window as any).goongjs;
-    if (!goongjs) return;
+    const GoongGeocoder = (window as any).GoongGeocoder;
+    if (!goongjs || !GoongGeocoder) return;
 
-    // Thêm điều khiển zoom nếu được yêu cầu
     if (controls.navigation) {
       map.addControl(new goongjs.NavigationControl(), "bottom-right");
     }
 
-    // Thêm nút định vị nếu được yêu cầu
     if (controls.geolocate) {
       const geolocate = new goongjs.GeolocateControl({
         positionOptions: { enableHighAccuracy: true },
@@ -34,8 +34,43 @@ export default function MapPage({ controls = {} }: MapPageProps) {
       map.addControl(geolocate, "bottom-right");
       map.on("load", () => geolocate.trigger());
     }
-    
-  }, [map, controls]);
+
+    // Đợi script load xong rồi mới thêm GoongGeocoder
+    if (controls.search) {
+      if (typeof GoongGeocoder !== "undefined") {
+        const geocoder = new GoongGeocoder({
+          accessToken: process.env.NEXT_PUBLIC_GOONG_API_KEY,
+          goongjs: goongjs,
+        });
+
+        map.addControl(geocoder, "top-left");
+
+        const geocoderContainer = document.querySelector(".mapboxgl-ctrl-top-left");
+        if (geocoderContainer) {
+          (geocoderContainer as HTMLElement).style.top = "12px";
+          (geocoderContainer as HTMLElement).style.left = "70px";
+            (geocoderContainer as HTMLElement).style.width = "1000px";
+            (geocoderContainer as HTMLElement).style.height = "200px";
+              (geocoderContainer as HTMLElement).style.borderRadius = "8px";
+        }
+        
+      }
+    }
+
+    return () => {
+      if (controls.navigation) {
+        map.removeControl("navigation");
+      }
+
+      if (controls.geolocate) {
+        map.removeControl("geolocate");
+      }
+
+      if (controls.search) {
+        map.removeControl("geocoder");
+      }
+    };
+  }, [map]);
 
   return (
     <div className="relative w-full h-full">
