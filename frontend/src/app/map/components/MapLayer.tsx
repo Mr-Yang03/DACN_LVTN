@@ -1,37 +1,32 @@
-import { Layers, Map, Bus, Bike } from "lucide-react";
+import { Layers, Map, Satellite } from "lucide-react";
 import { useState } from "react";
 
 const layers = [
   {
     name: "Bản đồ",
-    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    style: "https://tiles.goong.io/assets/goong_map_web.json",
     icon: <Map className="w-6 h-6 text-blue-600" />,
   },
   {
     name: "Địa hình",
-    url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+    style: "https://tiles.goong.io/assets/navigation_day.json",
     icon: <Layers className="w-6 h-6 text-gray-600" />,
   },
   {
     name: "Giao thông",
-    url: "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+    style: "https://tiles.goong.io/assets/navigation_day.json",
     icon: <Map className="w-6 h-6 text-red-600" />,
   },
   {
-    name: "Chuyến tuyến",
-    url: "https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=YOUR_API_KEY",
-    icon: <Bus className="w-6 h-6 text-purple-600" />,
-  },
-  {
-    name: "Đi xe đạp",
-    url: "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=YOUR_API_KEY",
-    icon: <Bike className="w-6 h-6 text-green-600" />,
-  },
+    name: "Vệ tinh",
+    style: "https://tiles.goong.io/assets/navigation_day.json",
+    icon: <Satellite className="w-6 h-6 text-purple-600" />,
+  }
 ];
 
 interface MapLayerProps {
   selectedLayer: string;
-  setSelectedLayer: (layer: { name: string; url: string }) => void;
+  setSelectedLayer: (layer: { name: string; style: string }) => void;
 }
 
 export default function MapLayer({

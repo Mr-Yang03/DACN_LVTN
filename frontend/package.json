@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@goongmaps/goong-geocoder": "^1.1.1",
+    "@goongmaps/goong-js": "^1.0.9",
+    "@goongmaps/goong-sdk": "^1.0.7",
     "@radix-ui/react-switch": "^1.1.3",
     "@tanstack/react-query": "^5.66.9",
     "@types/react-leaflet": "^3.0.0",

@@ -267,19 +267,21 @@ const Page: React.FC = () => {
             <div
               className="h-full"
             >
-              <MapContainer
-                center={[10.762622, 106.660172]}
-                zoom={15}
-                scrollWheelZoom={true}
-                className="w-full h-full z-0"
-                zoomControl={false}
-              >
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <ZoomControl position="bottomright"/>
-              </MapContainer>
+              {typeof window !== "undefined" && (
+                <MapContainer
+                  center={[10.762622, 106.660172]}
+                  zoom={15}
+                  scrollWheelZoom={true}
+                  className="w-full h-full z-0"
+                  zoomControl={false}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <ZoomControl position="bottomright" />
+                </MapContainer>
+              )}
             </div>
           </div>
         </div>
