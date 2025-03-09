@@ -56,20 +56,6 @@ export default function MapPage({ controls = {} }: MapPageProps) {
         
       }
     }
-
-    return () => {
-      if (controls.navigation) {
-        map.removeControl("navigation");
-      }
-
-      if (controls.geolocate) {
-        map.removeControl("geolocate");
-      }
-
-      if (controls.search) {
-        map.removeControl("geocoder");
-      }
-    };
   }, [map]);
 
   return (

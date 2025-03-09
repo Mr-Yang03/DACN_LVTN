@@ -5,7 +5,7 @@ import { useEffect} from "react";
 export default function GoongMapLoader({ onLoad }: { onLoad: () => void }) {
   useEffect(() => {
     // Nếu GoongJS đã được tải trước đó, gọi onLoad ngay lập tức
-    if ((window as any).goongjs) {
+    if (typeof (window as any).goongjs !== "undefined") {
       onLoad();
     }
   }, []);
