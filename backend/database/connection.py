@@ -7,7 +7,6 @@ client = MongoClient(MONGO_URI)
 
 # Choose database and collection
 db = client["bktraffic"]
-# user_collection = db["user"]
 
 def get_database():
     return db
