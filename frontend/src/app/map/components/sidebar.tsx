@@ -81,7 +81,7 @@ export default function Sidebar({ onClose }: { onClose: () => void }) {
                   </button>
                 </>
               ) : (
-                <Link href={"/login"} className="text-gray-600 hover:text-blue-500 mx-auto">
+                <Link href={"/auth"} className="text-gray-600 hover:text-blue-500 mx-auto">
                   Đăng nhập
                 </Link>
               )}

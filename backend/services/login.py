@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from database.connection import get_database
 
@@ -20,9 +20,9 @@ async def check_login(login_info: LoginInfo) -> dict:
     )
 
     if not check_user:
-        return {"success": False}
+        raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    return {"success": True}
+    return {"username": login_info.email}
 
 @login_router.get("/users/all")
 async def get_all_users() -> list:

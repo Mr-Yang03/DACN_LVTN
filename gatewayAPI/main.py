@@ -22,6 +22,19 @@ async def get_proxy(service: str, path: str, request: Request, _=Depends(rate_li
 async def post_proxy(service: str, path: str, request: Request, _=Depends(rate_limit)):
     return await forward_request(service, f"/{path}", request)
 
+
+USER_SERVICE_URL = "http://user-service:8001"
+
+@app.post("/login")
+async def login(username: str, password: str):
+    response = requests.post(f"{USER_SERVICE_URL}/validate-user", json={"username": username, "password": password})
+    if response.status_code != 200:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    user_data = response.json()
+    access_token = create_access_token(data={"sub": user_data["username"]}, expires_delta=timedelta(minutes=60))
+    return {"access_token": access_token, "token_type": "bearer"}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
