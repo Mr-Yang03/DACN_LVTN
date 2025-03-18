@@ -53,3 +53,60 @@ INFO:httpx:HTTP Request: GET http://localhost:8000/all "HTTP/1.1 404 Not Found"
 INFO:root:Request: GET http://127.0.0.1:9000/users/all
 INFO:root:Request: GET http://127.0.0.1:9000/users/users/all
 INFO:httpx:HTTP Request: GET http://localhost:8000/users/all "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/
+INFO:root:Request: GET http://localhost:9000/favicon.ico
+INFO:root:Request: GET http://localhost:9000/favicon.ico/
+INFO:root:Request: GET http://localhost:9000/docs
+INFO:root:Request: GET http://localhost:9000/openapi.json
+INFO:root:Request: GET http://localhost:9000/users/users
+INFO:httpx:HTTP Request: GET http://localhost:8001/users "HTTP/1.1 404 Not Found"
+INFO:root:Request: GET http://localhost:9000/users/users/all
+INFO:httpx:HTTP Request: GET http://localhost:8001/users/all "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/docs
+INFO:root:Request: GET http://localhost:9000/openapi.json
+INFO:root:Request: POST http://localhost:9000/register
+INFO:root:Request: POST http://localhost:9000/register
+INFO:root:Request: OPTIONS http://localhost:9000/user/register
+INFO:root:Request: OPTIONS http://localhost:9000/user/register
+INFO:root:Request: POST http://localhost:9000/user/register
+INFO:root:Request: OPTIONS http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:root:Request: GET http://localhost:9000/users/users/all
+INFO:httpx:HTTP Request: GET http://localhost:8001/users/all "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 400 Bad Request"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
+INFO:root:Request: POST http://localhost:9000/login
+INFO:root:Request: POST http://localhost:9000/login/
+INFO:root:Request: GET http://localhost:9000/docs
+INFO:root:Request: GET http://localhost:9000/openapi.json
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"

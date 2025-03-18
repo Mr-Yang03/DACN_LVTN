@@ -46,7 +46,7 @@ export default function AuthPage() {
               </AnimatedIcon>
             ))}
           </div>
-          <p className="text-slate-600 max-w-xs mx-auto font-light text-center">Hãy đăng nhập hoặc đăng ký để truy cập hệ thống giao thông thông minh thành phố</p>
+          <p className="text-slate-600 max-w-xs mx-auto font-light text-center">Hãy đăng nhập hoặc đăng ký để truy cập hệ thống giao thông thông minh đô thị</p>
         </div>
         {activeTab === "login" ? (
           <LoginForm onSwitchTab={() => setActiveTab("register")} />
