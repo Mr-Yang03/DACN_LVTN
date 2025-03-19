@@ -27,7 +27,7 @@ export function SiteHeader() {
           <Link href="/" className="hover:text-gray-600">
             Tin tức
           </Link>
-          <Link href="/" className="hover:text-gray-600">
+          <Link href="/feedback" className="hover:text-gray-600">
             Phản ánh
           </Link>
           <Link href="/" className="hover:text-gray-600">
