@@ -36,7 +36,7 @@ export function SiteHeader() {
         </div>
 
         <div className="hidden lg:block">
-          <Link href="/login">
+          <Link href="/auth">
             <button className="bg-[#4285F4] text-white py-2 px-4 rounded-full hover:bg-blue-700 transition">
               Đăng nhập
             </button>
@@ -84,7 +84,7 @@ export function SiteHeader() {
             Thống kê
           </Link>
           <Link
-            href="/login"
+            href="/auth"
             className="text-white hover:text-gray-400 py-2 px-4 block"
           >
             Đăng nhập
