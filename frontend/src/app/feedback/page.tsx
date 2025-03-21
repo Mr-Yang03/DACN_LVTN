@@ -13,15 +13,15 @@ const Page: React.FC = () => {
                 Phản ánh tình trạng giao thông
             </div>
             <div
-                className="flex w-full my-4"
+                className="sm:flex w-full"
             >
                 <div
-                    className="w-3/5 p-4 ml-4 rounded-lg bg-white border-2"
+                    className="sm:w-3/5 w-full p-4 sm:ml-4 rounded-lg bg-white border-2 max-sm:aspect-square"
                 >
                     <GoongMap controls={{ navigation: true, geolocate: true, search: true}} />   
                 </div>
                 <div
-                    className="w-2/5 px-4"
+                    className="sm:w-2/5 w-full sm:px-4 max-sm:p-4"
                 >
                     <form
                         className="flex flex-col space-y-4"
