@@ -8,7 +8,7 @@ interface MapPageProps {
     navigation?: boolean;
     geolocate?: boolean;
     search?: boolean;
-  };
+  }
 }
 
 export default function MapPage({ controls = {} }: MapPageProps) {
@@ -30,7 +30,7 @@ export default function MapPage({ controls = {} }: MapPageProps) {
         positionOptions: { enableHighAccuracy: true },
         trackUserLocation: true,
       });
-
+      
       map.addControl(geolocate, "bottom-right");
       map.on("load", () => geolocate.trigger());
     }
