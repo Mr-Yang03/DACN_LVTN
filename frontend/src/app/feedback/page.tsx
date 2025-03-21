@@ -9,7 +9,7 @@ export default function ReportPage() {
       <div className="text-3xl font-bold text-center p-4 mt-4">
         Phản ánh tình trạng giao thông
       </div>
-      <div className="text-center text-gray-500 mb-4">
+      <div className="text-center text-gray-800 mb-4">
       Gửi thông tin phản ánh về tình trạng giao thông để giúp chúng tôi cải thiện hệ thống giám sát
       </div>
       <div className="flex w-full my-4 items-center justify-center">

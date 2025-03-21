@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { useToggle } from "@/hooks/useToggle";
 import { PasswordInput } from "@/components/ui/PasswordInput";
+import { useAuth } from "@/context/auth-context";
 
 export default function LoginForm({
   onSwitchTab,
@@ -18,6 +19,8 @@ export default function LoginForm({
   const [showPassword, toggleShowPassword] = useToggle();
   const [form, setForm] = useState({ email: "", password: "" });
   const [remember, setRemember] = useState(false); // Thêm state remember
+  const {setToken} = useAuth();
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -38,14 +41,20 @@ export default function LoginForm({
       alert("Đăng nhập thất bại!");
     } else {
       const data = await response.json();
-      alert("Đăng nhập thành công!");
-      console.log("Token:", data.access_token);
+      // alert("Đăng nhập thành công!");
+      console.log("token:", data.access_token);
+
+      // Lưu token vào context
+      setToken(data.access_token);
+
+      localStorage.setItem("user_data", JSON.stringify(data.user));
+      console.log("User data:", data.user);
 
       // Nếu người dùng tích "Ghi nhớ", lưu token vào localStorage
       if (remember) {
-        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("token", data.access_token);
       } else {
-        sessionStorage.setItem("access_token", data.access_token);
+        sessionStorage.setItem("token", data.access_token);
       }
 
       // Chuyển hướng về trang chủ

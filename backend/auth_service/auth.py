@@ -39,8 +39,11 @@ async def check_login(login_info: LoginInfo) -> dict:
 
     if not check_user or not pwd_context.verify(login_info.password, check_user["password"]):
         raise HTTPException(status_code=401, detail="Invalid credentials")
-
-    return {"email": login_info.email}
+    user_data = {
+        "fullname": check_user["fullname"],
+        "email": check_user["email"]
+    }
+    return user_data
 
 @auth_router.get("/users/all")
 async def get_all_users() -> list:

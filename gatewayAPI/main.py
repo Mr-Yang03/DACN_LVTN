@@ -35,7 +35,7 @@ async def login(request: Request):
 
     user_data = response.json()
     access_token = create_access_token(data={"sub": user_data["email"]}, expires_delta=timedelta(minutes=60))
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "user": user_data}
 
 @app.post("/users/register")
 async def register(request: Request):

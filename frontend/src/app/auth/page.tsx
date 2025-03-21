@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import LoginForm from "@/app/auth/LoginForm";
 import RegisterForm from "@/app/auth/RegisterForm";
 import { Car, Building2, Bus, Truck, Bike, Plane } from "lucide-react";
+import { useAuth } from "@/context/auth-context";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function AnimatedIcon({ delay, children, animate }: any) {
@@ -22,6 +23,13 @@ function AnimatedIcon({ delay, children, animate }: any) {
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState("login");
   const [animateIcons, setAnimateIcons] = useState(false);
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      window.location.href = "/";
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     setAnimateIcons(true);
