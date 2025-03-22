@@ -17,6 +17,7 @@ export default function LoginForm({
 }) {
   const [showPassword, toggleShowPassword] = useToggle();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [remember, setRemember] = useState(false); // Thêm state remember
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -38,7 +39,17 @@ export default function LoginForm({
     } else {
       const data = await response.json();
       alert("Đăng nhập thành công!");
-      console.log("Token:", data.access_token); // có thể lưu token ở đây
+      console.log("Token:", data.access_token);
+
+      // Nếu người dùng tích "Ghi nhớ", lưu token vào localStorage
+      if (remember) {
+        localStorage.setItem("access_token", data.access_token);
+      } else {
+        sessionStorage.setItem("access_token", data.access_token);
+      }
+
+      // Chuyển hướng về trang chủ
+      window.location.href = "/";
     }
   };
 
@@ -85,10 +96,10 @@ export default function LoginForm({
           />
         </div>
         <div className="flex items-center space-x-2">
-          <Checkbox id="remember" />
+          <Checkbox id="remember" checked={remember} onCheckedChange={() => setRemember(!remember)} />
           <label
             htmlFor="remember"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 cursor-pointer"
           >
             Ghi nhớ đăng nhập
           </label>

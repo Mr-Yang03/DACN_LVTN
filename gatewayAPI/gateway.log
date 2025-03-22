@@ -110,3 +110,28 @@ INFO:root:Request: POST http://localhost:9000/users/login
 INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
 INFO:root:Request: POST http://localhost:9000/users/login
 INFO:httpx:HTTP Request: POST http://localhost:8001/validate-user "HTTP/1.1 404 Not Found"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: GET http://localhost:9000/docs
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:root:Request: GET http://localhost:9000/openapi.json
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: OPTIONS http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"

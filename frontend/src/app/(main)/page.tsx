@@ -262,7 +262,7 @@ const Page: React.FC = () => {
             </div>
           </div>
           <div
-            className="h-[450] z-0"
+            className="h-[28rem] z-0"
           >
             <div
               className="h-full"
