@@ -3,9 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import Image from "next/image";
+import { useAuth } from "@/context/auth-context";
 
 export function SiteHeader() {
   const [dropDownMenu, setDropDownMenu] = useState(false);
+  const { isAuthenticated, setToken } = useAuth();
 
   return (
     <div className="flex flex-col sticky top-0 left-0 w-full z-50">
@@ -36,11 +39,31 @@ export function SiteHeader() {
         </div>
 
         <div className="hidden lg:block">
-          <Link href="/auth">
-            <button className="bg-[#4285F4] text-white py-2 px-4 rounded-full hover:bg-blue-700 transition">
-              Đăng nhập
-            </button>
-          </Link>
+          {isAuthenticated ? (
+            (() => {
+              const userData = JSON.parse(
+                localStorage.getItem("user_data") || "{}"
+              );
+              return (
+                <Link href="/" className="flex flex-row items-center">
+                  <Image
+                    src={"/image/default_avatar.png"}
+                    alt="User Avatar"
+                    width={40}
+                    height={40}
+                    className="w-10 h-10 rounded-full"
+                  />
+                  <span className="ml-2">{userData.fullname}</span>
+                </Link>
+              );
+            })()
+          ) : (
+            <Link href="/auth">
+              <button className="bg-[#4285F4] text-white py-2 px-4 rounded-full hover:bg-blue-700 transition">
+                Đăng nhập
+              </button>
+            </Link>
+          )}
         </div>
 
         {/* Nút menu + dropdown cho màn hình nhỏ */}
@@ -50,6 +73,7 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
+      
       {/* Dropdown menu */}
       {dropDownMenu && (
         <div className="bg-black shadow-lg px-4 pb-4 flex flex-col space-y-2 w-full lg:hidden">
@@ -83,12 +107,24 @@ export function SiteHeader() {
           >
             Thống kê
           </Link>
-          <Link
-            href="/auth"
-            className="text-white hover:text-gray-400 py-2 px-4 block"
-          >
-            Đăng nhập
-          </Link>
+          {isAuthenticated ? (
+            <Link
+              href="/"
+              className="text-white hover:text-gray-400 py-2 px-4 block"
+              onClick={() => {
+                setToken(null);
+              }}
+            >
+              Đăng xuất
+            </Link>
+          ) : (
+            <Link
+              href="/auth"
+              className="text-white hover:text-gray-400 py-2 px-4 block"
+            >
+              Đăng nhập
+            </Link>
+          )}
         </div>
       )}
     </div>

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from "react";
 
 // Định nghĩa kiểu dữ liệu cho context
 interface AuthContextType {
@@ -17,9 +17,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Chỉ cập nhật token sau khi component đã mount
   useEffect(() => {
-    if (typeof window !== 'undefined') { // Chạy trên client
+    if (typeof window !== "undefined") {
+      // Chạy trên client
       setIsMounted(true);
-      const storedToken = sessionStorage.getItem('token');
+      const storedToken =
+        sessionStorage.getItem("token") || localStorage.getItem("token");
       if (storedToken) {
         setTokenState(storedToken);
       }
@@ -28,11 +30,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const setToken = (newToken: string | null) => {
     setTokenState(newToken);
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       if (newToken) {
-        sessionStorage.setItem('token', newToken);
+        sessionStorage.setItem("token", newToken);
       } else {
-        sessionStorage.removeItem('token');
+        sessionStorage.removeItem("token");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user_data");
       }
     }
   };
@@ -52,7 +56,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

@@ -135,3 +135,37 @@ INFO:root:Request: POST http://localhost:9000/users/register
 INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 200 OK"
 INFO:root:Request: POST http://localhost:9000/users/login
 INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: OPTIONS http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
