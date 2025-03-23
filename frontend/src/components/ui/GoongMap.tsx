@@ -47,13 +47,12 @@ export default function MapPage({ controls = {} }: MapPageProps) {
 
         const geocoderContainer = document.querySelector(".mapboxgl-ctrl-top-left");
         if (geocoderContainer) {
-          (geocoderContainer as HTMLElement).style.top = "12px";
-          (geocoderContainer as HTMLElement).style.left = "70px";
-            (geocoderContainer as HTMLElement).style.width = "1000px";
-            (geocoderContainer as HTMLElement).style.height = "200px";
-              (geocoderContainer as HTMLElement).style.borderRadius = "8px";
+          (geocoderContainer as HTMLElement).style.top = "2%";
+          (geocoderContainer as HTMLElement).style.left = "5%";
+          (geocoderContainer as HTMLElement).style.width = "30%";
+          (geocoderContainer as HTMLElement).style.height = "5%";
+          (geocoderContainer as HTMLElement).style.borderRadius = "1%";
         }
-        
       }
     }
   }, [map]);
