@@ -4,7 +4,7 @@ import { useState } from "react";
 // import goongjs from "@goongmaps/goong-js";
 // import "@goongmaps/goong-js/dist/goong-js.css";
 import { Menu } from "lucide-react";
-import Sidebar from "./components/sidebar";
+import Sidebar from "./sidebar";
 // import LocationButton from "@/components/ui/LocationButton";
 // import { MapSearchBox } from "@/components/ui/MapSearchBox";
 // import MapLayer from "./components/MapLayer";
