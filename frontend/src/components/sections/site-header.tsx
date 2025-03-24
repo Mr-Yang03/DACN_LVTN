@@ -27,7 +27,7 @@ export function SiteHeader() {
           <Link href="/map" className="hover:text-gray-600">
             Bản đồ
           </Link>
-          <Link href="/" className="hover:text-gray-600">
+          <Link href="/news" className="hover:text-gray-600">
             Tin tức
           </Link>
           <Link href="/feedback" className="hover:text-gray-600">

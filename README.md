@@ -4,7 +4,7 @@ Run FastAPI backend in /backend directory:
     python -m venv .venv 
     .venv/Scripts/activate 
     pip install -r requirements.txt
-    fastapi dev main.py
+    uvicorn auth_service.main:app --host 0.0.0.0 --port 8001 --reload
 ```
 Run frontend in /frontend directory:
 ```Text

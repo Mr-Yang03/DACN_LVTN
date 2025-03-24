@@ -170,7 +170,7 @@ export default function RegisterForm({ onSwitchTab }: { onSwitchTab: () => void 
         </Form>
       </CardContent>
       <CardFooter className="px-6 pb-6 text-center">
-        <p className="text-sm text-slate-600 mt-4">
+        <p className="w-full text-sm text-slate-600 mt-4">
           Đã có tài khoản?{" "}
           <button className="ml-1 text-blue-600 hover:text-blue-700 font-medium hover:underline" onClick={onSwitchTab}>
             Đăng nhập

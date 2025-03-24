@@ -32,6 +32,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export default function LoginForm({ onSwitchTab }: { onSwitchTab: () => void }) {
   const { setToken } = useAuth();
   const [showPassword, toggleShowPassword] = useToggle();
+  // const router = useRouter();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -53,7 +54,7 @@ export default function LoginForm({ onSwitchTab }: { onSwitchTab: () => void }) 
     });
 
     if (!response.ok) {
-      alert("Đăng nhập thất bại!");
+      alert("Email hoặc mật khẩu không chính xác");
     } else {
       const data = await response.json();
       setToken(data.access_token);
@@ -64,8 +65,6 @@ export default function LoginForm({ onSwitchTab }: { onSwitchTab: () => void }) 
       } else {
         sessionStorage.setItem("token", data.access_token);
       }
-
-      window.location.href = "/";
     }
   };
 
