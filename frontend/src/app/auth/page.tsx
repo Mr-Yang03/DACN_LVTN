@@ -6,6 +6,7 @@ import RegisterForm from "@/app/auth/RegisterForm";
 import { Car, Building2, Bus, Truck, Bike, Plane } from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
+import { ToastContainer } from "react-toastify";
 
 // Component icon
 function IconCard({ children }: { children: React.ReactNode }) {
@@ -28,12 +29,30 @@ export default function AuthPage() {
   }, [isAuthenticated]);
 
   const icons = [
-    <Car key="car" className="h-14 w-14 text-blue-600 group-hover:text-blue-700 transition-colors duration-300" />,
-    <Building2 key="building" className="h-14 w-14 text-slate-600 group-hover:text-slate-700 transition-colors duration-300" />,
-    <Bus key="bus" className="h-14 w-14 text-red-700 group-hover:text-red-800 transition-colors duration-300" />,
-    <Truck key="truck" className="h-14 w-14 text-yellow-700 group-hover:text-yellow-800 transition-colors duration-300" />,
-    <Bike key="bike" className="h-14 w-14 text-green-600 group-hover:text-green-700 transition-colors duration-300" />,
-    <Plane key="plane" className="h-14 w-14 text-indigo-600 group-hover:text-indigo-700 transition-colors duration-300" />,
+    <Car
+      key="car"
+      className="h-14 w-14 text-blue-600 group-hover:text-blue-700 transition-colors duration-300"
+    />,
+    <Building2
+      key="building"
+      className="h-14 w-14 text-slate-600 group-hover:text-slate-700 transition-colors duration-300"
+    />,
+    <Bus
+      key="bus"
+      className="h-14 w-14 text-red-700 group-hover:text-red-800 transition-colors duration-300"
+    />,
+    <Truck
+      key="truck"
+      className="h-14 w-14 text-yellow-700 group-hover:text-yellow-800 transition-colors duration-300"
+    />,
+    <Bike
+      key="bike"
+      className="h-14 w-14 text-green-600 group-hover:text-green-700 transition-colors duration-300"
+    />,
+    <Plane
+      key="plane"
+      className="h-14 w-14 text-indigo-600 group-hover:text-indigo-700 transition-colors duration-300"
+    />,
   ];
 
   return (
@@ -61,6 +80,7 @@ export default function AuthPage() {
           )}
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );
 }

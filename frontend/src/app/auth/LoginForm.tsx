@@ -14,25 +14,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import Link from "next/link";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { useToggle } from "@/hooks/useToggle";
 import { useAuth } from "@/context/auth-context";
-
-// Schema validation
-const loginSchema = z.object({
-  email: z.string().email("Email không hợp lệ"),
-  password: z.string().min(6, "Mật khẩu tối thiểu 6 ký tự"),
-  remember: z.boolean().optional(),
-});
+import { loginSchema } from "@/validations/userSchema";
+import { login } from "@/apis/userApi";
+import { toast } from "react-toastify";
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
-export default function LoginForm({ onSwitchTab }: { onSwitchTab: () => void }) {
+export default function LoginForm({
+  onSwitchTab,
+}: {
+  onSwitchTab: () => void;
+}) {
   const { setToken } = useAuth();
   const [showPassword, toggleShowPassword] = useToggle();
-  // const router = useRouter();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -44,19 +48,8 @@ export default function LoginForm({ onSwitchTab }: { onSwitchTab: () => void }) 
   });
 
   const onSubmit = async (values: LoginFormValues) => {
-    const response = await fetch("http://localhost:9000/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: values.email,
-        password: values.password,
-      }),
-    });
-
-    if (!response.ok) {
-      alert("Email hoặc mật khẩu không chính xác");
-    } else {
-      const data = await response.json();
+    try {
+      const data = await login(values.email, values.password);
       setToken(data.access_token);
       localStorage.setItem("user_data", JSON.stringify(data.user));
 
@@ -65,6 +58,13 @@ export default function LoginForm({ onSwitchTab }: { onSwitchTab: () => void }) 
       } else {
         sessionStorage.setItem("token", data.access_token);
       }
+
+      toast.success("Đăng nhập thành công!");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(
+        error.response?.data?.message || "Email hoặc mật khẩu không chính xác"
+      );
     }
   };
 
@@ -84,7 +84,9 @@ export default function LoginForm({ onSwitchTab }: { onSwitchTab: () => void }) 
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-slate-700 font-medium">Email</FormLabel>
+                  <FormLabel className="text-slate-700 font-medium">
+                    Email
+                  </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -105,7 +107,9 @@ export default function LoginForm({ onSwitchTab }: { onSwitchTab: () => void }) 
               render={({ field }) => (
                 <FormItem>
                   <div className="flex justify-between">
-                    <FormLabel className="text-slate-700 font-medium">Mật khẩu</FormLabel>
+                    <FormLabel className="text-slate-700 font-medium">
+                      Mật khẩu
+                    </FormLabel>
                     <Link
                       href="#"
                       className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
