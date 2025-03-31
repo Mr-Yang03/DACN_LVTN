@@ -272,7 +272,7 @@ export default function ReportPage() {
       {/* Feedback List */}
       <div className="space-y-6 p-6">
         {currentFeedbackItems.map((item) => (
-          <Card key={item.id} className="bg-gray-900 border-gray-800 overflow-hidden">
+          <Card key={item.id} className="bg-white border-gray-800 overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="relative h-[200px] md:h-auto">
                 <Image
@@ -297,13 +297,12 @@ export default function ReportPage() {
                   </Badge>
                   <Badge className="bg-blue-600">{item.type}</Badge>
                   <Badge
-                    variant="outline"
                     className={`${
                       item.severity === "Nghiêm trọng"
-                        ? "text-red-500 border-red-800 bg-red-950/30"
+                        ? "text-white bg-red-500"
                         : item.severity === "Trung bình"
-                          ? "text-amber-500 border-amber-800 bg-amber-950/30"
-                          : "text-green-500 border-green-800 bg-green-950/30"
+                          ? "text-white bg-amber-500"
+                          : "text-white bg-green-500"
                     }`}
                   >
                     {item.severity}
@@ -312,12 +311,12 @@ export default function ReportPage() {
 
                 <h3 className="text-xl font-bold mb-2">{item.title}</h3>
 
-                <div className="flex items-center gap-2 text-sm text-gray-400 mb-3">
+                <div className="flex items-center gap-2 text-sm text-gray-800 mb-3">
                   <MapPin className="h-4 w-4" />
                   <span>{item.location}</span>
                 </div>
 
-                <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                <div className="flex items-center gap-4 text-sm text-gray-800 mb-3">
                   <div className="flex items-center gap-1">
                     <CalendarIcon className="h-4 w-4" />
                     <span>{item.date}</span>
@@ -328,10 +327,10 @@ export default function ReportPage() {
                   </div>
                 </div>
 
-                <p className="text-gray-300 mb-4 line-clamp-2">{item.description}</p>
+                <p className="text-gray-900 mb-4 line-clamp-2">{item.description}</p>
 
                 <div className="flex justify-between items-center">
-                  <div className="text-sm text-gray-400">Người gửi: {item.author}</div>
+                  <div className="text-sm text-gray-800">Người gửi: {item.author}</div>
                   <Button variant="outline" className="border-blue-600 text-blue-500 hover:bg-blue-900/20">
                     Xem chi tiết
                   </Button>

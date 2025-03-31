@@ -10,30 +10,29 @@ const Page: React.FC = () => {
   return (
     <>
       {/* Giới thiệu và hình ảnh minh họa */}
-      <div className="h-[auto] p-4 relative w-full flex items-center bg-white">
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/[0.05] bg-[center_top_-1px]" />
         <div
-          className="w-1/2 "
-        >
-          <h1 className="text-5xl font-bold p-4 text-left">
-            Hệ thống giám sát
-            <div
-              className="pt-4"
-            >
-              giao thông đô thị
-            </div>
-          </h1>
-          <p className="text-lg p-5 text-justify">
-            Theo dõi, phân tích và tối ưu hóa lưu thông một cách thông minh và hiệu quả. Cập nhật trạng thái giao thông theo thời gian thực để hỗ trợ di chuyển an toàn và tiện lợi.
-          </p>
-        </div>
+            className="absolute inset-0 bg-[url('/image/giaothonghcm.jpg?height=600&width=1200')] bg-cover bg-center"
+        />
         <div
-          className="w-1/2"
+          className="container relative z-10 py-12"
         >
-          <img 
-            src="/image/giaothonghcm.jpg" 
-            alt="Giao thông HCM" 
-            className="w-full h-auto rounded-lg" 
-          />
+          <div
+            className="max-w-2xl m-10 p-10 bg-gray-400 bg-opacity-80 rounded-lg"
+          >
+            <h1 className="text-5xl font-bold p-4 text-left text-gray-100">
+              Hệ thống giám sát
+              <div
+                className="pt-4"
+              >
+                giao thông đô thị
+              </div>
+            </h1>
+            <p className="text-lg p-5 text-justify text-gray-100">
+              Theo dõi, phân tích và tối ưu hóa lưu thông một cách thông minh và hiệu quả. Cập nhật trạng thái giao thông theo thời gian thực để hỗ trợ di chuyển an toàn và tiện lợi.
+            </p>
+          </div>
         </div>
       </div>
 

@@ -57,8 +57,7 @@ const Page: React.FC = () => {
             <div className="relative overflow-hidden">
                 <div className="absolute inset-0 bg-grid-white/[0.05] bg-[center_top_-1px]" />
                 <div
-                    className="absolute inset-0 bg-[url('/placeholder.svg?height=600&width=1200')] bg-cover bg-center"
-                    style={{ backgroundImage: "url('/image/images.jpg?height=600&width=1200')" }}
+                    className="absolute inset-0 bg-[url('/image/images.jpg?height=600&width=1200')] bg-cover bg-center"
                 />
 
                 <div className="container relative z-10 py-12">
@@ -97,7 +96,7 @@ const Page: React.FC = () => {
 
                         {/* Featured News */}
                         <div className="mb-8">
-                            <Card className="bg-gray-900 border-gray-800 overflow-hidden">
+                            <Card className="bg-white border-gray-800 overflow-hidden">
                                 <div className="relative h-[300px] w-full">
                                     <Image
                                         src="/placeholder.svg?height=600&width=1200"
@@ -107,7 +106,7 @@ const Page: React.FC = () => {
                                     />
                                 </div>
                                 <CardContent className="p-6">
-                                    <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                                    <div className="flex items-center gap-4 text-sm text-gray-800 mb-3">
                                         <div className="flex items-center gap-1">
                                             <CalendarIcon className="h-4 w-4" />
                                             <span>24/03/2025</span>
@@ -120,7 +119,7 @@ const Page: React.FC = () => {
                                     <h3 className="text-xl font-bold mb-2">
                                         Hệ thống giám sát giao thông thông minh mới được triển khai tại TP.HCM
                                     </h3>
-                                    <p className="text-gray-300 mb-4">
+                                    <p className="text-gray-900 mb-4">
                                         Hệ thống giám sát giao thông thông minh mới nhất đã được triển khai tại các tuyến đường trọng điểm
                                         của TP.HCM, giúp giảm thiểu tình trạng ùn tắc và nâng cao hiệu quả quản lý giao thông đô thị.
                                     </p>
@@ -133,7 +132,7 @@ const Page: React.FC = () => {
 
                         {/* News Categories Tabs */}
                         <Tabs defaultValue="all" className="mb-8">
-                            <TabsList className="bg-gray-900 border border-gray-800">
+                            <TabsList className="bg-white border border-gray-800">
                                 <TabsTrigger value="all">Tất cả</TabsTrigger>
                                 <TabsTrigger value="traffic">Giao thông</TabsTrigger>
                                 <TabsTrigger value="technology">Công nghệ</TabsTrigger>
@@ -143,12 +142,12 @@ const Page: React.FC = () => {
                             <TabsContent value="all" className="mt-6">
                                 <div id="news-list" className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {currentNewsItems.map((item) => (
-                                        <Card key={item.id} className="bg-gray-900 border-gray-800 overflow-hidden">
+                                        <Card key={item.id} className="bg-white border-gray-800 overflow-hidden">
                                             <div className="relative h-[180px] w-full">
                                                 <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
                                             </div>
                                             <CardContent className="p-4">
-                                                <div className="flex items-center gap-4 text-xs text-gray-400 mb-2">
+                                                <div className="flex items-center gap-4 text-xs text-gray-800 mb-2">
                                                     <div className="flex items-center gap-1">
                                                         <CalendarIcon className="h-3 w-3" />
                                                         <span>{item.date}</span>
@@ -158,10 +157,10 @@ const Page: React.FC = () => {
                                                     </Badge>
                                                 </div>
                                                 <h3 className="text-base font-medium mb-2">{item.title}</h3>
-                                                <p className="text-gray-400 text-sm line-clamp-2">{item.description}</p>
+                                                <p className="text-gray-800 text-sm line-clamp-2">{item.description}</p>
                                             </CardContent>
                                             <CardFooter className="p-4 pt-0 flex justify-between items-center">
-                                                <div className="flex items-center gap-1 text-xs text-gray-400">
+                                                <div className="flex items-center gap-1 text-xs text-gray-800">
                                                     <Eye className="h-3 w-3" />
                                                     <span>{item.views} lượt xem</span>
                                                 </div>
@@ -187,15 +186,15 @@ const Page: React.FC = () => {
                             </TabsContent>
 
                             <TabsContent value="traffic" className="mt-6">
-                                <div className="text-center py-8 text-gray-400">Đang tải dữ liệu tin tức về giao thông...</div>
+                                <div className="text-center py-8 text-gray-800">Đang tải dữ liệu tin tức về giao thông...</div>
                             </TabsContent>
 
                             <TabsContent value="technology" className="mt-6">
-                                <div className="text-center py-8 text-gray-400">Đang tải dữ liệu tin tức về công nghệ...</div>
+                                <div className="text-center py-8 text-gray-800">Đang tải dữ liệu tin tức về công nghệ...</div>
                             </TabsContent>
 
                             <TabsContent value="policy" className="mt-6">
-                                <div className="text-center py-8 text-gray-400">Đang tải dữ liệu tin tức về chính sách...</div>
+                                <div className="text-center py-8 text-gray-800">Đang tải dữ liệu tin tức về chính sách...</div>
                             </TabsContent>
                         </Tabs>
                     </div>
@@ -208,7 +207,7 @@ const Page: React.FC = () => {
                                 <input
                                     type="text"
                                     placeholder="Tìm kiếm tin tức..."
-                                    className="w-full bg-gray-900 border border-gray-800 rounded-md py-2 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                    className="w-full bg-white border border-gray-800 rounded-md py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
                                 />
                                 <Button className="absolute right-1 top-1 h-8 w-8 p-0 bg-blue-600">
                                     <Search className="h-4 w-4" />
@@ -241,14 +240,14 @@ const Page: React.FC = () => {
                                                 src={`/placeholder.svg?height=64&width=64&text=${item}`}
                                                 alt={`Tin nổi bật ${item}`}
                                                 fill
-                                                className="object-cover rounded"
+                                                className="object-cover rounded border-gray-800"
                                             />
                                         </div>
                                         <div>
                                             <h4 className="text-sm font-medium line-clamp-2">
                                                 Hệ thống đèn giao thông thông minh giúp giảm 30% thời gian di chuyển
                                             </h4>
-                                            <div className="flex items-center gap-2 mt-1 text-xs text-gray-400">
+                                            <div className="flex items-center gap-2 mt-1 text-xs text-gray-800">
                                                 <CalendarIcon className="h-3 w-3" />
                                                 <span>22/03/2025</span>
                                             </div>
@@ -259,16 +258,16 @@ const Page: React.FC = () => {
                         </div>
 
                         {/* Newsletter */}
-                        <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
+                        <div className="bg-white border border-gray-800 rounded-lg p-6">
                             <h3 className="text-lg font-bold mb-2">Đăng ký nhận tin</h3>
-                            <p className="text-gray-400 text-sm mb-4">
+                            <p className="text-gray-800 text-sm mb-4">
                                 Nhận thông báo về các tin tức mới nhất về giao thông thông minh
                             </p>
                             <div className="space-y-3">
                                 <input
                                     type="email"
                                     placeholder="Email của bạn"
-                                    className="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                    className="w-full bg-white border border-gray-700 rounded-md py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
                                 />
                                 <Button className="w-full bg-blue-600 hover:bg-blue-700">Đăng ký</Button>
                             </div>
