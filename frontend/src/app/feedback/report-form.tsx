@@ -34,40 +34,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-// import { toast } from "@/components/ui/use-toast";
 import FileUploader from "@/components/ui/fileUploader";
 import { useRouter } from "next/navigation";
 import { LocationPicker } from "@/app/feedback/location-picker";
+import { feedbackSchema } from "@/validations/feedbackSchema";
+// import { toast } from "@/components/ui/use-toast";
 
-const formSchema = z.object({
-  fullName: z.string().min(2, {
-    message: "Họ tên phải có ít nhất 2 ký tự",
-  }),
-  email: z.string().email({
-    message: "Email không hợp lệ",
-  }),
-  phone: z.string().min(10, {
-    message: "Số điện thoại không hợp lệ",
-  }),
-  location: z.object({
-    lat: z.number(),
-    lng: z.number(),
-  }),
-  date: z.date({
-    required_error: "Vui lòng chọn ngày",
-  }),
-  time: z.string().min(1, {
-    message: "Vui lòng nhập thời gian",
-  }),
-  issueType: z.string({
-    required_error: "Vui lòng chọn loại vấn đề",
-  }),
-  severity: z.enum(["low", "medium", "high"], {
-    required_error: "Vui lòng chọn mức độ nghiêm trọng",
-  }),
-  description: z.string(),
-  attachments: z.any().optional(),
-});
+type FeedbackFormValues = z.infer<typeof feedbackSchema>;
 
 export function ReportForm() {
   const router = useRouter();
@@ -75,8 +48,8 @@ export function ReportForm() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<FeedbackFormValues>({
+    resolver: zodResolver(feedbackSchema),
     defaultValues: {
       fullName: "",
       email: "",
@@ -93,7 +66,7 @@ export function ReportForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: FeedbackFormValues) {
     setIsSubmitting(true);
 
     // Simulate API call

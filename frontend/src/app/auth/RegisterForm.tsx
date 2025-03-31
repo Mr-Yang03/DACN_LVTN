@@ -14,27 +14,28 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { useToggle } from "@/hooks/useToggle";
 import Link from "next/link";
+import { registerSchema } from "@/validations/userSchema";
+import { register } from "@/apis/userApi";
+import { toast } from "react-toastify";
 
-const formSchema = z.object({
-  fullname: z.string().min(1, "Họ và tên không được để trống"),
-  email: z.string().email("Email không hợp lệ"),
-  password: z.string().min(6, "Mật khẩu phải ít nhất 6 ký tự"),
-  confirmPassword: z.string().min(6, "Xác nhận mật khẩu phải ít nhất 6 ký tự"),
-  acceptTerms: z.literal(true, {
-    errorMap: () => ({ message: "Bạn phải đồng ý điều khoản" }),
-  }),
-}).refine((data) => data.password === data.confirmPassword, {
-  path: ["confirmPassword"],
-  message: "Mật khẩu không khớp",
-});
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
-export default function RegisterForm({ onSwitchTab }: { onSwitchTab: () => void }) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+export default function RegisterForm({
+  onSwitchTab,
+}: {
+  onSwitchTab: () => void;
+}) {
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       fullname: "",
       email: "",
@@ -47,29 +48,24 @@ export default function RegisterForm({ onSwitchTab }: { onSwitchTab: () => void 
   const [showPassword, toggleShowPassword] = useToggle();
   const [showConfirmPassword, toggleShowConfirmPassword] = useToggle();
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const response = await fetch("http://localhost:9000/users/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        fullname: values.fullname,
-        email: values.email,
-        password: values.password,
-      }),
-    });
+  const onSubmit = async (values: RegisterFormValues) => {
+    try {
+      await register(values.fullname, values.email, values.password);
 
-    if (!response.ok) {
-      alert("Đăng ký thất bại!");
-    } else {
-      alert("Đăng ký thành công!");
+      toast.success("Đăng ký thành công!");
       onSwitchTab();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Đăng ký thất bại!");
     }
   };
 
   return (
     <Card className="border-none shadow-lg bg-white/90 backdrop-blur-md rounded-2xl overflow-hidden">
       <CardHeader className="pb-4">
-        <h2 className="text-2xl text-center font-bold text-slate-800">Đăng Ký</h2>
+        <h2 className="text-2xl text-center font-bold text-slate-800">
+          Đăng Ký
+        </h2>
       </CardHeader>
       <CardContent className="space-y-5">
         <Form {...form}>
@@ -96,7 +92,11 @@ export default function RegisterForm({ onSwitchTab }: { onSwitchTab: () => void 
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="email@example.com" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="email@example.com"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -163,7 +163,10 @@ export default function RegisterForm({ onSwitchTab }: { onSwitchTab: () => void 
               )}
             />
 
-            <Button type="submit" className="w-full h-12 text-base font-medium bg-blue-600 hover:bg-blue-700 rounded-xl">
+            <Button
+              type="submit"
+              className="w-full h-12 text-base font-medium bg-blue-600 hover:bg-blue-700 rounded-xl"
+            >
               Đăng Ký
             </Button>
           </form>
@@ -172,7 +175,10 @@ export default function RegisterForm({ onSwitchTab }: { onSwitchTab: () => void 
       <CardFooter className="px-6 pb-6 text-center">
         <p className="w-full text-sm text-slate-600 mt-4">
           Đã có tài khoản?{" "}
-          <button className="ml-1 text-blue-600 hover:text-blue-700 font-medium hover:underline" onClick={onSwitchTab}>
+          <button
+            className="ml-1 text-blue-600 hover:text-blue-700 font-medium hover:underline"
+            onClick={onSwitchTab}
+          >
             Đăng nhập
           </button>
         </p>
