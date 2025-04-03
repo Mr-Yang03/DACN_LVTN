@@ -15,7 +15,7 @@ export default function RootLayout({
       <div className="min-h-screen flex flex-col">
         <SiteHeader />
 
-        <main className="flex-1 bg-gray-100">{children}</main>
+        <main className="flex-1 bg-[#F6F8FC]">{children}</main>
 
         <SiteFooter />
       </div>

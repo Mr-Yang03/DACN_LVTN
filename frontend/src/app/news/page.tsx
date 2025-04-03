@@ -54,7 +54,7 @@ const Page: React.FC = () => {
 
     return (
         <>
-            <div className="relative overflow-hidden">
+            {/* <div className="relative overflow-hidden">
                 <div className="absolute inset-0 bg-grid-white/[0.05] bg-[center_top_-1px]" />
                 <div
                     className="absolute inset-0 bg-[url('/image/images.jpg?height=600&width=1200')] bg-cover bg-center"
@@ -86,24 +86,26 @@ const Page: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className="container mx-auto px-4 py-8">
                 <div className="flex flex-col md:flex-row gap-8">
                     {/* Main News Section */}
-                    <div className="w-full md:w-2/3">
-                        <h2 className="text-2xl font-bold mb-6">Tin tức mới nhất</h2>
+                    <div className="w-full md:w-2/3 ">
+                        <div className="bg-white px-4 pt-4 pb-1 rounded-xl shadow-md mb-8">
+
+                        <h2 className="text-2xl font-semibold mb-6">Tin tức mới nhất</h2>
 
                         {/* Featured News */}
                         <div className="mb-8">
-                            <Card className="bg-white border-gray-800 overflow-hidden">
+                            <Card className="bg-white border-gray-200 overflow-hidden rounded-xl">
                                 <div className="relative h-[300px] w-full">
                                     <Image
                                         src="/placeholder.svg?height=600&width=1200"
                                         alt="Hệ thống giám sát giao thông thông minh mới"
                                         fill
                                         className="object-cover"
-                                    />
+                                        />
                                 </div>
                                 <CardContent className="p-6">
                                     <div className="flex items-center gap-4 text-sm text-gray-800 mb-3">
@@ -123,26 +125,27 @@ const Page: React.FC = () => {
                                         Hệ thống giám sát giao thông thông minh mới nhất đã được triển khai tại các tuyến đường trọng điểm
                                         của TP.HCM, giúp giảm thiểu tình trạng ùn tắc và nâng cao hiệu quả quản lý giao thông đô thị.
                                     </p>
-                                    <Button variant="outline" className="border-blue-600 text-blue-500 hover:bg-blue-900/20">
+                                    <Button variant="outline" className="border-blue-600 text-blue-500 hover:bg-blue-900/20 rounded-full">
                                         Đọc tiếp
                                     </Button>
                                 </CardContent>
                             </Card>
                         </div>
 
+                                        </div>
                         {/* News Categories Tabs */}
-                        <Tabs defaultValue="all" className="mb-8">
-                            <TabsList className="bg-white border border-gray-800">
-                                <TabsTrigger value="all">Tất cả</TabsTrigger>
-                                <TabsTrigger value="traffic">Giao thông</TabsTrigger>
-                                <TabsTrigger value="technology">Công nghệ</TabsTrigger>
-                                <TabsTrigger value="policy">Chính sách</TabsTrigger>
+                        <Tabs defaultValue="all" className="mb-8  bg-white p-4 rounded-xl shadow-md">
+                            <TabsList className="bg-white border border-gray-200 rounded-full w-full flex justify-center shadow-sm">
+                                <TabsTrigger value="all" className="rounded-full">Tất cả</TabsTrigger>
+                                <TabsTrigger value="traffic" className="rounded-full">Giao thông</TabsTrigger>
+                                <TabsTrigger value="technology" className="rounded-full">Công nghệ</TabsTrigger>
+                                <TabsTrigger value="policy" className="rounded-full">Chính sách</TabsTrigger>
                             </TabsList>
 
                             <TabsContent value="all" className="mt-6">
                                 <div id="news-list" className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {currentNewsItems.map((item) => (
-                                        <Card key={item.id} className="bg-white border-gray-800 overflow-hidden">
+                                        <Card key={item.id} className="bg-white border-gray-200 overflow-hidden">
                                             <div className="relative h-[180px] w-full">
                                                 <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
                                             </div>
@@ -152,7 +155,7 @@ const Page: React.FC = () => {
                                                         <CalendarIcon className="h-3 w-3" />
                                                         <span>{item.date}</span>
                                                     </div>
-                                                    <Badge variant="outline" className="text-blue-500 border-blue-800 bg-blue-950/30">
+                                                    <Badge variant="outline" className="text-white bg-blue-600">
                                                         {item.category}
                                                     </Badge>
                                                 </div>
@@ -207,9 +210,9 @@ const Page: React.FC = () => {
                                 <input
                                     type="text"
                                     placeholder="Tìm kiếm tin tức..."
-                                    className="w-full bg-white border border-gray-800 rounded-md py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                    className="w-full bg-white border border-gray-200 rounded-full py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
                                 />
-                                <Button className="absolute right-1 top-1 h-8 w-8 p-0 bg-blue-600">
+                                <Button className="absolute right-1 top-1 h-8 w-8 p-0 bg-blue-600 rounded-full">
                                     <Search className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -230,7 +233,7 @@ const Page: React.FC = () => {
                         </div>
 
                         {/* Popular News */}
-                        <div className="mb-8">
+                        <div className="mb-8  bg-white p-4 rounded-xl shadow-md">
                             <h3 className="text-lg font-bold mb-4">Tin tức nổi bật</h3>
                             <div className="space-y-4">
                                 {[1, 2, 3, 4].map((item) => (
@@ -240,7 +243,7 @@ const Page: React.FC = () => {
                                                 src={`/placeholder.svg?height=64&width=64&text=${item}`}
                                                 alt={`Tin nổi bật ${item}`}
                                                 fill
-                                                className="object-cover rounded border-gray-800"
+                                                className="object-cover rounded border-gray-200"
                                             />
                                         </div>
                                         <div>
@@ -258,7 +261,7 @@ const Page: React.FC = () => {
                         </div>
 
                         {/* Newsletter */}
-                        <div className="bg-white border border-gray-800 rounded-lg p-6">
+                        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md">
                             <h3 className="text-lg font-bold mb-2">Đăng ký nhận tin</h3>
                             <p className="text-gray-800 text-sm mb-4">
                                 Nhận thông báo về các tin tức mới nhất về giao thông thông minh
@@ -269,7 +272,7 @@ const Page: React.FC = () => {
                                     placeholder="Email của bạn"
                                     className="w-full bg-white border border-gray-700 rounded-md py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
                                 />
-                                <Button className="w-full bg-blue-600 hover:bg-blue-700">Đăng ký</Button>
+                                <Button className="w-full bg-blue-600 hover:bg-blue-700 rounded-full">Đăng ký</Button>
                             </div>
                         </div>
                     </div>
