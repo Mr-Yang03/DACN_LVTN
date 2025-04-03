@@ -154,7 +154,7 @@ export default function ReportPage() {
     <>
       {/* Form phản ánh */}
       <Dialog open={showFeedbackForm} onOpenChange={setShowFeedbackForm}>
-        <DialogContent className="bg-white border-gray-800 text-gray-800 max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-white border-gray-200 text-gray-800 max-w-4xl max-h-[90vh] overflow-y-auto">
           <VisuallyHidden>
             <DialogTitle>Hidden Title</DialogTitle>
           </VisuallyHidden>
@@ -175,12 +175,12 @@ export default function ReportPage() {
       </Dialog>
 
       <div className="flex flex-col md:flex-row gap-4 m-6">
-        <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setShowFeedbackForm(true)}>
+        <Button className="bg-black hover:bg-gray-800 rounded-full" onClick={() => setShowFeedbackForm(true)}>
             <Plus className="h-4 w-4 mr-2" /> Gửi phản ánh mới
         </Button>
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
-          <Input placeholder="Tìm kiếm phản ánh..." className="bg-white border-gray-800 pl-10 text-black" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500 " />
+          <Input placeholder="Tìm kiếm phản ánh..." className="bg-white border-gray-200 pl-10 text-black rounded-full" />
         </div>
       </div>
       
@@ -197,11 +197,11 @@ export default function ReportPage() {
                className="mt-2"
             >
               <Select value={severityFilter} onValueChange={setSeverityFilter}>
-                <SelectTrigger className="bg-white border-gray-800 text-black w-full">
+                <SelectTrigger className="bg-white border-gray-200 text-black w-full rounded-full">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Lọc theo mức độ" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-800 text-black">
+                <SelectContent className="bg-white border-gray-200 text-black">
                   <SelectItem value="allSeverity">Tất cả mức độ</SelectItem>
                   <SelectItem value="slight">Nhẹ</SelectItem>
                   <SelectItem value="medium">Trung bình</SelectItem>
@@ -217,11 +217,11 @@ export default function ReportPage() {
               className="mt-2"
             >
               <Select value={issueFilter} onValueChange={setIssueFilter}>
-                <SelectTrigger className="bg-white border-gray-800 text-black w-full">
-                  <Filter className="h-4 w-4 mr-2" />
+                <SelectTrigger className="bg-white border-gray-200 text-black w-full rounded-full">
+                  <Filter className="h-4 w-4 mr-2 " />
                   <SelectValue placeholder="Lọc theo vấn đề" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-800 text-black">
+                <SelectContent className="bg-white border-gray-200 text-black">
                   <SelectItem value="allIssueType">Tất cả vấn đề</SelectItem>
                   <SelectItem value="trafic-jam">Tắc đường</SelectItem>
                   <SelectItem value="accident">Tai nạn</SelectItem>
@@ -241,7 +241,7 @@ export default function ReportPage() {
               <Input
                 id="startDate"
                 type="date"
-                className="w-full bg-white border-gray-800 text-black"
+                className="w-full bg-white border-gray-200 text-black rounded-full"
                 defaultValue={currentDate}
                 onChange={(e) => setCurrentDate(e.target.value)}
               />
@@ -254,7 +254,7 @@ export default function ReportPage() {
               <Input
                 id="endDate"
                 type="date"
-                className="w-full bg-white border-gray-800 text-black"
+                className="w-full bg-white border-gray-200 text-black rounded-full"
                 defaultValue={currentDate}
                 onChange={(e) => setCurrentDate(e.target.value)}
               />
@@ -262,24 +262,25 @@ export default function ReportPage() {
           </div>
 
           <div className="relative flex-1">
-            <Button className="w-full absolute bottom-0 left-0 bg-green-500 hover:bg-green-600 mt-2">
+            <Button className="w-full absolute bottom-0 left-0 bg-black rounded-full hover:bg-gray-800 mt-2">
               Lọc phản ánh
             </Button>
           </div>
         </div>
       </div>
-
+      <br />
+      <hr className="border-gray-300"/>
       {/* Feedback List */}
-      <div className="space-y-6 p-6">
+      <div className="space-y-6 p-6 pt-9">
         {currentFeedbackItems.map((item) => (
-          <Card key={item.id} className="bg-white border-gray-800 overflow-hidden">
+          <Card key={item.id} className="bg-white border-gray-200 overflow-hidden rounded-xl shadow-md p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="relative h-[200px] md:h-auto">
                 <Image
                   src={item.images[0] || "/placeholder.svg"}
                   alt={item.title}
                   fill
-                  className="object-cover"
+                  className="object-cover rounded-xl"
                 />
               </div>
               <div className="p-4 md:col-span-2">
@@ -291,11 +292,11 @@ export default function ReportPage() {
                         : item.status === "Đang xử lý"
                           ? "bg-amber-600"
                           : "bg-red-600"
-                    }`}
+                    } rounded-full`}
                   >
                     {item.status}
                   </Badge>
-                  <Badge className="bg-blue-600">{item.type}</Badge>
+                  <Badge className="bg-blue-600 rounded-full">{item.type}</Badge>
                   <Badge
                     className={`${
                       item.severity === "Nghiêm trọng"
@@ -303,7 +304,7 @@ export default function ReportPage() {
                         : item.severity === "Trung bình"
                           ? "text-white bg-amber-500"
                           : "text-white bg-green-500"
-                    }`}
+                    } rounded-full`}
                   >
                     {item.severity}
                   </Badge>
@@ -331,7 +332,7 @@ export default function ReportPage() {
 
                 <div className="flex justify-between items-center">
                   <div className="text-sm text-gray-800">Người gửi: {item.author}</div>
-                  <Button variant="outline" className="border-blue-600 text-blue-500 hover:bg-blue-900/20">
+                  <Button variant="outline" className="border-blue-600 text-blue-500 hover:bg-blue-600 hover:text-white rounded-full">
                     Xem chi tiết
                   </Button>
                 </div>
