@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
@@ -9,16 +8,9 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import {
     CalendarIcon,
-    Clock,
     Eye,
     ChevronRight,
-    MapPin,
-    AlertTriangle,
-    Upload,
-    Filter,
     Search,
-    Plus,
-    ArrowRight
 } from "lucide-react"
 import {
     PaginationDemo

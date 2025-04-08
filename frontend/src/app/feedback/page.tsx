@@ -7,8 +7,6 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
@@ -22,18 +20,14 @@ import {
 import {
   CalendarIcon,
   Clock,
-  Eye,
-  ChevronRight,
   MapPin,
-  AlertTriangle,
-  Upload,
   Filter,
   Search,
   Plus,
 } from "lucide-react"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Card} from "@/components/ui/card"
 
 export default function ReportPage() {
   const [severityFilter, setSeverityFilter] = useState("allSeverity")
