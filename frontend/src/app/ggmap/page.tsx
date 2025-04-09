@@ -9,6 +9,9 @@ export default function FullScreenMap() {
   const [latitude, setLatitude] = useState<number>(10.762622);
   const [longitude, setLongitude] = useState<number>(106.660172);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
+  // const [showTraffic, setShowTraffic] = useState(false);
+
   return (
     <div className="flex flex-row w-full h-full">
       {/* UI điều khiển */}
@@ -27,7 +30,7 @@ export default function FullScreenMap() {
           {/* Sidebar */}
           <div className="pointer-events-auto h-full">
             {isSidebarOpen && (
-              <Sidebar onClose={() => setIsSidebarOpen(false)} />
+              <Sidebar onClose={() => setIsSidebarOpen(false)} showCamera={showCamera} setShowCamera={setShowCamera}/>
             )}
           </div>
         </div>
@@ -39,6 +42,7 @@ export default function FullScreenMap() {
         longitude={longitude}
         setLatitude={setLatitude}
         setLongitude={setLongitude}
+        showCamera={showCamera}
       />
     </div>
   );

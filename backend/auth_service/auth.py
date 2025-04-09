@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from database.connection import get_database
+from connection import get_database
 from passlib.context import CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -44,8 +44,3 @@ async def check_login(login_info: LoginInfo) -> dict:
         "email": check_user["email"]
     }
     return user_data
-
-@auth_router.get("/users/all")
-async def get_all_users() -> list:
-    users = user_collection.find({}, {"_id": 0, "email": 1, "password": 1})
-    return list(users)

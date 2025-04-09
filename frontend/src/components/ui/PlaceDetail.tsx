@@ -21,7 +21,7 @@ function getCompactHours(openingHours?: string[]): string {
   return ""; // Có thể hiển thị dạng bình thường nếu không giống nhau
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ place, onClose }) => {
+const PlaceDetail: React.FC<SidebarProps> = ({ place, onClose }) => {
   if (!place) return null;
 
   return (
@@ -86,4 +86,4 @@ const Sidebar: React.FC<SidebarProps> = ({ place, onClose }) => {
   );
 };
 
-export default Sidebar;
+export default PlaceDetail;

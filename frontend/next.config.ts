@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -9,6 +8,12 @@ const nextConfig: NextConfig = {
         hostname: "maps.googleapis.com",
         port: "",
         pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "camera.thongtingiaothong.vn",
+        port: "",
+        pathname: "/api/snapshot/**",
       },
     ],
   },

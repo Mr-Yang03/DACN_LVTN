@@ -6,167 +6,190 @@ import {
   useLoadScript,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import React, { useMemo, useState, useEffect } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
 import SearchBox from "@/components/ui/SearchBox";
 import LocationButton from "@/components/ui/LocationButton";
-import Sidebar from "@/components/ui/Sidebar_GGMap";
+import PlaceDetail from "@/components/ui/PlaceDetail";
+import { useGoogleMapsLogic } from "@/hooks/useGoogleMap";
+import { getCameras } from "@/apis/trafficApi";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import Image from "next/image";
 
 interface GoogleMapsProps {
   setLatitude: (lat: number) => void;
   setLongitude: (lng: number) => void;
   latitude: number;
   longitude: number;
+  showCamera: boolean;
   style?: React.CSSProperties;
 }
+
+interface Camera {
+  Title: string;
+  DisplayName: string;
+  SnapshotUrl: string | null;
+  Location: {
+    type: "Point";
+    coordinates: [number, number];
+  };
+}
+
+const libraries: ("places" | "drawing" | "geometry" | "visualization")[] = [
+  "places",
+];
 
 const GoogleMaps: React.FC<GoogleMapsProps> = ({
   setLatitude,
   setLongitude,
   latitude,
   longitude,
+  showCamera,
   style = { width: "100%", height: "100vh" },
 }) => {
-  const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [directions, setDirections] =
-    useState<google.maps.DirectionsResult | null>(null);
-  const [selectedPlace, setSelectedPlace] =
-    useState<google.maps.places.PlaceResult | null>(null);
-
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || "",
-    libraries: ["places"],
+    libraries,
   });
-
-  const center = useMemo(
-    () => ({
-      lat: latitude || 10.762622,
-      lng: longitude || 106.660172,
-    }),
-    [latitude, longitude]
-  );
-
-  // 🛰️ Lấy vị trí hiện tại khi vừa load map
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        ({ coords }) => {
-          setLatitude(coords.latitude);
-          setLongitude(coords.longitude);
-          map?.panTo({ lat: coords.latitude, lng: coords.longitude });
-        },
-        (error) => console.error("Lỗi khi lấy vị trí:", error)
-      );
-    }
-  }, []);
-
-  const handlePlaceSelected = (lat: number, lng: number, placeId?: string) => {
-    setLatitude(lat);
-    setLongitude(lng);
-    map?.panTo({ lat, lng });
-
-    if (placeId && map) {
-      const service = new google.maps.places.PlacesService(map);
-      service.getDetails({ placeId }, (place, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && place) {
-          setSelectedPlace(place);
-        }
-      });
-    }
-  };
+  const [cameras, setCameras] = useState<Camera[]>([]);
+  const {
+    map,
+    setMap,
+    directions,
+    setDirections,
+    selectedPlace,
+    setSelectedPlace,
+    center,
+    handlePlaceSelected,
+  } = useGoogleMapsLogic(latitude, longitude, setLatitude, setLongitude);
+  const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
+  const [showDialog, setShowDialog] = useState(false);
+  const [snapshotUrl, setSnapshotUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    if (map) {
-      const listener = map.addListener(
-        "click",
-        (e: google.maps.MapMouseEvent) => {
-          const placeId = (e.domEvent?.target as HTMLElement)?.getAttribute(
-            "data-place-id"
-          );
-          if (placeId) {
-            e.stop(); // Ngăn mặc định của Google
-            const service = new google.maps.places.PlacesService(map);
-            service.getDetails({ placeId }, (place, status) => {
-              if (
-                status === google.maps.places.PlacesServiceStatus.OK &&
-                place
-              ) {
-                setLatitude(place.geometry?.location?.lat() || latitude);
-                setLongitude(place.geometry?.location?.lng() || longitude);
-                setSelectedPlace(place);
-                if (place.geometry?.location) {
-                  map.panTo(place.geometry.location);
-                }
-              }
-            });
-          } else {
-            const lat = e.latLng?.lat();
-            const lng = e.latLng?.lng();
-            if (lat && lng && map) {
-              setLatitude(lat);
-              setLongitude(lng);
-              const geocoder = new google.maps.Geocoder();
-              geocoder.geocode(
-                { location: { lat, lng } },
-                (results, status) => {
-                  if (
-                    status === google.maps.GeocoderStatus.OK &&
-                    results &&
-                    results[0]
-                  ) {
-                    const placeId = results[0].place_id;
-                    const service = new google.maps.places.PlacesService(map);
-                    service.getDetails({ placeId }, (place, status) => {
-                      if (
-                        status === google.maps.places.PlacesServiceStatus.OK &&
-                        place
-                      ) {
-                        setSelectedPlace(place);
-                      }
-                    });
-                  }
-                }
-              );
-            }
-          }
-        }
-      );
+    if (!isLoaded) return;
 
-      return () => listener.remove();
-    }
-  }, [map]);
+    const fetchCameras = async () => {
+      try {
+        const response = await getCameras({});
+        setCameras(response.cameras);
+      } catch (err) {
+        console.error("Lỗi khi tải camera:", err);
+      }
+    };
+
+    fetchCameras();
+  }, [isLoaded]);
+
+  useEffect(() => {
+    if (!selectedCamera || !selectedCamera.SnapshotUrl) return;
+
+    const interval = setInterval(() => {
+      setSnapshotUrl(`${selectedCamera.SnapshotUrl}?t=${Date.now()}`);
+    }, 15000); // 15s
+
+    return () => clearInterval(interval);
+  }, [selectedCamera]);
 
   if (!isLoaded) return null;
 
   return (
-    <div className="relative w-full h-screen flex flex-row">
-      <Sidebar place={selectedPlace} onClose={() => setSelectedPlace(null)} />
-      <GoogleMap
-        center={center}
-        zoom={16}
-        mapContainerStyle={style}
-        onLoad={(mapInstance) => setMap(mapInstance)}
-        options={{
-          mapTypeControl: false,
-          fullscreenControl: false,
-          streetViewControl: false,
+    <>
+      <Dialog
+        open={showDialog}
+        onOpenChange={(open) => {
+          setShowDialog(open);
+          if (!open) setSelectedCamera(null);
         }}
       >
-        <SearchBox
-          onPlaceSelected={(lat, lng, placeId) =>
-            handlePlaceSelected(lat, lng, placeId)
-          }
-          onDirectionsReady={(dir) => setDirections(dir)}
-          selectedPlace={selectedPlace}
+        <DialogContent className="bg-white border-gray-200 text-gray-800 w-[90vw] max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-center">
+              {selectedCamera?.DisplayName}
+            </DialogTitle>
+            <DialogDescription className="text-center text-gray-500">
+              Video camera giao thông - cập nhật mỗi 15s
+            </DialogDescription>
+          </DialogHeader>
+
+          {snapshotUrl ? (
+            <Image
+              src={snapshotUrl || "/placeholder.png"}
+              alt={selectedCamera?.DisplayName || "Camera"}
+              className="w-full rounded-lg mt-4"
+              width={800}
+              height={600}
+            />
+          ) : (
+            <p className="text-center text-gray-500 mt-4">
+              Camera hiện không hoạt động
+            </p>
+          )}
+        </DialogContent>
+      </Dialog>
+      <div className="relative w-full h-screen flex flex-row">
+        <PlaceDetail
+          place={selectedPlace}
+          onClose={() => setSelectedPlace(null)}
         />
-        <Marker position={center} />
-        <LocationButton
-          map={map}
-          setLatitude={setLatitude}
-          setLongitude={setLongitude}
-        />
-        {directions && <DirectionsRenderer directions={directions} />}
-      </GoogleMap>
-    </div>
+        <GoogleMap
+          center={center}
+          zoom={16}
+          mapContainerStyle={style}
+          onLoad={(mapInstance) => setMap(mapInstance)}
+          options={{
+            mapTypeControl: false,
+            fullscreenControl: false,
+            streetViewControl: false,
+          }}
+        >
+          <SearchBox
+            onPlaceSelected={(lat, lng, placeId) =>
+              handlePlaceSelected(lat, lng, placeId)
+            }
+            onDirectionsReady={(dir) => setDirections(dir)}
+            selectedPlace={selectedPlace}
+          />
+          <Marker position={center} />
+          <LocationButton
+            map={map}
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
+          />
+          {directions && <DirectionsRenderer directions={directions} />}
+          {showCamera &&
+            cameras.map((camera, index) => (
+              <Marker
+                key={index}
+                position={{
+                  lat: camera.Location.coordinates[1],
+                  lng: camera.Location.coordinates[0],
+                }}
+                icon={{
+                  url: camera.SnapshotUrl
+                    ? "/image/cctv_camera_active.png"
+                    : "/image/cctv_camera_inactive.png",
+                  scaledSize: new window.google.maps.Size(30, 30),
+                }}
+                title={camera.DisplayName}
+                onClick={() => {
+                  setSelectedCamera(camera);
+                  setSnapshotUrl(
+                    camera.SnapshotUrl ? `${camera.SnapshotUrl}` : null
+                  );
+                  setShowDialog(true);
+                }}
+              />
+            ))}
+        </GoogleMap>
+      </div>
+    </>
   );
 };
 

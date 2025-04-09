@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
 import { useAuth } from "@/context/auth-context";
 
-export default function Sidebar({ onClose }: { onClose: () => void }) {
+export default function Sidebar({ onClose, showCamera, setShowCamera }: { onClose: () => void; showCamera: boolean; setShowCamera: (value: boolean) => void }) {
   const {setToken, isAuthenticated } = useAuth();
   return (
     <div className="bg-white w-80 h-full border-r border-gray-200 z-10">
@@ -47,7 +47,7 @@ export default function Sidebar({ onClose }: { onClose: () => void }) {
                 <Cctv className="text-blue-700" size={25} />
                 <div>Xem camera giao thông</div>
               </div>
-              <Switch className="data-[state=checked]:bg-blue-500" />
+              <Switch className="data-[state=checked]:bg-blue-500" onClick={() => setShowCamera(!showCamera)}/>
             </div>
           </div>
           <hr className="border-gray-200" />

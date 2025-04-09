@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Depends, HTTPException
+from fastapi import FastAPI, Request, Depends, HTTPException, Query
 from forwarder import forward_request
 from auth import verify_token, create_access_token
 from rate_limiter import rate_limit
@@ -20,50 +20,89 @@ app.add_middleware(
 setup_monitoring(app)
 
 USER_SERVICE_URL = "http://localhost:8001"
+TRAFFIC_SERVICE_URL = "http://localhost:8002"
+
 
 @app.post("/users/login")
 async def login(request: Request):
     body = await request.json()
     async with httpx.AsyncClient() as client:
-        response = await client.post(f"{USER_SERVICE_URL}/login", json={
-            "email": body.get("email"),
-            "password": body.get("password")
-        })
+        response = await client.post(
+            f"{USER_SERVICE_URL}/login",
+            json={"email": body.get("email"), "password": body.get("password")},
+        )
 
     if response.status_code != 200:
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     user_data = response.json()
-    access_token = create_access_token(data={"sub": user_data["email"]}, expires_delta=timedelta(minutes=60))
+    access_token = create_access_token(
+        data={"sub": user_data["email"]}, expires_delta=timedelta(minutes=60)
+    )
     return {"access_token": access_token, "token_type": "bearer", "user": user_data}
+
 
 @app.post("/users/register")
 async def register(request: Request):
     body = await request.json()
     async with httpx.AsyncClient() as client:
-        response = await client.post(f"{USER_SERVICE_URL}/register", json={
-            "fullname": body.get("fullname"),
-            "email": body.get("email"),
-            "password": body.get("password")
-        })
+        response = await client.post(
+            f"{USER_SERVICE_URL}/register",
+            json={
+                "fullname": body.get("fullname"),
+                "email": body.get("email"),
+                "password": body.get("password"),
+            },
+        )
     if response.status_code != 200:
         raise HTTPException(status_code=400, detail="Register failed")
     return {"message": "Register success!"}
+
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/{service}/{path:path}")
-async def get_proxy(service: str, path: str, request: Request, _=Depends(rate_limit)):
-    return await forward_request(service, f"/{path}", request)
 
-@app.post("/{service}/{path:path}")
-async def post_proxy(service: str, path: str, request: Request, _=Depends(rate_limit)):
-    return await forward_request(service, f"/{path}", request)
+@app.get("/traffic/status")
+async def get_traffic_data_from_service(
+    WSlat: float = Query(...),
+    WSlng: float = Query(...),
+    NElat: float = Query(...),
+    NElng: float = Query(...),
+    level: int = 0,
+    _=Depends(rate_limit),
+):
+    params = {
+        "WSlat": WSlat,
+        "WSlng": WSlng,
+        "NElat": NElat,
+        "NElng": NElng,
+        "level": level,
+    }
+
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{TRAFFIC_SERVICE_URL}/status", params=params)
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to fetch traffic data")
+
+    return response.json()
+
+
+@app.get("/traffic/camera")
+async def get_cameras():
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{TRAFFIC_SERVICE_URL}/camera")
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to fetch camera data")
+
+    return response.json()
 
 
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=9000)

@@ -259,3 +259,86 @@ INFO:root:Request: POST http://localhost:9000/users/register
 INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 400 Bad Request"
 INFO:root:Request: POST http://localhost:9000/users/login
 INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/docs
+INFO:root:Request: GET http://localhost:9000/openapi.json
+INFO:root:Request: GET http://localhost:9000/traffic/status
+INFO:root:Request: GET http://localhost:9000/
+INFO:root:Request: GET http://localhost:9000/traffic/status
+INFO:root:Request: GET http://localhost:9000/traffic/status
+INFO:httpx:HTTP Request: GET http://localhost:8002/status "HTTP/1.1 422 Unprocessable Entity"
+INFO:root:Request: GET http://localhost:9000/traffic/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762
+INFO:httpx:HTTP Request: GET http://localhost:8002/status "HTTP/1.1 422 Unprocessable Entity"
+INFO:root:Request: GET http://localhost:9000/traffic/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762
+INFO:root:Request: GET http://localhost:9000/traffic/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762
+INFO:root:Request: GET http://localhost:9000/traffic/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762
+INFO:root:Request: GET http://localhost:9000/traffic/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762
+INFO:root:Request: GET http://localhost:9000/traffic/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762
+INFO:httpx:HTTP Request: GET http://localhost:8002/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762&level=0 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762
+INFO:httpx:HTTP Request: GET http://localhost:8002/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762&level=0 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/status?WSlat=10.5&WSlng=106.3&NElat=11.2&NElng=107.1&level=0
+INFO:root:Request: GET http://localhost:9000/traffic/status?WSlat=10.5&WSlng=106.3&NElat=11.2&NElng=107.1&level=0
+INFO:root:Request: GET http://localhost:9000/traffic/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762
+INFO:httpx:HTTP Request: GET http://localhost:8002/status?WSlat=10.866375&WSlng=106.801471&NElat=10.8667246&NElng=106.8021762&level=0 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/docs
+INFO:root:Request: GET http://localhost:9000/openapi.json
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/docs
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"

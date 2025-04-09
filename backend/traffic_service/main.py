@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv
-from auth import auth_router
+from traffic import traffic_router
 from fastapi.middleware.cors import CORSMiddleware
 
 # Load environment variables from a .env file
@@ -17,4 +17,4 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-app.include_router(auth_router)
+app.include_router(traffic_router)
