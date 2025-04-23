@@ -16,7 +16,7 @@ call .venv\Scripts\activate
 start cmd /k "uvicorn main:app --host 0.0.0.0 --port 8002 --reload"
 cd ../..
 
-echo 🔶 Starting API Gateway...
+echo Starting API Gateway...
 cd gatewayAPI
 call .venv\Scripts\activate
 start cmd /k "uvicorn main:app --host 0.0.0.0 --port 9000 --reload"

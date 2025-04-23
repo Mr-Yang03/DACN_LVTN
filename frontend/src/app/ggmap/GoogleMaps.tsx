@@ -32,6 +32,7 @@ interface GoogleMapsProps {
 }
 
 interface Camera {
+  Id: string;
   Title: string;
   DisplayName: string;
   SnapshotUrl: string | null;
@@ -91,7 +92,7 @@ const GoogleMaps: React.FC<GoogleMapsProps> = ({
     if (!selectedCamera || !selectedCamera.SnapshotUrl) return;
 
     const interval = setInterval(() => {
-      setSnapshotUrl(`${selectedCamera.SnapshotUrl}?t=${Date.now()}`);
+      setSnapshotUrl(`http://camera.thongtingiaothong.vn/api/snapshot/${selectedCamera.Id}?t=${Date.now()}`);
     }, 15000); // 15s
 
     return () => clearInterval(interval);
@@ -108,7 +109,7 @@ const GoogleMaps: React.FC<GoogleMapsProps> = ({
           if (!open) setSelectedCamera(null);
         }}
       >
-        <DialogContent className="bg-white border-gray-200 text-gray-800 w-[90vw] max-h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-white border-gray-200 text-gray-800 max-w-[100vh] max-h-[100vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-center">
               {selectedCamera?.DisplayName}
@@ -119,13 +120,14 @@ const GoogleMaps: React.FC<GoogleMapsProps> = ({
           </DialogHeader>
 
           {snapshotUrl ? (
+            <div className="relative w-100 h-[380px]"> {/* khung có chiều cao cố định */}
             <Image
               src={snapshotUrl || "/placeholder.png"}
               alt={selectedCamera?.DisplayName || "Camera"}
-              className="w-full rounded-lg mt-4"
-              width={800}
-              height={600}
+              fill
+              className="object-contain rounded-lg mt-4"
             />
+          </div>
           ) : (
             <p className="text-center text-gray-500 mt-4">
               Camera hiện không hoạt động
@@ -172,16 +174,14 @@ const GoogleMaps: React.FC<GoogleMapsProps> = ({
                   lng: camera.Location.coordinates[0],
                 }}
                 icon={{
-                  url: camera.SnapshotUrl
-                    ? "/image/cctv_camera_active.png"
-                    : "/image/cctv_camera_inactive.png",
+                  url: "/image/cctv_camera_active.png",
                   scaledSize: new window.google.maps.Size(30, 30),
                 }}
                 title={camera.DisplayName}
                 onClick={() => {
                   setSelectedCamera(camera);
                   setSnapshotUrl(
-                    camera.SnapshotUrl ? `${camera.SnapshotUrl}` : null
+                    `http://camera.thongtingiaothong.vn/api/snapshot/${camera.Id}?t=${Date.now()}`
                   );
                   setShowDialog(true);
                 }}
