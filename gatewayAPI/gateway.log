@@ -447,3 +447,77 @@ INFO:root:Request: GET http://localhost:9000/traffic/camera
 INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
 =======
 >>>>>>> 082052614798e2eac9a9b2e67bc6722447cb6154
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
