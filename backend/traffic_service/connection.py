@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import os
 
 # Connect MongoDB using environment variable for security
-MONGO_URI = os.getenv("mongodb://192.168.137.101:27017/")
+MONGO_URI = os.getenv("localhost:27017/")
 client = MongoClient(MONGO_URI)
 
 # Choose database and collection
