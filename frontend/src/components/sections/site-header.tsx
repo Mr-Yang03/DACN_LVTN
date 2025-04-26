@@ -33,7 +33,7 @@ export function SiteHeader() {
           <Link href="/feedback" className="hover:text-gray-600">
             Phản ánh
           </Link>
-          <Link href="/" className="hover:text-gray-600">
+          <Link href="/admin" className="hover:text-gray-600">
             Thống kê
           </Link>
         </div>
