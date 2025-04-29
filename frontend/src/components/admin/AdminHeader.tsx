@@ -38,7 +38,7 @@ export function AdminHeader() {
           <Link href="/admin/users" className="hover:text-gray-600">
             Người dùng
           </Link>
-          <Link href="/admin/reports" className="hover:text-gray-600">
+          <Link href="/admin/news" className="hover:text-gray-600">
             Tin tức
           </Link>
           <Link href="/admin/alerts" className="hover:text-gray-600">
