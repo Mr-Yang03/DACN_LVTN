@@ -32,6 +32,7 @@ async def get_camera_location():
     cameras = user_collection.find().to_list(length=None)
 
     info = [{
+        "Id": str(camera["_id"]),
         "Title": camera["Title"],
         "Location": camera["Location"],
         "SnapshotUrl": camera["SnapshotUrl"],
