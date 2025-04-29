@@ -19,8 +19,13 @@ cd ../..
 echo Starting backend/feedback_service
 cd backend/feedback_service
 call .venv\Scripts\activate
-call pip install -r requirements.txt
 start cmd /k "uvicorn main:app --host 0.0.0.0 --port 8003 --reload"
+cd ../..
+
+echo Starting backend/feedback_service
+cd backend/news_service
+call .venv\Scripts\activate
+start cmd /k "uvicorn main:app --host 0.0.0.0 --port 8004 --reload"
 cd ../..
 
 echo Starting API Gateway...

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv
-from traffic import traffic_router
+from news import news_router
 from fastapi.middleware.cors import CORSMiddleware
 
 # Load environment variables from a .env file
