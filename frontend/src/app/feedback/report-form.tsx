@@ -54,7 +54,6 @@ const getAuthToken = () => {
 export function ReportForm() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isSuccess, setIsSuccess] = useState(false);
 
   const form = useForm<FeedbackFormValues>({

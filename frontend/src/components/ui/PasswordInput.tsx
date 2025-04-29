@@ -3,7 +3,6 @@
 import { Input } from "@/components/ui/input"
 import { Eye, EyeOff } from "lucide-react"
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function PasswordInput({ id, value, onChange, show, toggleShow, placeholder }: any) {
     return (
       <div className="relative">

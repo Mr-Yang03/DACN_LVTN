@@ -60,7 +60,6 @@ export default function LoginForm({
       }
 
       toast.success("Đăng nhập thành công!");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(
         error.response?.data?.message || "Email hoặc mật khẩu không chính xác"

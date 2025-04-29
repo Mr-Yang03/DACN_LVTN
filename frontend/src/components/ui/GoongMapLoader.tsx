@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Script from "next/script";
 import { useState, useEffect } from "react";
 

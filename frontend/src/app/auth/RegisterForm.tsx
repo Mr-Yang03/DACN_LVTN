@@ -54,7 +54,6 @@ export default function RegisterForm({
 
       toast.success("Đăng ký thành công!");
       onSwitchTab();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Đăng ký thất bại!");
     }

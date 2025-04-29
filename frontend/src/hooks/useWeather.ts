@@ -28,7 +28,6 @@ export function useWeather(city: string = "Ho Chi Minh") {
           icon: data.weather[0].icon,
           time: new Date(data.dt * 1000).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }),
         });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setError(err.message || "Lỗi không xác định");
       } finally {

@@ -30,7 +30,6 @@ const QuillNoSSRWrapper = dynamic(
       }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const QuillWrapper = function (props: any) {
       return <ReactQuill {...props} />;
     };
