@@ -38,9 +38,18 @@ import FileUploader from "@/components/ui/fileUploader";
 import { useRouter } from "next/navigation";
 import { LocationPicker } from "@/app/feedback/location-picker";
 import { feedbackSchema } from "@/validations/feedbackSchema";
-// import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
+import { sendFeedback } from "@/apis/feedbackApi";
 
 type FeedbackFormValues = z.infer<typeof feedbackSchema>;
+
+// Add this utility function to get the auth token
+const getAuthToken = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('token') || '';
+  }
+  return '';
+};
 
 export function ReportForm() {
   const router = useRouter();
@@ -66,20 +75,81 @@ export function ReportForm() {
     },
   });
 
-  function onSubmit(values: FeedbackFormValues) {
+  async function onSubmit(values: FeedbackFormValues) {
     setIsSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      console.log(values);
+    try {
+      // Format data to match API expectations
+      const feedbackData = {
+        title: `Phản ánh về ${values.issueType === 'traffic_jam' ? 'tắc đường' : 
+               values.issueType === 'accident' ? 'tai nạn' : 
+               values.issueType === 'construction' ? 'công trình đang thi công' :
+               values.issueType === 'road_damage' ? 'hư hỏng đường' :
+               values.issueType === 'traffic_light' ? 'đèn tín hiệu hỏng' :
+               values.issueType === 'flooding' ? 'ngập nước' : 'vấn đề khác'}`,
+        location: `${values.location.lat}, ${values.location.lng}`, // Convert location object to string format
+        type: values.issueType === 'traffic_jam' ? 'Ùn tắc giao thông' : 
+             values.issueType === 'accident' ? 'Tai nạn' : 
+             values.issueType === 'construction' ? 'Công trình đang thi công' :
+             values.issueType === 'road_damage' ? 'Hư hỏng đường' :
+             values.issueType === 'traffic_light' ? 'Đèn tín hiệu hỏng' :
+             values.issueType === 'flooding' ? 'Ngập nước' : 'Khác',
+        severity: values.severity === 'low' ? 'Nhẹ' : 
+                 values.severity === 'medium' ? 'Trung bình' : 'Nghiêm trọng',
+        description: values.description,
+        images: values.attachments ? values.attachments.map((file: { url?: string }) => file.url || '') : [],
+        author: values.fullName, 
+        phone_number: values.phone,
+        email: values.email
+      };
+
+      // Call API endpoint
+      const response = await fetch('/api/items', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getAuthToken()}`
+        },
+        body: JSON.stringify(feedbackData)
+      });
+
+      const result = await response.json();
+
+      // Handle unauthorized (redirect to login)
+      if (response.status === 401 && result.redirect) {
+        // Store the current form data in session storage to recover after login
+        sessionStorage.setItem('pendingFeedback', JSON.stringify(values));
+        // Redirect to login page
+        router.push(result.redirect_url);
+        return;
+      }
+
+      // Handle success
+      if (response.ok) {
+        setIsSuccess(true);
+        toast?.({
+          title: "Phản ánh đã được gửi",
+          description: "Cảm ơn bạn đã gửi phản ánh về tình trạng giao thông",
+        });
+        router.push("/thanks");
+      } else {
+        // Handle API error
+        toast?.({
+          title: "Có lỗi xảy ra",
+          description: result.message || "Không thể gửi phản ánh. Vui lòng thử lại sau.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error("Lỗi khi gửi phản ánh:", error);
+      toast?.({
+        title: "Có lỗi xảy ra",
+        description: "Không thể kết nối đến máy chủ. Vui lòng thử lại sau.",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-      // toast({
-      //   title: "Phản ánh đã được gửi",
-      //   description: "Cảm ơn bạn đã gửi phản ánh về tình trạng giao thông",
-      // });
-      router.push("/thanks");
-    }, 2000);
+    }
   }
 
   return (

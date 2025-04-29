@@ -17,8 +17,10 @@ class FeedbackCreate(BaseModel):
     status: str = "Đang xử lý"
     images: List[str] = []
     author: str
+    phone_number: str
+    email: str
 
-traffic_router = APIRouter()
+feedback_router = APIRouter()
 
 db = get_database()
 items_collection = db["Items"]  # Chỉnh sửa tên collection thành "Items"
@@ -41,7 +43,7 @@ async def check_authentication(authorization: Optional[str] = Header(None)):
         return {"user_id": "user123", "username": "nguyenvana"}
     return None
 
-@traffic_router.get("/items")
+@feedback_router.get("/items")
 async def get_all_items():
     """
     Lấy tất cả các items từ collection Items trong database Feedback
@@ -56,7 +58,7 @@ async def get_all_items():
     
     return {"status": "success", "data": items, "total": len(items)}
 
-@traffic_router.get("/items/{item_id}")
+@feedback_router.get("/items/{item_id}")
 async def get_item_by_id(item_id: str):
     """
     Lấy item theo ID
@@ -71,7 +73,7 @@ async def get_item_by_id(item_id: str):
     
     return {"status": "error", "message": "Item không tồn tại"}
 
-@traffic_router.post("/items")
+@feedback_router.post("/items")
 async def create_feedback(feedback: FeedbackCreate, request: Request, user=Depends(check_authentication)):
     """
     Thêm mới feedback vào database
@@ -97,7 +99,7 @@ async def create_feedback(feedback: FeedbackCreate, request: Request, user=Depen
     # Thêm các trường bổ sung
     feedback_data["date"] = current_time.strftime("%d/%m/%Y")
     feedback_data["time"] = current_time.strftime("%H:%M")
-    feedback_data["author"] = user.get("username", feedback_data["author"])
+    # feedback_data["author"] = user.get("username", feedback_data["author"])
     
     # Chèn vào database
     result = items_collection.insert_one(feedback_data)
@@ -111,7 +113,7 @@ async def create_feedback(feedback: FeedbackCreate, request: Request, user=Depen
     
     return {"status": "error", "message": "Không thể tạo phản hồi"}
 
-@traffic_router.get("/items/search")
+@feedback_router.get("/items/search")
 async def search_items(q: str = Query(None, description="Từ khóa tìm kiếm trong tiêu đề hoặc địa điểm")):
     """
     Tìm kiếm phản ánh theo tiêu đề hoặc địa điểm
@@ -137,7 +139,7 @@ async def search_items(q: str = Query(None, description="Từ khóa tìm kiếm 
     
     return {"status": "success", "data": items, "total": len(items), "search_term": q}
 
-@traffic_router.get("/items/filter")
+@feedback_router.get("/items/filter")
 async def filter_items(
     severity: Optional[str] = Query(None, description="Mức độ nghiêm trọng"),
     type: Optional[str] = Query(None, description="Loại vấn đề"),
@@ -195,7 +197,7 @@ async def filter_items(
     }
 
 # Để hỗ trợ cho giao diện, thêm API lấy danh sách các giá trị có thể có
-@traffic_router.get("/items/metadata")
+@feedback_router.get("/items/metadata")
 async def get_metadata():
     """
     Lấy dữ liệu metadata cho các bộ lọc: danh sách mức độ nghiêm trọng và loại vấn đề
@@ -226,7 +228,7 @@ async def check_admin(user = Depends(check_authentication)):
     return user
 
 # API duyệt phản ánh (chuyển từ "Đang xử lý" sang "Đã xử lý")
-@traffic_router.patch("/items/{item_id}/approve")
+@feedback_router.patch("/items/{item_id}/approve")
 async def approve_feedback(item_id: str, admin=Depends(check_admin)):
     """
     Duyệt phản ánh (chuyển từ "Đang xử lý" sang "Đã xử lý")
@@ -257,7 +259,7 @@ async def approve_feedback(item_id: str, admin=Depends(check_admin)):
         return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
 # API hủy duyệt phản ánh (chuyển từ "Đã xử lý" sang "Đang xử lý")
-@traffic_router.patch("/items/{item_id}/unapprove")
+@feedback_router.patch("/items/{item_id}/unapprove")
 async def unapprove_feedback(item_id: str, admin=Depends(check_admin)):
     """
     Hủy duyệt phản ánh (chuyển từ "Đã xử lý" sang "Đang xử lý")
@@ -290,40 +292,40 @@ async def unapprove_feedback(item_id: str, admin=Depends(check_admin)):
     except Exception as e:
         return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
-# API xóa phản ánh ở trạng thái "Đang xử lý"
-@traffic_router.delete("/items/{item_id}")
-async def delete_feedback(item_id: str, admin=Depends(check_admin)):
-    """
-    Xóa phản ánh ở trạng thái "Đang xử lý"
-    Nếu muốn xóa phản ánh ở trạng thái "Đã xử lý" thì cần hủy duyệt trước
-    Chỉ admin mới có quyền thực hiện
-    """
-    try:
-        # Kiểm tra phản ánh có tồn tại không
-        item = items_collection.find_one({"_id": ObjectId(item_id)})
-        if not item:
-            return {"status": "error", "message": "Phản ánh không tồn tại"}
+# # API xóa phản ánh ở trạng thái "Đang xử lý" --> thêm trạng thái isDelete???
+# @feedback_router.delete("/items/{item_id}")
+# async def delete_feedback(item_id: str, admin=Depends(check_admin)):
+#     """
+#     Xóa phản ánh ở trạng thái "Đang xử lý"
+#     Nếu muốn xóa phản ánh ở trạng thái "Đã xử lý" thì cần hủy duyệt trước
+#     Chỉ admin mới có quyền thực hiện
+#     """
+#     try:
+#         # Kiểm tra phản ánh có tồn tại không
+#         item = items_collection.find_one({"_id": ObjectId(item_id)})
+#         if not item:
+#             return {"status": "error", "message": "Phản ánh không tồn tại"}
         
-        # Kiểm tra trạng thái
-        if item.get("status") != "Đang xử lý":
-            return {
-                "status": "error", 
-                "message": "Chỉ có thể xóa phản ánh ở trạng thái 'Đang xử lý'. Vui lòng hủy duyệt trước khi xóa."
-            }
+#         # Kiểm tra trạng thái
+#         if item.get("status") != "Đang xử lý":
+#             return {
+#                 "status": "error", 
+#                 "message": "Chỉ có thể xóa phản ánh ở trạng thái 'Đang xử lý'. Vui lòng hủy duyệt trước khi xóa."
+#             }
         
-        # Thực hiện xóa
-        result = items_collection.delete_one({"_id": ObjectId(item_id)})
+#         # Thực hiện xóa
+#         result = items_collection.delete_one({"_id": ObjectId(item_id)})
         
-        if result.deleted_count:
-            return {"status": "success", "message": "Đã xóa phản ánh thành công"}
+#         if result.deleted_count:
+#             return {"status": "success", "message": "Đã xóa phản ánh thành công"}
         
-        return {"status": "error", "message": "Không thể xóa phản ánh"}
+#         return {"status": "error", "message": "Không thể xóa phản ánh"}
     
-    except Exception as e:
-        return {"status": "error", "message": f"Lỗi: {str(e)}"}
+#     except Exception as e:
+#         return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
 # API hiển thị những phản ánh đã xử lý
-@traffic_router.get("/items/processed")
+@feedback_router.get("/items/processed")
 async def get_processed_items():
     """
     Lấy danh sách phản ánh đã được xử lý (status = "Đã xử lý")

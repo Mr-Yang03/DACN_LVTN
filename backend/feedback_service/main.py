@@ -17,4 +17,4 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-app.include_router(news_router)
+app.include_router(feedback_router)
