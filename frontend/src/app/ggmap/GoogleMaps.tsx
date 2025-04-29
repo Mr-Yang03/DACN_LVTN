@@ -17,6 +17,20 @@ import CameraLayer from "./components/CameraLayer";
 import DirectionsLayer from "./components/DirectionsLayer";
 import CustomMapTypeControl from "./components/CustomMapTypeControl";
 
+// Thanh trạng thái giao thông sử dụng Tailwind CSS
+const TrafficStatusBar = () => (
+  <div
+    className="fixed left-1/2 bottom-6 z-[1000] flex items-center gap-1 px-2.5 py-1 rounded-lg shadow-lg bg-white font-medium text-[15px] justify-center"
+  >
+    <span className="mr-2 italic text-xs">Nhanh</span>
+    <span className="w-6 h-3 bg-[#00D084] inline-block" />
+    <span className="w-6 h-3 bg-[#FFEB3B] inline-block" />
+    <span className="w-6 h-3 bg-[#FF9800] inline-block" />
+    <span className="w-6 h-3 bg-[#B71C1C] inline-block" />
+    <span className="ml-2 italic text-xs">Chậm</span>
+  </div>
+);
+
 interface GoogleMapsProps {
   setLatitude: (lat: number) => void;
   setLongitude: (lng: number) => void;
@@ -68,7 +82,8 @@ const GoogleMaps: React.FC<GoogleMapsProps> = ({
   } = useGoogleMapsLogic(latitude, longitude, setLatitude, setLongitude);
   const [mapType, setMapType] = useState<string>("roadmap");
 
-  const effectiveMapType = mapType === "satellite" && showTraffic ? "hybrid" : mapType;
+  const effectiveMapType =
+    mapType === "satellite" && showTraffic ? "hybrid" : mapType;
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -106,19 +121,30 @@ const GoogleMaps: React.FC<GoogleMapsProps> = ({
             mapTypeId: effectiveMapType as google.maps.MapTypeId,
           }}
         >
-          <CustomMapTypeControl mapType={mapType} setMapType={setMapType} map={map} />
+          <CustomMapTypeControl
+            mapType={mapType}
+            setMapType={setMapType}
+            map={map}
+          />
           <SearchBox
-            onPlaceSelected={(lat, lng, placeId) => handlePlaceSelected(lat, lng, placeId)}
+            onPlaceSelected={(lat, lng, placeId) =>
+              handlePlaceSelected(lat, lng, placeId)
+            }
             onDirectionsReady={(dir) => setDirections(dir)}
             selectedPlace={selectedPlace}
-            />
+          />
           <Marker position={center} />
-          <LocationButton map={map} setLatitude={setLatitude} setLongitude={setLongitude} />
-            {showTraffic && <TrafficLayer />}
+          <LocationButton
+            map={map}
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
+          />
+          {showTraffic && <TrafficLayer />}
           <DirectionsLayer directions={directions} />
           <CameraLayer cameras={cameras} showCamera={showCamera} map={map} />
         </GoogleMap>
       </div>
+      {showTraffic && <TrafficStatusBar />}
     </>
   );
 };
