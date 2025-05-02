@@ -80,6 +80,7 @@ export function ImageUploader({ value, onChange }: ImageUploaderProps) {
             variant="destructive"
             className="absolute -top-3 -right-3 h-8 w-8 rounded-full"
             onClick={handleRemove}
+            type="button"
           >
             <X className="h-4 w-4" />
           </Button>
@@ -89,6 +90,7 @@ export function ImageUploader({ value, onChange }: ImageUploaderProps) {
           variant="outline" 
           onClick={() => fileInputRef.current?.click()}
           className="w-full max-w-md h-32 flex flex-col items-center justify-center border-dashed gap-2"
+          type="button"
         >
           <Upload className="h-6 w-6 text-gray-400" />
           <div className="text-sm text-gray-500">

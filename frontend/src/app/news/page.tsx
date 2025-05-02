@@ -2,8 +2,9 @@
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import {
@@ -11,75 +12,290 @@ import {
     Eye,
     ChevronRight,
     Search,
+    ArrowRight,
+    Loader2
 } from "lucide-react"
 import {
     PaginationDemo
 } from "@/components/sections/pagination-demo"
+import { useToast } from "@/hooks/use-toast"
+import { getPublicNews, getNewsByCategory, getNewsById, getFeaturedNews, NewsArticle } from "@/apis/newsApi"
 
 const Page: React.FC = () => {
-    const [currentNewsPage, setCurrentNewsPage] = useState(1)
-    const newsPerPage = 4 // Số lượng tin tức hiển thị trên mỗi trang
+    const { toast } = useToast();
+    const [currentNewsPage, setCurrentNewsPage] = useState(1);
+    const [newsItems, setNewsItems] = useState<NewsArticle[]>([]);
+    const [featuredNews, setFeaturedNews] = useState<NewsArticle | null>(null);
+    const [popularNews, setPopularNews] = useState<NewsArticle[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingPopular, setIsLoadingPopular] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [errorPopular, setErrorPopular] = useState<string | null>(null);
+    const [activeCategory, setActiveCategory] = useState("all");
+    const [searchTerm, setSearchTerm] = useState("");
+    const [categoryNewsMap, setCategoryNewsMap] = useState<Record<string, NewsArticle[]>>({
+        traffic: [],
+        accident: [],
+        regulation: [],
+        construction: [],
+        weather: [],
+        other: []
+    });
+    const [categoryLoading, setCategoryLoading] = useState<Record<string, boolean>>({
+        traffic: false,
+        accident: false,
+        regulation: false,
+        construction: false,
+        weather: false,
+        other: false
+    });
+    const newsPerPage = 4; // Số lượng tin tức hiển thị trên mỗi trang
 
-    // Dữ liệu mẫu cho tin tức
-    const newsItems = Array.from({ length: 12 }, (_, i) => ({
-        id: i + 1,
-        title: `Ứng dụng AI trong việc phân tích luồng giao thông tại các nút giao cắt ${i + 1}`,
-        date: "24/03/2025",
-        category: "Giao thông",
-        description:
-        "Công nghệ AI đang được ứng dụng để phân tích và tối ưu hóa luồng giao thông tại các nút giao cắt phức tạp.",
-        views: 856 + i * 10,
-        image: `/placeholder.svg?height=360&width=640&text=Tin tức ${i + 1}`,
-    }))
+    // Mapping from tab value to actual category name in backend
+    const categoryMapping: Record<string, string> = {
+        'traffic': 'Giao thông',
+        'accident': 'Tai nạn',
+        'regulation': 'Quy định',
+        'construction': 'Công trình',
+        'weather': 'Thời tiết',
+        'other': 'Khác'
+    };
+
+    // Tải dữ liệu tin tức từ API
+    useEffect(() => {
+        const fetchNews = async () => {
+            try {
+                setIsLoading(true);
+                setError(null);
+                
+                // Gọi API để lấy danh sách tin tức
+                const newsData = await getPublicNews();
+                
+                // Lọc ra tin nổi bật đầu tiên
+                const featured = newsData.find((item: NewsArticle) => item.featured && item.status === 'published');
+                if (featured) {
+                    setFeaturedNews(featured);
+                    // Loại bỏ tin nổi bật khỏi danh sách chính
+                    setNewsItems(newsData.filter((item: NewsArticle) => item._id !== featured._id && item.status === 'published'));
+                } else {
+                    // Nếu không có tin nổi bật, lấy tin mới nhất làm tin nổi bật
+                    const latestNews = [...newsData].sort((a: NewsArticle, b: NewsArticle) => 
+                        new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime()
+                    )[0];
+                    
+                    if (latestNews) {
+                        setFeaturedNews(latestNews);
+                        setNewsItems(newsData.filter((item: NewsArticle) => item._id !== latestNews._id && item.status === 'published'));
+                    } else {
+                        setNewsItems(newsData.filter((item: NewsArticle) => item.status === 'published'));
+                    }
+                }
+            } catch (err) {
+                console.error('Failed to fetch news:', err);
+                setError('Không thể tải dữ liệu tin tức. Vui lòng thử lại sau.');
+                toast({
+                    variant: 'destructive',
+                    title: 'Lỗi',
+                    description: 'Không thể tải dữ liệu tin tức. Vui lòng thử lại sau.',
+                });
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchNews();
+    }, [toast]);
+
+    // Tải dữ liệu tin tức nổi bật
+    useEffect(() => {
+        const fetchFeaturedNews = async () => {
+            try {
+                setIsLoadingPopular(true);
+                setErrorPopular(null);
+                
+                // Fetch featured news with a limit of 4 items
+                const featuredNewsData = await getFeaturedNews(4);
+                setPopularNews(featuredNewsData.filter((item: NewsArticle) => item.status === 'published'));
+            } catch (err) {
+                console.error('Failed to fetch featured news:', err);
+                setErrorPopular('Không thể tải tin tức nổi bật.');
+            } finally {
+                setIsLoadingPopular(false);
+            }
+        };
+
+        fetchFeaturedNews();
+    }, []);
+
+    // Hàm để tải dữ liệu cho một danh mục cụ thể
+    const fetchCategoryNews = async (category: string) => {
+        if (categoryNewsMap[category].length > 0) {
+            // Already loaded
+            return;
+        }
+
+        try {
+            setCategoryLoading(prev => ({ ...prev, [category]: true }));
+            
+            const backendCategory = categoryMapping[category];
+            const newsData = await getNewsByCategory(backendCategory);
+            
+            setCategoryNewsMap(prev => ({
+                ...prev,
+                [category]: newsData.filter((item: NewsArticle) => item.status === 'published')
+            }));
+        } catch (err) {
+            console.error(`Failed to fetch ${category} news:`, err);
+            toast({
+                variant: 'destructive',
+                title: 'Lỗi',
+                description: `Không thể tải dữ liệu tin tức loại ${categoryMapping[category]}. Vui lòng thử lại sau.`,
+            });
+        } finally {
+            setCategoryLoading(prev => ({ ...prev, [category]: false }));
+        }
+    };
+
+    // Handle tab change
+    const handleTabChange = (value: string) => {
+        setActiveCategory(value);
+        if (value !== 'all') {
+            fetchCategoryNews(value);
+        }
+        setCurrentNewsPage(1); // Reset page to 1 when switching tabs
+    };
+            
+    // Lọc tin tức theo danh mục
+    const filteredNews = activeCategory === "all"
+        ? newsItems
+        : categoryNewsMap[activeCategory];
+            
+    // Lọc tin tức theo từ khóa tìm kiếm
+    const searchedNews = searchTerm 
+        ? filteredNews.filter(item => 
+            item.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.summary?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
+          )
+        : filteredNews;
 
     // Tính toán tin tức hiển thị trên trang hiện tại
-    const indexOfLastNews = currentNewsPage * newsPerPage
-    const indexOfFirstNews = indexOfLastNews - newsPerPage
-    const currentNewsItems = newsItems.slice(indexOfFirstNews, indexOfLastNews)
+    const indexOfLastNews = currentNewsPage * newsPerPage;
+    const indexOfFirstNews = indexOfLastNews - newsPerPage;
+    const currentNewsItems = searchedNews.slice(indexOfFirstNews, indexOfLastNews);
 
     // Hàm xử lý khi người dùng chuyển trang tin tức
     const handleNewsPageChange = (page: number) => {
-        setCurrentNewsPage(page)
+        setCurrentNewsPage(page);
         // Cuộn lên đầu danh sách khi chuyển trang
-        window.scrollTo({ top: document.getElementById("news-list")?.offsetTop || 0, behavior: "smooth" })
-    }
+        window.scrollTo({ top: document.getElementById("news-list")?.offsetTop || 0, behavior: "smooth" });
+    };
+
+    // Hàm xử lý tìm kiếm
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Reset về trang 1 khi tìm kiếm
+        setCurrentNewsPage(1);
+    };
+
+    // Render tin tức
+    const renderNewsGrid = (newsItems: NewsArticle[]) => (
+        <>
+            <div id="news-list" className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {newsItems.map((item) => (
+                    <Card key={item._id} className="bg-white border-gray-200 overflow-hidden">
+                        <div className="relative h-[180px] w-full">
+                            <Link href={`/news/${item._id}`}>
+                                <Image 
+                                    src={item.image_url || "/placeholder.svg?height=360&width=640"} 
+                                    alt={item.title} 
+                                    fill 
+                                    className="object-cover" 
+                                />
+                            </Link>
+                        </div>
+                        <CardContent className="p-4">
+                            <div className="flex items-center gap-4 text-xs text-gray-800 mb-2">
+                                <div className="flex items-center gap-1">
+                                    <CalendarIcon className="h-3 w-3" />
+                                    <span>{item.publishDate || new Date(item.created_at || Date.now()).toLocaleDateString('vi-VN')}</span>
+                                </div>
+                                <Badge variant="outline" className="text-white bg-blue-600">
+                                    {item.category || "Chung"}
+                                </Badge>
+                            </div>
+                            <Link href={`/news/${item._id}`} className="hover:text-blue-500 transition-colors">
+                                <h3 className="text-base font-medium mb-2">{item.title}</h3>
+                            </Link>
+                            <p className="text-gray-800 text-sm line-clamp-2">
+                                {item.summary || item.content?.substring(0, 150) + "..."}
+                            </p>
+                        </CardContent>
+                        <CardFooter className="p-4 pt-0 flex justify-between items-center">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-blue-500 p-0 h-auto hover:bg-transparent hover:text-blue-400"
+                                asChild
+                            >
+                                <Link href={`/news/${item._id}`}>
+                                    Đọc tiếp <ChevronRight className="h-3 w-3 ml-1" />
+                                </Link>
+                            </Button>
+                        </CardFooter>
+                    </Card>
+                ))}
+            </div>
+
+            <PaginationDemo
+                totalItems={searchedNews.length}
+                itemsPerPage={newsPerPage}
+                currentPage={currentNewsPage}
+                onPageChange={handleNewsPageChange}
+                className="mt-8"
+            />
+        </>
+    );
+
+    // Render loading state
+    const renderLoading = () => (
+        <div className="flex justify-center items-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <span className="ml-2 text-gray-600">Đang tải dữ liệu...</span>
+        </div>
+    );
+
+    // Render error state
+    const renderError = (errorMessage: string) => (
+        <div className="text-center py-12 text-red-500">
+            <p>{errorMessage}</p>
+            <Button 
+                onClick={() => window.location.reload()} 
+                variant="outline" 
+                className="mt-4"
+            >
+                Thử lại
+            </Button>
+        </div>
+    );
+
+    // Render empty state for search
+    const renderEmptySearch = () => (
+        <div className="text-center py-12 text-gray-600">
+            <p>Không tìm thấy kết quả phù hợp với từ khóa &quot;{searchTerm}&quot;</p>
+            <Button 
+                onClick={() => setSearchTerm("")} 
+                variant="outline" 
+                className="mt-4"
+            >
+                Xóa bộ lọc
+            </Button>
+        </div>
+    );
 
     return (
         <>
-            {/* <div className="relative overflow-hidden">
-                <div className="absolute inset-0 bg-grid-white/[0.05] bg-[center_top_-1px]" />
-                <div
-                    className="absolute inset-0 bg-[url('/image/images.jpg?height=600&width=1200')] bg-cover bg-center"
-                />
-
-                <div className="container relative z-10 py-12">
-                    <div className="max-w-2xl m-10 p-10 bg-gray-400 bg-opacity-80 rounded-lg">
-                        <h1 className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
-                            Cập nhật tin tức giao thông mới nhất
-                        </h1>
-                        <p className="mt-4 text-lg text-blue-100">
-                            Thông tin về tình hình giao thông, sự cố, công trình và các quy định mới
-                        </p>
-                        <div className="mt-8 flex flex-wrap gap-4">
-                            <Button asChild size="lg" variant="secondary">
-                                <Link href="/feedback">
-                                    Gửi phản ánh
-                                    <ArrowRight className="ml-2 h-4 w-4" />
-                                </Link>
-                            </Button>
-                            <Button
-                                asChild
-                                size="lg"
-                                variant="outline"
-                                className="bg-white/10 text-white border-white/20 hover:bg-white/20"
-                            >
-                                <Link href="/map">Xem bản đồ giao thông</Link>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
-
             <div className="container mx-auto px-4 py-8">
                 <div className="flex flex-col md:flex-row gap-8">
                     {/* Main News Section */}
@@ -90,106 +306,120 @@ const Page: React.FC = () => {
 
                         {/* Featured News */}
                         <div className="mb-8">
-                            <Card className="bg-white border-gray-200 overflow-hidden rounded-xl">
-                                <div className="relative h-[300px] w-full">
-                                    <Image
-                                        src="/placeholder.svg?height=600&width=1200"
-                                        alt="Hệ thống giám sát giao thông thông minh mới"
-                                        fill
-                                        className="object-cover"
-                                        />
+                            {isLoading ? (
+                                <div className="flex justify-center items-center py-12">
+                                    <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
                                 </div>
-                                <CardContent className="p-6">
-                                    <div className="flex items-center gap-4 text-sm text-gray-800 mb-3">
-                                        <div className="flex items-center gap-1">
-                                            <CalendarIcon className="h-4 w-4" />
-                                            <span>24/03/2025</span>
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <Eye className="h-4 w-4" />
-                                            <span>1,234 lượt xem</span>
-                                        </div>
+                            ) : error ? (
+                                <div className="text-center py-6 text-red-500">
+                                    <p>{error}</p>
+                                </div>
+                            ) : featuredNews ? (
+                                <Card className="bg-white border-gray-200 overflow-hidden rounded-xl">
+                                    <div className="relative h-[300px] w-full">
+                                        <Link href={`/news/${featuredNews._id}`}>
+                                            <Image
+                                                src={featuredNews.image_url || "/placeholder.svg?height=600&width=1200"}
+                                                alt={featuredNews.title}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </Link>
                                     </div>
-                                    <h3 className="text-xl font-bold mb-2">
-                                        Hệ thống giám sát giao thông thông minh mới được triển khai tại TP.HCM
-                                    </h3>
-                                    <p className="text-gray-900 mb-4">
-                                        Hệ thống giám sát giao thông thông minh mới nhất đã được triển khai tại các tuyến đường trọng điểm
-                                        của TP.HCM, giúp giảm thiểu tình trạng ùn tắc và nâng cao hiệu quả quản lý giao thông đô thị.
-                                    </p>
-                                    <Button variant="outline" className="border-blue-600 text-blue-500 hover:bg-blue-900/20 rounded-full">
-                                        Đọc tiếp
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        </div>
-
+                                    <CardContent className="p-6">
+                                        <div className="flex items-center gap-4 text-sm text-gray-800 mb-3">
+                                            <div className="flex items-center gap-1">
+                                                <CalendarIcon className="h-4 w-4" />
+                                                <span>{featuredNews.publishDate || new Date(featuredNews.created_at || Date.now()).toLocaleDateString('vi-VN')}</span>
+                                            </div>
+                                            {featuredNews.category && (
+                                                <Badge variant="outline" className="text-white bg-blue-600">
+                                                    {featuredNews.category}
+                                                </Badge>
+                                            )}
                                         </div>
+                                        <Link href={`/news/${featuredNews._id}`} className="hover:text-blue-500 transition-colors">
+                                            <h3 className="text-xl font-bold mb-2">
+                                                {featuredNews.title}
+                                            </h3>
+                                        </Link>
+                                        <p className="text-gray-900 mb-4">
+                                            {featuredNews.summary || featuredNews.content?.substring(0, 200) + "..."}
+                                        </p>
+                                        <Button 
+                                            variant="outline" 
+                                            className="border-blue-600 text-blue-500 hover:bg-blue-900/20 rounded-full"
+                                            asChild
+                                        >
+                                            <Link href={`/news/${featuredNews._id}`}>
+                                                Đọc tiếp
+                                            </Link>
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            ) : (
+                                <div className="text-center py-6 text-gray-500">
+                                    <p>Không có tin tức nổi bật</p>
+                                </div>
+                            )}
+                        </div>
+                        </div>
                         {/* News Categories Tabs */}
-                        <Tabs defaultValue="all" className="mb-8  bg-white p-4 rounded-xl shadow-md">
+                        <Tabs defaultValue="all" className="mb-8 bg-white p-4 rounded-xl shadow-md" onValueChange={handleTabChange}>
                             <TabsList className="bg-white border border-gray-200 rounded-full w-full flex justify-center shadow-sm">
                                 <TabsTrigger value="all" className="rounded-full">Tất cả</TabsTrigger>
                                 <TabsTrigger value="traffic" className="rounded-full">Giao thông</TabsTrigger>
-                                <TabsTrigger value="technology" className="rounded-full">Công nghệ</TabsTrigger>
-                                <TabsTrigger value="policy" className="rounded-full">Chính sách</TabsTrigger>
+                                <TabsTrigger value="accident" className="rounded-full">Tai nạn</TabsTrigger>
+                                <TabsTrigger value="regulation" className="rounded-full">Quy định</TabsTrigger>
+                                <TabsTrigger value="construction" className="rounded-full">Công trình</TabsTrigger>
+                                <TabsTrigger value="weather" className="rounded-full">Thời tiết</TabsTrigger>
                             </TabsList>
 
                             <TabsContent value="all" className="mt-6">
-                                <div id="news-list" className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {currentNewsItems.map((item) => (
-                                        <Card key={item.id} className="bg-white border-gray-200 overflow-hidden">
-                                            <div className="relative h-[180px] w-full">
-                                                <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
-                                            </div>
-                                            <CardContent className="p-4">
-                                                <div className="flex items-center gap-4 text-xs text-gray-800 mb-2">
-                                                    <div className="flex items-center gap-1">
-                                                        <CalendarIcon className="h-3 w-3" />
-                                                        <span>{item.date}</span>
-                                                    </div>
-                                                    <Badge variant="outline" className="text-white bg-blue-600">
-                                                        {item.category}
-                                                    </Badge>
-                                                </div>
-                                                <h3 className="text-base font-medium mb-2">{item.title}</h3>
-                                                <p className="text-gray-800 text-sm line-clamp-2">{item.description}</p>
-                                            </CardContent>
-                                            <CardFooter className="p-4 pt-0 flex justify-between items-center">
-                                                <div className="flex items-center gap-1 text-xs text-gray-800">
-                                                    <Eye className="h-3 w-3" />
-                                                    <span>{item.views} lượt xem</span>
-                                                </div>
-                                                <Button
-                                                    variant="ghost"
-                                                    size="sm"
-                                                    className="text-blue-500 p-0 h-auto hover:bg-transparent hover:text-blue-400"
-                                                >
-                                                    Đọc tiếp <ChevronRight className="h-3 w-3 ml-1" />
-                                                </Button>
-                                            </CardFooter>
-                                        </Card>
-                                    ))}
-                                </div>
-
-                                <PaginationDemo
-                                    totalItems={newsItems.length}
-                                    itemsPerPage={newsPerPage}
-                                    currentPage={currentNewsPage}
-                                    onPageChange={handleNewsPageChange}
-                                    className="mt-8"
-                                />
+                                {isLoading ? renderLoading() : 
+                                 error ? renderError(error) : 
+                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
+                                 renderNewsGrid(currentNewsItems)}
                             </TabsContent>
 
                             <TabsContent value="traffic" className="mt-6">
-                                <div className="text-center py-8 text-gray-800">Đang tải dữ liệu tin tức về giao thông...</div>
+                                {categoryLoading.traffic ? renderLoading() : 
+                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
+                                 categoryNewsMap.traffic.length === 0 ? 
+                                    <div className="text-center py-8 text-gray-600">Không có tin tức nào về Giao thông</div> : 
+                                    renderNewsGrid(currentNewsItems)}
                             </TabsContent>
 
-                            <TabsContent value="technology" className="mt-6">
-                                <div className="text-center py-8 text-gray-800">Đang tải dữ liệu tin tức về công nghệ...</div>
+                            <TabsContent value="accident" className="mt-6">
+                                {categoryLoading.accident ? renderLoading() : 
+                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
+                                 categoryNewsMap.accident.length === 0 ? 
+                                    <div className="text-center py-8 text-gray-600">Không có tin tức nào về Tai nạn</div> : 
+                                    renderNewsGrid(currentNewsItems)}
                             </TabsContent>
 
-                            <TabsContent value="policy" className="mt-6">
-                                <div className="text-center py-8 text-gray-800">Đang tải dữ liệu tin tức về chính sách...</div>
+                            <TabsContent value="regulation" className="mt-6">
+                                {categoryLoading.regulation ? renderLoading() : 
+                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
+                                 categoryNewsMap.regulation.length === 0 ? 
+                                    <div className="text-center py-8 text-gray-600">Không có tin tức nào về Quy định</div> : 
+                                    renderNewsGrid(currentNewsItems)}
+                            </TabsContent>
+
+                            <TabsContent value="construction" className="mt-6">
+                                {categoryLoading.construction ? renderLoading() : 
+                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
+                                 categoryNewsMap.construction.length === 0 ? 
+                                    <div className="text-center py-8 text-gray-600">Không có tin tức nào về Công trình</div> : 
+                                    renderNewsGrid(currentNewsItems)}
+                            </TabsContent>
+
+                            <TabsContent value="weather" className="mt-6">
+                                {categoryLoading.weather ? renderLoading() : 
+                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
+                                 categoryNewsMap.weather.length === 0 ? 
+                                    <div className="text-center py-8 text-gray-600">Không có tin tức nào về Thời tiết</div> : 
+                                    renderNewsGrid(currentNewsItems)}
                             </TabsContent>
                         </Tabs>
                     </div>
@@ -199,14 +429,18 @@ const Page: React.FC = () => {
                         {/* Search */}
                         <div className="mb-8">
                             <div className="relative">
-                                <input
-                                    type="text"
-                                    placeholder="Tìm kiếm tin tức..."
-                                    className="w-full bg-white border border-gray-200 rounded-full py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                />
-                                <Button className="absolute right-1 top-1 h-8 w-8 p-0 bg-blue-600 rounded-full">
-                                    <Search className="h-4 w-4" />
-                                </Button>
+                                <form onSubmit={handleSearch}>
+                                    <input
+                                        type="text"
+                                        placeholder="Tìm kiếm tin tức..."
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        className="w-full bg-white border border-gray-200 rounded-full py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                    />
+                                    <Button type="submit" className="absolute right-1 top-1 h-8 w-8 p-0 bg-blue-600 rounded-full">
+                                        <Search className="h-4 w-4" />
+                                    </Button>
+                                </form>
                             </div>
                         </div>
 
@@ -228,27 +462,37 @@ const Page: React.FC = () => {
                         <div className="mb-8  bg-white p-4 rounded-xl shadow-md">
                             <h3 className="text-lg font-bold mb-4">Tin tức nổi bật</h3>
                             <div className="space-y-4">
-                                {[1, 2, 3, 4].map((item) => (
-                                    <div key={item} className="flex gap-3">
-                                        <div className="relative h-16 w-16 flex-shrink-0">
-                                            <Image
-                                                src={`/placeholder.svg?height=64&width=64&text=${item}`}
-                                                alt={`Tin nổi bật ${item}`}
-                                                fill
-                                                className="object-cover rounded border-gray-200"
-                                            />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-sm font-medium line-clamp-2">
-                                                Hệ thống đèn giao thông thông minh giúp giảm 30% thời gian di chuyển
-                                            </h4>
-                                            <div className="flex items-center gap-2 mt-1 text-xs text-gray-800">
-                                                <CalendarIcon className="h-3 w-3" />
-                                                <span>22/03/2025</span>
+                                {isLoadingPopular ? (
+                                    renderLoading()
+                                ) : errorPopular ? (
+                                    <div className="text-center py-8 text-gray-600">Không có tin tức nổi bật</div>
+                                ) : popularNews.length === 0 ? (
+                                    <div className="text-center py-8 text-gray-600">Không có tin tức nổi bật</div>
+                                ) : (
+                                    popularNews.map((item) => (
+                                        <div key={item._id} className="flex gap-3">
+                                            <Link href={`/news/${item._id}`} className="relative h-16 w-16 flex-shrink-0">
+                                                <Image
+                                                    src={item.image_url || "/placeholder.svg?height=64&width=64"}
+                                                    alt={item.title}
+                                                    fill
+                                                    className="object-cover rounded border-gray-200"
+                                                />
+                                            </Link>
+                                            <div>
+                                                <Link href={`/news/${item._id}`} className="hover:text-blue-500 transition-colors">
+                                                    <h4 className="text-sm font-medium line-clamp-2">
+                                                        {item.title}
+                                                    </h4>
+                                                </Link>
+                                                <div className="flex items-center gap-2 mt-1 text-xs text-gray-800">
+                                                    <CalendarIcon className="h-3 w-3" />
+                                                    <span>{item.publishDate || new Date(item.created_at || Date.now()).toLocaleDateString('vi-VN')}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))
+                                )}
                             </div>
                         </div>
 

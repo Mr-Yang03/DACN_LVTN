@@ -41,6 +41,36 @@ import { useToast } from "@/hooks/use-toast";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { RichTextContent } from "@/components/admin/RichTextContent";
+import { createNews, uploadNewsImage, NewsArticle } from "@/apis/newsApi";
+
+// Function to extract image URLs from HTML content
+const extractImageUrls = (htmlContent: string): string[] => {
+  const imgRegex = /<img[^>]+src="([^">]+)"/g;
+  const urls: string[] = [];
+  let match;
+  
+  while ((match = imgRegex.exec(htmlContent)) !== null) {
+    // Skip URLs that are already from Google Cloud Storage
+    if (!match[1].includes('googleusercontent.com')) {
+      urls.push(match[1]);
+    }
+  }
+  
+  return urls;
+};
+
+// Function to convert a URL to a File object
+const urlToFile = async (url: string): Promise<File | null> => {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const filename = url.split('/').pop() || `image-${Date.now()}.${blob.type.split('/')[1]}`;
+    return new File([blob], filename, { type: blob.type });
+  } catch (error) {
+    console.error('Error converting URL to File:', error);
+    return null;
+  }
+};
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -49,8 +79,8 @@ const formSchema = z.object({
   author: z.string().min(2, {
     message: "Tên tác giả phải có ít nhất 2 ký tự",
   }),
-  excerpt: z.string().min(50, {
-    message: "Tóm tắt phải có ít nhất 50 ký tự",
+  excerpt: z.string().min(20, {
+    message: "Tóm tắt phải có ít nhất 20 ký tự",
   }),
   content: z.string().min(100, {
     message: "Nội dung phải có ít nhất 100 ký tự",
@@ -95,13 +125,103 @@ export function NewsEditor() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  // Prevent form submission when buttons are clicked in child components
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // Only let the form submit through the explicit form.handleSubmit calls
+    if (e.target instanceof HTMLButtonElement && !e.target.hasAttribute('form-submit')) {
+      e.preventDefault();
+    }
+  };
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      console.log(values);
-      setIsSubmitting(false);
+    try {
+      // Process featured image if present
+      let imageUrl = "";
+      if (values.featuredImage) {
+        if (values.featuredImage instanceof File) {
+          // Trường hợp 1: featuredImage là File object
+          const imageData = await uploadNewsImage(values.featuredImage);
+          imageUrl = imageData.public_url;
+        } else if (typeof values.featuredImage === 'string') {
+          // Trường hợp 2: featuredImage là data URL (Base64)
+          if (values.featuredImage.startsWith('data:image')) {
+            // Chuyển đổi Base64 thành File
+            try {
+              // Tách phần header và data của Base64
+              const arr = values.featuredImage.split(',');
+              const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
+              const bstr = atob(arr[1]);
+              let n = bstr.length;
+              const u8arr = new Uint8Array(n);
+              
+              while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+              }
+              
+              // Tạo File từ dữ liệu Base64
+              const file = new File([u8arr], `featured-image-${Date.now()}.${mime.split('/')[1] || 'jpg'}`, { type: mime });
+              
+              // Upload File lên Google Cloud
+              const imageData = await uploadNewsImage(file);
+              imageUrl = imageData.public_url;
+            } catch (error) {
+              console.error("Lỗi khi chuyển đổi Base64 sang File:", error);
+              // Nếu không thể chuyển đổi, vẫn sử dụng URL Base64 (không được khuyến nghị cho production)
+              imageUrl = values.featuredImage;
+            }
+          } else if (values.featuredImage.startsWith('https://storage.googleapis.com')) {
+            // Trường hợp 3: featuredImage đã là Google Cloud URL
+            imageUrl = values.featuredImage;
+          }
+        }
+      }
+
+      // Process content images
+      let processedContent = values.content;
+      const imageUrls = extractImageUrls(values.content);
+      
+      if (imageUrls.length > 0) {
+        // Create a map to track original URLs and their cloud replacements
+        const urlMap: Record<string, string> = {};
+        
+        // Upload each image to Google Cloud
+        for (const url of imageUrls) {
+          const file = await urlToFile(url);
+          if (file) {
+            const uploadResult = await uploadNewsImage(file);
+            urlMap[url] = uploadResult.public_url;
+          }
+        }
+        
+        // Replace all image URLs in the content
+        Object.entries(urlMap).forEach(([originalUrl, cloudUrl]) => {
+          processedContent = processedContent.replace(
+            new RegExp(originalUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), 
+            cloudUrl
+          );
+        });
+      }
+
+      // Prepare news data with processed content
+      const newsData: NewsArticle = {
+        title: values.title,
+        content: processedContent, // Use processed content with cloud storage URLs
+        author: values.author,
+        summary: values.excerpt,
+        category: values.category,
+        tags: values.tags ? values.tags.split(',').map(tag => tag.trim()) : [],
+        image_url: imageUrl,
+        featured: values.isFeatured,
+        publishDate: format(values.publishDate, "yyyy-MM-dd"),
+        publishTime: values.publishTime,
+        status: values.isDraft ? "draft" : "published"
+      };
+
+      // Create the news article
+      const response = await createNews(newsData);
+      
       toast({
         title: values.isDraft
           ? "Bài viết đã được lưu nháp"
@@ -111,10 +231,19 @@ export function NewsEditor() {
           : "Bài viết đã được đăng thành công và hiển thị trên trang tin tức",
       });
 
-      if (!values.isDraft) {
-        router.push("/admin/news");
-      }
-    }, 2000);
+      // Redirect to admin news page
+      router.push("/admin/news");
+      
+    } catch (error) {
+      console.error("Lỗi khi tạo bài viết:", error);
+      toast({
+        title: "Đã xảy ra lỗi",
+        description: "Không thể tạo bài viết. Vui lòng thử lại sau.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   function handlePreview() {
@@ -149,11 +278,16 @@ export function NewsEditor() {
               form.handleSubmit(onSubmit)();
             }}
             disabled={isSubmitting}
+            className="relative"
           >
             {isSubmitting && form.getValues("isDraft") ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
-            Lưu nháp
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <span>Đang lưu...</span>
+              </>
+            ) : (
+              <span>Lưu nháp</span>
+            )}
           </Button>
           <Button
             onClick={() => {
@@ -161,19 +295,26 @@ export function NewsEditor() {
               form.handleSubmit(onSubmit)();
             }}
             disabled={isSubmitting}
+            className="relative"
           >
             {isSubmitting && !form.getValues("isDraft") ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
-            <Send className="mr-2 h-4 w-4" />
-            Đăng bài
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <span>Đang đăng...</span>
+              </>
+            ) : (
+              <>
+                <Send className="mr-2 h-4 w-4" />
+                <span>Đăng bài</span>
+              </>
+            )}
           </Button>
         </div>
       </div>
 
       <TabsContent value="edit" className="space-y-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleFormSubmit} className="space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
                 <Card>
@@ -232,8 +373,7 @@ export function NewsEditor() {
                             />
                           </FormControl>
                           <FormDescription>
-                            Tóm tắt ngắn gọn về nội dung bài viết, giới hạn
-                            khoảng 200-300 ký tự
+                            Tóm tắt ngắn gọn về nội dung bài viết
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -310,18 +450,18 @@ export function NewsEditor() {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="traffic">
+                              <SelectItem value="Giao thông">
                                 Tình hình giao thông
                               </SelectItem>
-                              <SelectItem value="accident">Tai nạn</SelectItem>
-                              <SelectItem value="construction">
+                              <SelectItem value="Tai nạn">Tai nạn</SelectItem>
+                              <SelectItem value="Công trình">
                                 Công trình
                               </SelectItem>
-                              <SelectItem value="regulation">
+                              <SelectItem value="Quy định">
                                 Quy định mới
                               </SelectItem>
-                              <SelectItem value="weather">Thời tiết</SelectItem>
-                              <SelectItem value="other">Khác</SelectItem>
+                              <SelectItem value="Thời tiết">Thời tiết</SelectItem>
+                              <SelectItem value="Khác">Khác</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -437,7 +577,7 @@ export function NewsEditor() {
                       )}
                     />
 
-                    <FormField
+                    {/* <FormField
                       control={form.control}
                       name="isDraft"
                       render={({ field }) => (
@@ -456,7 +596,7 @@ export function NewsEditor() {
                           </FormControl>
                         </FormItem>
                       )}
-                    />
+                    /> */}
                   </CardContent>
                 </Card>
               </div>
