@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CalendarIcon, Loader2, Save, Clock, Eye, Send } from "lucide-react";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { vi } from "date-fns/locale";
 
 import { Button } from "@/components/ui/button";
@@ -41,7 +41,7 @@ import { useToast } from "@/hooks/use-toast";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { RichTextContent } from "@/components/admin/RichTextContent";
-import { createNews, uploadNewsImage, NewsArticle } from "@/apis/newsApi";
+import { getNewsById, updateNews } from "@/apis/newsApi";
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -71,7 +71,11 @@ const formSchema = z.object({
   isDraft: z.boolean().default(true),
 });
 
-export function NewsEditor() {
+export interface ModifyNewsEditorProps {
+  newsId?: string;
+}
+
+export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -79,6 +83,7 @@ export function NewsEditor() {
   const [previewData, setPreviewData] = useState<z.infer<
     typeof formSchema
   > | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -96,52 +101,102 @@ export function NewsEditor() {
     },
   });
 
+  // Fetch news data when component mounts
+  useEffect(() => {
+    if (!newsId) {
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+
+    const fetchNews = async () => {
+      try {
+        const data = await getNewsById(newsId);
+
+        if (data) {
+          // Convert data from API to form schema format
+          const formData = {
+            title: data.title || "",
+            author: data.author || "",
+            excerpt: data.summary || "",
+            content: data.content || "",
+            category: data.category || "",
+            tags: Array.isArray(data.tags) ? data.tags.join(", ") : data.tags || "",
+            featuredImage: data.image_url || "",
+            // Format date and time from API data
+            publishDate: data.publishDate
+              ? parse(data.publishDate, "dd/MM/yyyy", new Date())
+              : new Date(),
+            publishTime: data.publishTime || format(new Date(), "HH:mm"),
+            isFeatured: data.featured || false,
+            isDraft: data.status === "draft",
+          };
+
+          form.reset(formData);
+        }
+      } catch (error) {
+        console.error("Error fetching news:", error);
+        toast({
+          title: "Lỗi",
+          description: "Không thể tải thông tin bài viết. Vui lòng thử lại sau.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchNews();
+  }, [newsId, form, toast]);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!newsId) {
+      toast({
+        title: "Lỗi",
+        description: "Không tìm thấy ID bài viết để cập nhật.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // Xử lý tải ảnh lên nếu có
-      let imageUrl = "";
-      if (values.featuredImage && values.featuredImage instanceof File) {
-        const imageData = await uploadNewsImage(values.featuredImage);
-        imageUrl = imageData.url; // Giả sử API trả về URL của ảnh đã tải lên
-      }
-
-      // Chuyển đổi dữ liệu form sang định dạng phù hợp với API
-      const newsData: NewsArticle = {
+      // Convert form data to API data format
+      const apiData = {
         title: values.title,
-        content: values.content,
         author: values.author,
         summary: values.excerpt,
+        content: values.content,
         category: values.category,
-        tags: values.tags ? values.tags.split(',').map(tag => tag.trim()) : [],
-        image_url: imageUrl,
-        featured: values.isFeatured,
-        publishDate: format(values.publishDate, "yyyy-MM-dd"),
+        tags: values.tags ? values.tags.split(",").map(tag => tag.trim()) : [],
+        image_url: values.featuredImage,
+        publishDate: format(values.publishDate, "dd/MM/yyyy"),
         publishTime: values.publishTime,
-        status: values.isDraft ? "draft" : "published"
+        featured: values.isFeatured,
+        status: values.isDraft ? "draft" : "published",
       };
 
-      // Gọi API để tạo bài viết mới
-      const response = await createNews(newsData);
-      
+      await updateNews(newsId, apiData);
+
       toast({
         title: values.isDraft
-          ? "Bài viết đã được lưu nháp"
-          : "Bài viết đã được đăng",
+          ? "Bài viết đã được cập nhật và lưu nháp"
+          : "Bài viết đã được cập nhật và đăng",
         description: values.isDraft
           ? "Bạn có thể tiếp tục chỉnh sửa bài viết này sau"
-          : "Bài viết đã được đăng thành công và hiển thị trên trang tin tức",
+          : "Bài viết đã được cập nhật thành công và hiển thị trên trang tin tức",
       });
 
-      // Chuyển hướng về trang tin tức của admin trong cả hai trường hợp
-      router.push("/admin/news");
-      
+      if (!values.isDraft) {
+        router.push("/admin/news");
+      }
     } catch (error) {
-      console.error("Lỗi khi tạo bài viết:", error);
+      console.error("Error updating news:", error);
       toast({
-        title: "Đã xảy ra lỗi",
-        description: "Không thể tạo bài viết. Vui lòng thử lại sau.",
+        title: "Lỗi cập nhật",
+        description: "Đã xảy ra lỗi khi cập nhật bài viết. Vui lòng thử lại sau.",
         variant: "destructive",
       });
     } finally {
@@ -153,6 +208,15 @@ export function NewsEditor() {
     const values = form.getValues();
     setPreviewData(values);
     setActiveTab("preview");
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <span className="ml-2">Đang tải thông tin bài viết...</span>
+      </div>
+    );
   }
 
   return (
@@ -198,7 +262,7 @@ export function NewsEditor() {
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : null}
             <Send className="mr-2 h-4 w-4" />
-            Đăng bài
+            Cập nhật
           </Button>
         </div>
       </div>
