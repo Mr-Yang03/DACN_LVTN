@@ -43,6 +43,35 @@ import { ImageUploader } from "@/components/admin/ImageUploader";
 import { RichTextContent } from "@/components/admin/RichTextContent";
 import { createNews, uploadNewsImage, NewsArticle } from "@/apis/newsApi";
 
+// Function to extract image URLs from HTML content
+const extractImageUrls = (htmlContent: string): string[] => {
+  const imgRegex = /<img[^>]+src="([^">]+)"/g;
+  const urls: string[] = [];
+  let match;
+  
+  while ((match = imgRegex.exec(htmlContent)) !== null) {
+    // Skip URLs that are already from Google Cloud Storage
+    if (!match[1].includes('googleusercontent.com')) {
+      urls.push(match[1]);
+    }
+  }
+  
+  return urls;
+};
+
+// Function to convert a URL to a File object
+const urlToFile = async (url: string): Promise<File | null> => {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const filename = url.split('/').pop() || `image-${Date.now()}.${blob.type.split('/')[1]}`;
+    return new File([blob], filename, { type: blob.type });
+  } catch (error) {
+    console.error('Error converting URL to File:', error);
+    return null;
+  }
+};
+
 const formSchema = z.object({
   title: z.string().min(10, {
     message: "Tiêu đề phải có ít nhất 10 ký tự",
@@ -100,17 +129,43 @@ export function NewsEditor() {
     setIsSubmitting(true);
 
     try {
-      // Xử lý tải ảnh lên nếu có
+      // Process featured image if present
       let imageUrl = "";
       if (values.featuredImage && values.featuredImage instanceof File) {
         const imageData = await uploadNewsImage(values.featuredImage);
-        imageUrl = imageData.url; // Giả sử API trả về URL của ảnh đã tải lên
+        imageUrl = imageData.public_url; // Using public_url based on API response
       }
 
-      // Chuyển đổi dữ liệu form sang định dạng phù hợp với API
+      // Process content images
+      let processedContent = values.content;
+      const imageUrls = extractImageUrls(values.content);
+      
+      if (imageUrls.length > 0) {
+        // Create a map to track original URLs and their cloud replacements
+        const urlMap: Record<string, string> = {};
+        
+        // Upload each image to Google Cloud
+        for (const url of imageUrls) {
+          const file = await urlToFile(url);
+          if (file) {
+            const uploadResult = await uploadNewsImage(file);
+            urlMap[url] = uploadResult.public_url;
+          }
+        }
+        
+        // Replace all image URLs in the content
+        Object.entries(urlMap).forEach(([originalUrl, cloudUrl]) => {
+          processedContent = processedContent.replace(
+            new RegExp(originalUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), 
+            cloudUrl
+          );
+        });
+      }
+
+      // Prepare news data with processed content
       const newsData: NewsArticle = {
         title: values.title,
-        content: values.content,
+        content: processedContent, // Use processed content with cloud storage URLs
         author: values.author,
         summary: values.excerpt,
         category: values.category,
@@ -122,7 +177,7 @@ export function NewsEditor() {
         status: values.isDraft ? "draft" : "published"
       };
 
-      // Gọi API để tạo bài viết mới
+      // Create the news article
       const response = await createNews(newsData);
       
       toast({
@@ -134,7 +189,7 @@ export function NewsEditor() {
           : "Bài viết đã được đăng thành công và hiển thị trên trang tin tức",
       });
 
-      // Chuyển hướng về trang tin tức của admin trong cả hai trường hợp
+      // Redirect to admin news page
       router.push("/admin/news");
       
     } catch (error) {
@@ -181,11 +236,16 @@ export function NewsEditor() {
               form.handleSubmit(onSubmit)();
             }}
             disabled={isSubmitting}
+            className="relative"
           >
             {isSubmitting && form.getValues("isDraft") ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
-            Lưu nháp
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <span>Đang lưu...</span>
+              </>
+            ) : (
+              <span>Lưu nháp</span>
+            )}
           </Button>
           <Button
             onClick={() => {
@@ -193,12 +253,19 @@ export function NewsEditor() {
               form.handleSubmit(onSubmit)();
             }}
             disabled={isSubmitting}
+            className="relative"
           >
             {isSubmitting && !form.getValues("isDraft") ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
-            <Send className="mr-2 h-4 w-4" />
-            Đăng bài
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <span>Đang đăng...</span>
+              </>
+            ) : (
+              <>
+                <Send className="mr-2 h-4 w-4" />
+                <span>Đăng bài</span>
+              </>
+            )}
           </Button>
         </div>
       </div>

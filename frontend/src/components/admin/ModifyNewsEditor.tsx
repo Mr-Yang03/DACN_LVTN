@@ -41,7 +41,36 @@ import { useToast } from "@/hooks/use-toast";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { RichTextContent } from "@/components/admin/RichTextContent";
-import { getNewsById, updateNews } from "@/apis/newsApi";
+import { getNewsById, updateNews, uploadNewsImage } from "@/apis/newsApi";
+
+// Function to extract image URLs from HTML content
+const extractImageUrls = (htmlContent: string): string[] => {
+  const imgRegex = /<img[^>]+src="([^">]+)"/g;
+  const urls: string[] = [];
+  let match;
+  
+  while ((match = imgRegex.exec(htmlContent)) !== null) {
+    // Skip URLs that are already from Google Cloud Storage
+    if (!match[1].includes('googleusercontent.com')) {
+      urls.push(match[1]);
+    }
+  }
+  
+  return urls;
+};
+
+// Function to convert a URL to a File object
+const urlToFile = async (url: string): Promise<File | null> => {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const filename = url.split('/').pop() || `image-${Date.now()}.${blob.type.split('/')[1]}`;
+    return new File([blob], filename, { type: blob.type });
+  } catch (error) {
+    console.error('Error converting URL to File:', error);
+    return null;
+  }
+};
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -163,15 +192,48 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
     setIsSubmitting(true);
 
     try {
+      // Process featured image if it's a File object
+      let imageUrl = values.featuredImage;
+      if (values.featuredImage instanceof File) {
+        const imageData = await uploadNewsImage(values.featuredImage);
+        imageUrl = imageData.public_url;
+      }
+
+      // Process content images
+      let processedContent = values.content;
+      const imageUrls = extractImageUrls(values.content);
+      
+      if (imageUrls.length > 0) {
+        // Create a map to track original URLs and their cloud replacements
+        const urlMap: Record<string, string> = {};
+        
+        // Upload each image to Google Cloud
+        for (const url of imageUrls) {
+          const file = await urlToFile(url);
+          if (file) {
+            const uploadResult = await uploadNewsImage(file);
+            urlMap[url] = uploadResult.public_url;
+          }
+        }
+        
+        // Replace all image URLs in the content
+        Object.entries(urlMap).forEach(([originalUrl, cloudUrl]) => {
+          processedContent = processedContent.replace(
+            new RegExp(originalUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), 
+            cloudUrl
+          );
+        });
+      }
+
       // Convert form data to API data format
       const apiData = {
         title: values.title,
         author: values.author,
         summary: values.excerpt,
-        content: values.content,
+        content: processedContent, // Use processed content with cloud storage URLs
         category: values.category,
         tags: values.tags ? values.tags.split(",").map(tag => tag.trim()) : [],
-        image_url: values.featuredImage,
+        image_url: imageUrl,
         publishDate: format(values.publishDate, "dd/MM/yyyy"),
         publishTime: values.publishTime,
         featured: values.isFeatured,

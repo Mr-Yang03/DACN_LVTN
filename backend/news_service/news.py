@@ -7,7 +7,18 @@ from bson import ObjectId
 from typing import List, Optional
 import os
 import shutil
+import uuid
 from fastapi.responses import JSONResponse
+from google.cloud import storage
+import io
+
+# Initialize Google Cloud Storage client
+# Set path to credentials file
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "key/ggmap-456203-58579108ac37.json"
+
+# Initialize client
+storage_client = storage.Client()
+BUCKET_NAME = "bucket_ggmap-456203"  # Same bucket as used in news-feedback_service
 
 news_router = APIRouter()
 
@@ -302,29 +313,82 @@ async def get_public_news_by_id(news_id: str):
 @news_router.post("/news/upload")
 async def upload_news_image(file: UploadFile = File(...)):
     """
-    Upload an image for a news article.
+    Upload an image for a news article to Google Cloud Storage.
     """
     try:
-        # Create uploads directory if it doesn't exist
-        upload_dir = os.path.join(os.getcwd(), "uploads")
-        if not os.path.exists(upload_dir):
-            os.makedirs(upload_dir)
+        # Generate a unique filename
+        file_extension = file.filename.split(".")[-1] if "." in file.filename else ""
+        unique_filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{uuid.uuid4().hex}.{file_extension}"
+        
+        # Log the file info for debugging
+        print(f"Uploading file: {file.filename}, Size: {file.size}, Content-Type: {file.content_type}")
+        
+        # Check if credentials file exists and is accessible
+        creds_path = "key/ggmap-456203-58579108ac37.json"
+        if not os.path.exists(creds_path):
+            return JSONResponse(
+                status_code=500,
+                content={"detail": f"Credentials file not found: {creds_path}"}
+            )
             
-        # Generate unique filename
-        file_extension = file.filename.split(".")[-1]
-        unique_filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{file.filename}"
-        file_path = os.path.join(upload_dir, unique_filename)
+        print(f"Credentials file found at: {creds_path}")
         
-        # Save file
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        # Read file content
+        content = await file.read()
+        print(f"File content read, size: {len(content)} bytes")
+        
+        try:
+            # Try to initialize storage client
+            print("Initializing storage client...")
+            bucket = storage_client.bucket(BUCKET_NAME)
             
-        # Return file URL
-        # Note: In a production environment, you might want to use a CDN or cloud storage
-        file_url = f"/uploads/{unique_filename}"
-        
-        return {"file_url": file_url}
-        
+            # Check if bucket exists
+            if not bucket.exists():
+                return JSONResponse(
+                    status_code=500,
+                    content={"detail": f"Bucket {BUCKET_NAME} does not exist or is not accessible"}
+                )
+                
+            print(f"Bucket {BUCKET_NAME} found")
+            
+            # Upload to Google Cloud Storage
+            blob = bucket.blob(f"news_images/{unique_filename}")
+            
+            # Get the correct content type or default to a safe option
+            content_type = file.content_type or "application/octet-stream"
+            print(f"Using content type: {content_type}")
+            
+            # Set content type 
+            blob.content_type = content_type
+            
+            # Upload the file explicitly specifying the same content_type
+            print("Uploading file to Cloud Storage...")
+            blob.upload_from_string(
+                content,
+                content_type=content_type  # Explicitly pass the same content_type here
+            )
+            print("File uploaded successfully")
+            
+            # Generate a public URL - use predefined URL pattern instead of ACLs
+            # This assumes the bucket has uniform bucket-level access enabled and is publicly accessible
+            public_url = f"https://storage.googleapis.com/{BUCKET_NAME}/news_images/{unique_filename}"
+            print(f"Public URL: {public_url}")
+            
+            return {
+                "file_url": public_url,
+                "public_url": public_url  # For compatibility with frontend
+            }
+        except Exception as storage_error:
+            print(f"Storage error: {str(storage_error)}")
+            return JSONResponse(
+                status_code=500,
+                content={"detail": f"Storage error: {str(storage_error)}"}
+            )
+            
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"Failed to upload image: {str(e)}")
+        return JSONResponse(
+            status_code=500,
+            content={"detail": f"Failed to upload image: {str(e)}"}
+        )
 
