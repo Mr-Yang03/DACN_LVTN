@@ -293,7 +293,7 @@ export function ReportForm() {
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="traffic_jam">Tắc đường</SelectItem>
-                      <SelectItem value="accident">Tai nạn</SelectItem>
+                      <SelectItem value="accident">Tai nạn giao thông</SelectItem>
                       <SelectItem value="construction">
                         Công trình đang thi công
                       </SelectItem>

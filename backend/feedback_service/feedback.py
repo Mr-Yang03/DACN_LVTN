@@ -113,31 +113,31 @@ async def create_feedback(feedback: FeedbackCreate, request: Request, user=Depen
     
     return {"status": "error", "message": "Không thể tạo phản hồi"}
 
-@feedback_router.get("/items/search")
-async def search_items(q: str = Query(None, description="Từ khóa tìm kiếm trong tiêu đề hoặc địa điểm")):
-    """
-    Tìm kiếm phản ánh theo tiêu đề hoặc địa điểm
-    """
-    if not q:
-        # Nếu không có từ khóa tìm kiếm, trả về tất cả items
-        return await get_all_items()
+# @feedback_router.get("/items/search")
+# async def search_items(q: str = Query(None, description="Từ khóa tìm kiếm trong tiêu đề hoặc địa điểm")):
+#     """
+#     Tìm kiếm phản ánh theo tiêu đề hoặc địa điểm
+#     """
+#     if not q:
+#         # Nếu không có từ khóa tìm kiếm, trả về tất cả items
+#         return await get_all_items()
     
-    # Tạo truy vấn tìm kiếm với $regex để tìm kiếm không phân biệt hoa thường
-    query = {
-        "$or": [
-            {"title": {"$regex": q, "$options": "i"}},
-            {"location": {"$regex": q, "$options": "i"}}
-        ]
-    }
+#     # Tạo truy vấn tìm kiếm với $regex để tìm kiếm không phân biệt hoa thường
+#     query = {
+#         "$or": [
+#             {"title": {"$regex": q, "$options": "i"}},
+#             {"location": {"$regex": q, "$options": "i"}}
+#         ]
+#     }
     
-    items = []
-    cursor = items_collection.find(query)
+#     items = []
+#     cursor = items_collection.find(query)
     
-    for document in cursor:
-        document["_id"] = str(document["_id"])
-        items.append(document)
+#     for document in cursor:
+#         document["_id"] = str(document["_id"])
+#         items.append(document)
     
-    return {"status": "success", "data": items, "total": len(items), "search_term": q}
+#     return {"status": "success", "data": items, "total": len(items), "search_term": q}
 
 @feedback_router.get("/items/filter")
 async def filter_items(
