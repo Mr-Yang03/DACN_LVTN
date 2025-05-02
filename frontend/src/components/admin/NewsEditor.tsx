@@ -79,8 +79,8 @@ const formSchema = z.object({
   author: z.string().min(2, {
     message: "Tên tác giả phải có ít nhất 2 ký tự",
   }),
-  excerpt: z.string().min(50, {
-    message: "Tóm tắt phải có ít nhất 50 ký tự",
+  excerpt: z.string().min(20, {
+    message: "Tóm tắt phải có ít nhất 20 ký tự",
   }),
   content: z.string().min(100, {
     message: "Nội dung phải có ít nhất 100 ký tự",
@@ -125,15 +125,57 @@ export function NewsEditor() {
     },
   });
 
+  // Prevent form submission when buttons are clicked in child components
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // Only let the form submit through the explicit form.handleSubmit calls
+    if (e.target instanceof HTMLButtonElement && !e.target.hasAttribute('form-submit')) {
+      e.preventDefault();
+    }
+  };
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
 
     try {
       // Process featured image if present
       let imageUrl = "";
-      if (values.featuredImage && values.featuredImage instanceof File) {
-        const imageData = await uploadNewsImage(values.featuredImage);
-        imageUrl = imageData.public_url; // Using public_url based on API response
+      if (values.featuredImage) {
+        if (values.featuredImage instanceof File) {
+          // Trường hợp 1: featuredImage là File object
+          const imageData = await uploadNewsImage(values.featuredImage);
+          imageUrl = imageData.public_url;
+        } else if (typeof values.featuredImage === 'string') {
+          // Trường hợp 2: featuredImage là data URL (Base64)
+          if (values.featuredImage.startsWith('data:image')) {
+            // Chuyển đổi Base64 thành File
+            try {
+              // Tách phần header và data của Base64
+              const arr = values.featuredImage.split(',');
+              const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
+              const bstr = atob(arr[1]);
+              let n = bstr.length;
+              const u8arr = new Uint8Array(n);
+              
+              while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+              }
+              
+              // Tạo File từ dữ liệu Base64
+              const file = new File([u8arr], `featured-image-${Date.now()}.${mime.split('/')[1] || 'jpg'}`, { type: mime });
+              
+              // Upload File lên Google Cloud
+              const imageData = await uploadNewsImage(file);
+              imageUrl = imageData.public_url;
+            } catch (error) {
+              console.error("Lỗi khi chuyển đổi Base64 sang File:", error);
+              // Nếu không thể chuyển đổi, vẫn sử dụng URL Base64 (không được khuyến nghị cho production)
+              imageUrl = values.featuredImage;
+            }
+          } else if (values.featuredImage.startsWith('https://storage.googleapis.com')) {
+            // Trường hợp 3: featuredImage đã là Google Cloud URL
+            imageUrl = values.featuredImage;
+          }
+        }
       }
 
       // Process content images
@@ -272,7 +314,7 @@ export function NewsEditor() {
 
       <TabsContent value="edit" className="space-y-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleFormSubmit} className="space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
                 <Card>
@@ -331,8 +373,7 @@ export function NewsEditor() {
                             />
                           </FormControl>
                           <FormDescription>
-                            Tóm tắt ngắn gọn về nội dung bài viết, giới hạn
-                            khoảng 200-300 ký tự
+                            Tóm tắt ngắn gọn về nội dung bài viết
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -409,18 +450,18 @@ export function NewsEditor() {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="traffic">
+                              <SelectItem value="Giao thông">
                                 Tình hình giao thông
                               </SelectItem>
-                              <SelectItem value="accident">Tai nạn</SelectItem>
-                              <SelectItem value="construction">
+                              <SelectItem value="Tai nạn">Tai nạn</SelectItem>
+                              <SelectItem value="Công trình">
                                 Công trình
                               </SelectItem>
-                              <SelectItem value="regulation">
+                              <SelectItem value="Quy định">
                                 Quy định mới
                               </SelectItem>
-                              <SelectItem value="weather">Thời tiết</SelectItem>
-                              <SelectItem value="other">Khác</SelectItem>
+                              <SelectItem value="Thời tiết">Thời tiết</SelectItem>
+                              <SelectItem value="Khác">Khác</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -536,7 +577,7 @@ export function NewsEditor() {
                       )}
                     />
 
-                    <FormField
+                    {/* <FormField
                       control={form.control}
                       name="isDraft"
                       render={({ field }) => (
@@ -555,7 +596,7 @@ export function NewsEditor() {
                           </FormControl>
                         </FormItem>
                       )}
-                    />
+                    /> */}
                   </CardContent>
                 </Card>
               </div>

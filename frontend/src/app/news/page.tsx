@@ -55,7 +55,7 @@ const Page: React.FC = () => {
     const categoryMapping: Record<string, string> = {
         'traffic': 'Giao thông',
         'accident': 'Tai nạn',
-        'regulation': 'Quy định mới',
+        'regulation': 'Quy định',
         'construction': 'Công trình',
         'weather': 'Thời tiết',
         'other': 'Khác'
@@ -370,7 +370,7 @@ const Page: React.FC = () => {
                                 <TabsTrigger value="all" className="rounded-full">Tất cả</TabsTrigger>
                                 <TabsTrigger value="traffic" className="rounded-full">Giao thông</TabsTrigger>
                                 <TabsTrigger value="accident" className="rounded-full">Tai nạn</TabsTrigger>
-                                <TabsTrigger value="regulation" className="rounded-full">Quy định mới</TabsTrigger>
+                                <TabsTrigger value="regulation" className="rounded-full">Quy định</TabsTrigger>
                                 <TabsTrigger value="construction" className="rounded-full">Công trình</TabsTrigger>
                                 <TabsTrigger value="weather" className="rounded-full">Thời tiết</TabsTrigger>
                             </TabsList>
@@ -402,7 +402,7 @@ const Page: React.FC = () => {
                                 {categoryLoading.regulation ? renderLoading() : 
                                  searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
                                  categoryNewsMap.regulation.length === 0 ? 
-                                    <div className="text-center py-8 text-gray-600">Không có tin tức nào về Quy định mới</div> : 
+                                    <div className="text-center py-8 text-gray-600">Không có tin tức nào về Quy định</div> : 
                                     renderNewsGrid(currentNewsItems)}
                             </TabsContent>
 

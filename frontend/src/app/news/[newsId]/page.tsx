@@ -24,6 +24,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { RichTextContent } from "@/components/admin/RichTextContent";
 
 const NewsDetailPage = () => {
   const params = useParams();
@@ -210,69 +211,29 @@ const NewsDetailPage = () => {
         {/* Main Content */}
         <div className="w-full md:w-2/3">
           <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-            <h1 className="text-2xl md:text-3xl font-bold mb-4">
-              {newsDetail?.title}
-            </h1>
-
-            <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-gray-700 mb-6">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1">
-                  <CalendarIcon className="h-4 w-4" />
-                  <span>
-                    {newsDetail?.created_at
-                      ? formatDate(newsDetail.created_at)
-                      : formatDate(
-                          newsDetail?.publishDate,
-                          newsDetail?.publishTime
-                        )}
-                  </span>
-                </div>
-
-                {newsDetail?.category && (
-                  <Badge variant="outline" className="text-white bg-blue-600">
-                    {newsDetail.category}
-                  </Badge>
+              <div className="prose max-w-none">
+                <h1 className="text-4xl font-bold mb-6">{newsDetail?.title}</h1>
+                {newsDetail?.summary && (
+                  <p className="lead italic text-gray-800">{newsDetail.summary}</p>
+                )}
+                <p className="text-sm text-gray-600 mt-8 text-right">
+                  Ngày đăng: {newsDetail?.created_at
+                    ? formatDate(newsDetail.created_at)
+                    : `${newsDetail?.publishTime} - ${newsDetail?.publishDate}`}
+                </p>
+                <RichTextContent content={newsDetail?.content || ""} className="mt-4" />
+                {newsDetail?.author && (
+                  <p className="text-sm text-gray-600 mt-8 text-right italic">
+                    Tác giả: {newsDetail.author}
+                  </p>
                 )}
               </div>
-
-              {newsDetail?.author && (
-                <div className="ml-auto">
-                  <span>Tác giả: {newsDetail.author}</span>
-                </div>
-              )}
-            </div>
-
-            {/* Featured Image */}
-            {newsDetail?.image_url && (
-              <div className="relative h-[400px] w-full mb-6 rounded-lg overflow-hidden">
-                <Image
-                  src={newsDetail.image_url}
-                  alt={newsDetail.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            )}
-
-            {/* Summary */}
-            {newsDetail?.summary && (
-              <div className="bg-gray-50 p-4 rounded-lg mb-6 italic text-gray-700">
-                {newsDetail.summary}
-              </div>
-            )}
-
-            {/* Content */}
-            <div className="prose max-w-none">
-              <div
-                dangerouslySetInnerHTML={{ __html: newsDetail?.content || "" }}
-              />
-            </div>
 
             {/* Tags */}
             {newsDetail?.tags && newsDetail.tags.length > 0 && (
               <div className="mt-8">
                 <h4 className="font-semibold mb-2">Thẻ:</h4>
-                <div className="flex flex-wrap gap-2">
+                <span className="flex flex-wrap gap-2">
                   {newsDetail.tags.map((tag, index) => (
                     <Badge
                       key={index}
@@ -282,7 +243,7 @@ const NewsDetailPage = () => {
                       {tag}
                     </Badge>
                   ))}
-                </div>
+                </span>
               </div>
             )}
           </div>

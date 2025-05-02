@@ -1529,3 +1529,831 @@ INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
 INFO:root:Request: OPTIONS http://localhost:9000/admin/news/68148b580faf32d9ea9f758b
 INFO:root:Request: DELETE http://localhost:9000/admin/news/68148b580faf32d9ea9f758b
 INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/68148b580faf32d9ea9f758b "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: POST http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148d1e0faf32d9ea9f758c
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news
+INFO:root:Request: POST http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: POST http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814889102df8655d578878e
+INFO:root:Request: DELETE http://localhost:9000/admin/news/6814889102df8655d578878e
+INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/6814889102df8655d578878e "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:root:Request: PUT http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: DELETE http://localhost:9000/admin/news/68148fce0faf32d9ea9f758d
+INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/68148fce0faf32d9ea9f758d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148d1e0faf32d9ea9f758c
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:root:Request: PUT http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148d1e0faf32d9ea9f758c
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878d
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878d
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878c
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878c
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878c "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148af90faf32d9ea9f758a
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148af90faf32d9ea9f758a "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148af90faf32d9ea9f758a
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148af90faf32d9ea9f758a "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:root:Request: PUT http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news
+INFO:root:Request: POST http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: POST http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/category/Quy \u0111\u1ecbnh m\u1edbi
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Quy%20%C4%91%E1%BB%8Bnh%20m%E1%BB%9Bi "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/681499b00faf32d9ea9f758e
+INFO:root:Request: PUT http://localhost:9000/admin/news/681499b00faf32d9ea9f758e
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/681499b00faf32d9ea9f758e "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/681499b00faf32d9ea9f758e
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/681499b00faf32d9ea9f758e "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/681499b00faf32d9ea9f758e
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/681499b00faf32d9ea9f758e "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/68148af90faf32d9ea9f758a
+INFO:root:Request: DELETE http://localhost:9000/admin/news/68148af90faf32d9ea9f758a
+INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/68148af90faf32d9ea9f758a "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814889102df8655d578878f
+INFO:root:Request: DELETE http://localhost:9000/admin/news/6814889102df8655d578878f
+INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/6814889102df8655d578878f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/681499b00faf32d9ea9f758e
+INFO:root:Request: DELETE http://localhost:9000/admin/news/681499b00faf32d9ea9f758e
+INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/681499b00faf32d9ea9f758e "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:root:Request: GET http://localhost:9000/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news
+INFO:root:Request: POST http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: POST http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148d1e0faf32d9ea9f758c
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814a1f60faf32d9ea9f758f
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/category/Quy \u0111\u1ecbnh
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Quy%20%C4%91%E1%BB%8Bnh "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/category/Công trình
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/C%C3%B4ng%20tr%C3%ACnh "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: POST http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a3990faf32d9ea9f7590
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a3990faf32d9ea9f7590 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a3990faf32d9ea9f7590
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a3990faf32d9ea9f7590 "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814a3990faf32d9ea9f7590
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a3990faf32d9ea9f7590
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a3990faf32d9ea9f7590 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a3990faf32d9ea9f7590
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a3990faf32d9ea9f7590 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a3990faf32d9ea9f7590
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a3990faf32d9ea9f7590 "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a3990faf32d9ea9f7590
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a3990faf32d9ea9f7590 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814a3990faf32d9ea9f7590
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a3990faf32d9ea9f7590 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814a3990faf32d9ea9f7590
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a3990faf32d9ea9f7590 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878d
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878d "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814a1f60faf32d9ea9f758f
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: DELETE http://localhost:9000/admin/news/6814a3990faf32d9ea9f7590
+INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/6814a3990faf32d9ea9f7590 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news
+INFO:root:Request: POST http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: POST http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814a7640faf32d9ea9f7591
+INFO:root:Request: DELETE http://localhost:9000/admin/news/6814a7640faf32d9ea9f7591
+INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/6814a7640faf32d9ea9f7591 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:root:Request: GET http://localhost:9000/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814a1f60faf32d9ea9f758f
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814889102df8655d5788790
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814889102df8655d5788790
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814889102df8655d5788790 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d5788790
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d5788790 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news
+INFO:root:Request: POST http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: POST http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814ae580faf32d9ea9f7592
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814ae580faf32d9ea9f7592 "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814ae580faf32d9ea9f7592
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814ae580faf32d9ea9f7592
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814ae580faf32d9ea9f7592 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814ae580faf32d9ea9f7592
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814ae580faf32d9ea9f7592 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: DELETE http://localhost:9000/admin/news/6814ae580faf32d9ea9f7592
+INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/6814ae580faf32d9ea9f7592 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: POST http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814af540faf32d9ea9f7593
+INFO:root:Request: DELETE http://localhost:9000/admin/news/6814af540faf32d9ea9f7593
+INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/6814af540faf32d9ea9f7593 "HTTP/1.1 200 OK"

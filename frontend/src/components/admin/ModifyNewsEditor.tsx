@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { CalendarIcon, Loader2, Save, Clock, Eye, Send } from "lucide-react";
-import { format, parse } from "date-fns";
+import { CalendarIcon, Loader2, Save, Clock, Eye, Send, Trash } from "lucide-react";
+import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 
 import { Button } from "@/components/ui/button";
@@ -37,11 +37,28 @@ import { Calendar } from "@/components/ui/calendar";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { RichTextContent } from "@/components/admin/RichTextContent";
-import { getNewsById, updateNews, uploadNewsImage } from "@/apis/newsApi";
+import { 
+  getNewsById, 
+  updateNews, 
+  deleteNews, 
+  uploadNewsImage, 
+  NewsArticle 
+} from "@/apis/newsApi";
 
 // Function to extract image URLs from HTML content
 const extractImageUrls = (htmlContent: string): string[] => {
@@ -79,8 +96,8 @@ const formSchema = z.object({
   author: z.string().min(2, {
     message: "Tên tác giả phải có ít nhất 2 ký tự",
   }),
-  excerpt: z.string().min(50, {
-    message: "Tóm tắt phải có ít nhất 50 ký tự",
+  excerpt: z.string().min(20, {
+    message: "Tóm tắt phải có ít nhất 20 ký tự",
   }),
   content: z.string().min(100, {
     message: "Nội dung phải có ít nhất 100 ký tự",
@@ -100,19 +117,21 @@ const formSchema = z.object({
   isDraft: z.boolean().default(true),
 });
 
-export interface ModifyNewsEditorProps {
-  newsId?: string;
+interface ModifyNewsEditorProps {
+  newsId: string;
 }
 
 export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
   const router = useRouter();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [activeTab, setActiveTab] = useState("edit");
   const [previewData, setPreviewData] = useState<z.infer<
     typeof formSchema
   > | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [originalImageUrl, setOriginalImageUrl] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -130,42 +149,39 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
     },
   });
 
-  // Fetch news data when component mounts
+  // Fetch news article data
   useEffect(() => {
-    if (!newsId) {
-      setIsLoading(false);
-      return;
-    }
-
-    setIsLoading(true);
-
-    const fetchNews = async () => {
+    const fetchNewsData = async () => {
       try {
-        const data = await getNewsById(newsId);
-
-        if (data) {
-          // Convert data from API to form schema format
-          const formData = {
-            title: data.title || "",
-            author: data.author || "",
-            excerpt: data.summary || "",
-            content: data.content || "",
-            category: data.category || "",
-            tags: Array.isArray(data.tags) ? data.tags.join(", ") : data.tags || "",
-            featuredImage: data.image_url || "",
-            // Format date and time from API data
-            publishDate: data.publishDate
-              ? parse(data.publishDate, "dd/MM/yyyy", new Date())
-              : new Date(),
-            publishTime: data.publishTime || format(new Date(), "HH:mm"),
-            isFeatured: data.featured || false,
-            isDraft: data.status === "draft",
-          };
-
-          form.reset(formData);
+        setIsLoading(true);
+        const newsData = await getNewsById(newsId);
+        
+        if (newsData) {
+          // Parse the date and time
+          const publishDateStr = newsData.publishDate || format(new Date(), 'yyyy-MM-dd');
+          const publishTimeStr = newsData.publishTime || format(new Date(), 'HH:mm');
+          const publishDate = new Date(publishDateStr);
+          
+          // Set original image URL for reference
+          setOriginalImageUrl(newsData.image_url);
+          
+          // Populate form with existing data
+          form.reset({
+            title: newsData.title,
+            author: newsData.author || "",
+            excerpt: newsData.summary || "",
+            content: newsData.content,
+            category: newsData.category || "",
+            tags: newsData.tags ? newsData.tags.join(", ") : "",
+            featuredImage: newsData.image_url,
+            publishDate: publishDate,
+            publishTime: publishTimeStr,
+            isFeatured: newsData.featured || false,
+            isDraft: newsData.status === "draft",
+          });
         }
       } catch (error) {
-        console.error("Error fetching news:", error);
+        console.error("Error fetching news article:", error);
         toast({
           title: "Lỗi",
           description: "Không thể tải thông tin bài viết. Vui lòng thử lại sau.",
@@ -176,27 +192,61 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
       }
     };
 
-    fetchNews();
+    if (newsId) {
+      fetchNewsData();
+    }
   }, [newsId, form, toast]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!newsId) {
-      toast({
-        title: "Lỗi",
-        description: "Không tìm thấy ID bài viết để cập nhật.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
-      // Process featured image if it's a File object
-      let imageUrl = values.featuredImage;
-      if (values.featuredImage instanceof File) {
-        const imageData = await uploadNewsImage(values.featuredImage);
-        imageUrl = imageData.public_url;
+      // Process featured image if present and changed
+      let imageUrl = originalImageUrl || "";
+      
+      if (values.featuredImage) {
+        // Only process the image if it has changed from the original
+        const isImageChanged = 
+          (typeof values.featuredImage === 'string' && values.featuredImage !== originalImageUrl) ||
+          (values.featuredImage instanceof File);
+          
+        if (isImageChanged) {
+          if (values.featuredImage instanceof File) {
+            // Case 1: featuredImage is a File object
+            const imageData = await uploadNewsImage(values.featuredImage);
+            imageUrl = imageData.public_url;
+          } else if (typeof values.featuredImage === 'string') {
+            // Case 2: featuredImage is a data URL (Base64)
+            if (values.featuredImage.startsWith('data:image')) {
+              // Convert Base64 to File
+              try {
+                // Separate Base64 header and data
+                const arr = values.featuredImage.split(',');
+                const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
+                const bstr = atob(arr[1]);
+                let n = bstr.length;
+                const u8arr = new Uint8Array(n);
+                
+                while (n--) {
+                  u8arr[n] = bstr.charCodeAt(n);
+                }
+                
+                // Create File from Base64 data
+                const file = new File([u8arr], `featured-image-${Date.now()}.${mime.split('/')[1] || 'jpg'}`, { type: mime });
+                
+                // Upload File to Google Cloud
+                const imageData = await uploadNewsImage(file);
+                imageUrl = imageData.public_url;
+              } catch (error) {
+                console.error("Lỗi khi chuyển đổi Base64 sang File:", error);
+                imageUrl = values.featuredImage;
+              }
+            } else if (values.featuredImage.startsWith('https://storage.googleapis.com')) {
+              // Case 3: featuredImage is already a Google Cloud URL
+              imageUrl = values.featuredImage;
+            }
+          }
+        }
       }
 
       // Process content images
@@ -225,44 +275,71 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
         });
       }
 
-      // Convert form data to API data format
-      const apiData = {
+      // Prepare news data with processed content
+      const newsData: Partial<NewsArticle> = {
         title: values.title,
+        content: processedContent, // Use processed content with cloud storage URLs
         author: values.author,
         summary: values.excerpt,
-        content: processedContent, // Use processed content with cloud storage URLs
         category: values.category,
-        tags: values.tags ? values.tags.split(",").map(tag => tag.trim()) : [],
+        tags: values.tags ? values.tags.split(',').map(tag => tag.trim()) : [],
         image_url: imageUrl,
-        publishDate: format(values.publishDate, "dd/MM/yyyy"),
-        publishTime: values.publishTime,
         featured: values.isFeatured,
-        status: values.isDraft ? "draft" : "published",
+        publishDate: format(values.publishDate, "yyyy-MM-dd"),
+        publishTime: values.publishTime,
+        status: values.isDraft ? "draft" : "published"
       };
 
-      await updateNews(newsId, apiData);
-
+      // Update the news article
+      await updateNews(newsId, newsData);
+      
       toast({
         title: values.isDraft
           ? "Bài viết đã được cập nhật và lưu nháp"
           : "Bài viết đã được cập nhật và đăng",
         description: values.isDraft
           ? "Bạn có thể tiếp tục chỉnh sửa bài viết này sau"
-          : "Bài viết đã được cập nhật thành công và hiển thị trên trang tin tức",
+          : "Bài viết đã được cập nhật và hiển thị trên trang tin tức",
       });
 
-      if (!values.isDraft) {
-        router.push("/admin/news");
-      }
+      // Redirect to admin news page
+      router.push("/admin/news");
+      
     } catch (error) {
-      console.error("Error updating news:", error);
+      console.error("Lỗi khi cập nhật bài viết:", error);
       toast({
-        title: "Lỗi cập nhật",
-        description: "Đã xảy ra lỗi khi cập nhật bài viết. Vui lòng thử lại sau.",
+        title: "Đã xảy ra lỗi",
+        description: "Không thể cập nhật bài viết. Vui lòng thử lại sau.",
         variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
+    }
+  }
+
+  async function handleDelete() {
+    setIsDeleting(true);
+    
+    try {
+      await deleteNews(newsId);
+      
+      toast({
+        title: "Bài viết đã được xóa",
+        description: "Bài viết đã được xóa thành công",
+      });
+      
+      // Redirect to admin news page
+      router.push("/admin/news");
+      
+    } catch (error) {
+      console.error("Lỗi khi xóa bài viết:", error);
+      toast({
+        title: "Đã xảy ra lỗi",
+        description: "Không thể xóa bài viết. Vui lòng thử lại sau.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -274,7 +351,7 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-64">
+      <div className="flex items-center justify-center h-48">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
         <span className="ml-2">Đang tải thông tin bài viết...</span>
       </div>
@@ -300,6 +377,40 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
         </TabsList>
 
         <div className="flex items-center gap-2">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="destructive"
+                size="icon"
+                disabled={isDeleting || isSubmitting}
+                className="relative"
+              >
+                {isDeleting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Trash className="h-4 w-4" />
+                )}
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Xóa bài viết?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Hành động này không thể hoàn tác. Bài viết sẽ bị xóa vĩnh viễn khỏi hệ thống.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Hủy</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDelete}
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                >
+                  Xóa bài viết
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
           <Button
             variant="outline"
             onClick={() => {
@@ -307,11 +418,16 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
               form.handleSubmit(onSubmit)();
             }}
             disabled={isSubmitting}
+            className="relative"
           >
             {isSubmitting && form.getValues("isDraft") ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
-            Lưu nháp
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <span>Đang lưu...</span>
+              </>
+            ) : (
+              <span>Lưu nháp</span>
+            )}
           </Button>
           <Button
             onClick={() => {
@@ -319,12 +435,19 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
               form.handleSubmit(onSubmit)();
             }}
             disabled={isSubmitting}
+            className="relative"
           >
             {isSubmitting && !form.getValues("isDraft") ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
-            <Send className="mr-2 h-4 w-4" />
-            Cập nhật
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <span>Đang chỉnh sửa...</span>
+              </>
+            ) : (
+              <>
+                {/* <Send className="mr-2 h-4 w-4" /> */}
+                <span>Chỉnh sửa</span>
+              </>
+            )}
           </Button>
         </div>
       </div>
@@ -468,18 +591,18 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="traffic">
+                              <SelectItem value="Giao thông">
                                 Tình hình giao thông
                               </SelectItem>
-                              <SelectItem value="accident">Tai nạn</SelectItem>
-                              <SelectItem value="construction">
+                              <SelectItem value="Tai nạn">Tai nạn</SelectItem>
+                              <SelectItem value="Công trình">
                                 Công trình
                               </SelectItem>
-                              <SelectItem value="regulation">
+                              <SelectItem value="Quy định">
                                 Quy định mới
                               </SelectItem>
-                              <SelectItem value="weather">Thời tiết</SelectItem>
-                              <SelectItem value="other">Khác</SelectItem>
+                              <SelectItem value="Thời tiết">Thời tiết</SelectItem>
+                              <SelectItem value="Khác">Khác</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -595,7 +718,7 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
                       )}
                     />
 
-                    <FormField
+                    {/* <FormField
                       control={form.control}
                       name="isDraft"
                       render={({ field }) => (
@@ -614,7 +737,7 @@ export function ModifyNewsEditor({ newsId }: ModifyNewsEditorProps) {
                           </FormControl>
                         </FormItem>
                       )}
-                    />
+                    /> */}
                   </CardContent>
                 </Card>
               </div>

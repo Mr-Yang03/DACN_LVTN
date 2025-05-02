@@ -12,7 +12,8 @@ import {
   XCircle, 
   Search,
   X,
-  Loader2
+  Loader2,
+  Star
 } from 'lucide-react';
 import { isWithinInterval } from 'date-fns';
 import { DateRange } from 'react-day-picker';
@@ -44,6 +45,8 @@ import { useToast } from '@/hooks/use-toast';
 import { DateRangePicker } from '@/components/ui/date-range-picker';
 import { getAllNews, deleteNews, updateNews, NewsArticle } from '@/apis/newsApi';
 import { ContentSpinner } from '@/components/ui/spinner';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 
 export function NewsTable() {
   const router = useRouter();
@@ -56,6 +59,8 @@ export function NewsTable() {
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const [featuredFilter, setFeaturedFilter] = useState<boolean | null>(null);
 
   // Load data on component mount
   useEffect(() => {
@@ -211,7 +216,8 @@ export function NewsTable() {
     const matchesSearch = 
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (item.author?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-      (item.category?.toLowerCase() || '').includes(searchTerm.toLowerCase());
+      (item.category?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+      (item._id?.toLowerCase() || '').includes(searchTerm.toLowerCase()); // Thêm tìm kiếm theo ID
     
     // Date range filter
     let matchesDateRange = true;
@@ -231,7 +237,15 @@ export function NewsTable() {
       }
     }
     
-    return matchesSearch && matchesDateRange;
+    // Status filter
+    const matchesStatus = statusFilter === null || item.status === statusFilter;
+    
+    // Featured filter
+    const matchesFeatured = featuredFilter === null || 
+      (featuredFilter === true && item.featured) || 
+      (featuredFilter === false && !item.featured);
+    
+    return matchesSearch && matchesDateRange && matchesStatus && matchesFeatured;
   });
 
   // Sort data based on current sort settings
@@ -287,7 +301,7 @@ export function NewsTable() {
     switch (category) {
       case 'Tai nạn':
         return 'bg-red-500 hover:bg-red-600';
-      case 'Quy định mới':
+      case 'Quy định':
         return 'bg-purple-500 hover:bg-purple-600';
       case 'Công trình':
         return 'bg-orange-500 hover:bg-orange-600';
@@ -302,46 +316,169 @@ export function NewsTable() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 w-full flex-wrap">
-          <div className="w-full sm:w-auto flex-1 md:flex-none order-2 sm:order-1">
-            <DateRangePicker 
-              dateRange={dateRange}
-              onDateRangeChange={setDateRange}
-              className="flex-grow"
-            />
+        <div className="w-full flex flex-wrap gap-2 mt-2">
+          <div className="flex flex-wrap items-center gap-2 grow">
+            {/* Date Range Filter */}
+            <div className="w-[200px]">
+              <DateRangePicker 
+                dateRange={dateRange}
+                onDateRangeChange={setDateRange}
+              />
+            </div>
+            
+            {/* Status filter */}
+            <div className="w-[200px]">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start rounded-full  text-gray-500",
+                      statusFilter && "text-primary border-primary"
+                    )}
+                  >
+                    <CheckCircle className="mr-2 h-4 w-4" />
+                    {statusFilter === 'published' 
+                      ? "Đã đăng" 
+                      : statusFilter === 'draft' 
+                        ? "Bản nháp" 
+                        : "Chọn trạng thái"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-2">
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      variant={statusFilter === 'published' ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setStatusFilter(statusFilter === 'published' ? null : 'published')}
+                      className="justify-start"
+                    >
+                      <CheckCircle className="mr-2 h-4 w-4" />
+                      Đã đăng
+                    </Button>
+                    <Button
+                      variant={statusFilter === 'draft' ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setStatusFilter(statusFilter === 'draft' ? null : 'draft')}
+                      className="justify-start"
+                    >
+                      <XCircle className="mr-2 h-4 w-4" />
+                      Bản nháp
+                    </Button>
+                    {statusFilter && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setStatusFilter(null)}
+                        className="justify-start text-muted-foreground"
+                      >
+                        <X className="mr-2 h-4 w-4" />
+                        Xóa bộ lọc
+                      </Button>
+                    )}
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            {/* Featured filter */}
+            <div className="w-[200px]">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start rounded-full  text-gray-600",
+                      featuredFilter !== null && "text-primary border-primary"
+                    )}
+                  >
+                    <Star className="mr-2 h-4 w-4" />
+                    {featuredFilter === true 
+                      ? "Nổi bật" 
+                      : featuredFilter === false 
+                        ? "Không nổi bật" 
+                        : "Chọn nổi bật"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-2">
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      variant={featuredFilter === true ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setFeaturedFilter(featuredFilter === true ? null : true)}
+                      className="justify-start"
+                    >
+                      <Star className="mr-2 h-4 w-4 fill-current" />
+                      Nổi bật
+                    </Button>
+                    <Button
+                      variant={featuredFilter === false ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setFeaturedFilter(featuredFilter === false ? null : false)}
+                      className="justify-start"
+                    >
+                      <Star className="mr-2 h-4 w-4" />
+                      Không nổi bật
+                    </Button>
+                    {featuredFilter !== null && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setFeaturedFilter(null)}
+                        className="justify-start text-muted-foreground"
+                      >
+                        <X className="mr-2 h-4 w-4" />
+                        Xóa bộ lọc
+                      </Button>
+                    )}
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+            
+            {/* Clear all filters button - moved right after featured filter */}
+            {(statusFilter !== null || featuredFilter !== null || dateRange || searchTerm) && (
+              <div className="h-10">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setStatusFilter(null);
+                    setFeaturedFilter(null);
+                    setDateRange(undefined);
+                    setSearchTerm('');
+                  }}
+                  className="h-10 rounded-full"
+                >
+                  <X className="mr-2 h-4 w-4" />
+                  Xóa tất cả bộ lọc
+                </Button>
+              </div>
+            )}
           </div>
           
-          {dateRange && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setDateRange(undefined)}
-              className="h-10 order-3 sm:order-2"
-            >
-              <X className="mr-2 h-4 w-4" />
-              Xóa bộ lọc ngày
-            </Button>
-          )}
-          
-          <div className="relative w-full sm:w-64 order-1 sm:order-3 sm:ml-auto mb-2 sm:mb-0 flex flex-row items-center justify-center">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Tìm kiếm bài viết..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-8 rounded-full"
-            />
-            {searchTerm && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="absolute right-0 top-0 h-full px-3 text-muted-foreground"
-                onClick={() => setSearchTerm('')}
-              >
-                <X className="h-4 w-4" />
-                <span className="sr-only">Clear</span>
-              </Button>
-            )}
+          <div className="flex items-center gap-2 ml-auto">
+            {/* Search input - moved to the right */}
+            <div className="w-[300px] relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Tìm kiếm bài viết theo id, tiêu đề, tác giả"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-8 rounded-full"
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-0 top-0 h-full px-3 text-muted-foreground"
+                  onClick={() => setSearchTerm('')}
+                >
+                  <X className="h-4 w-4" />
+                  <span className="sr-only">Clear</span>
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -458,13 +595,9 @@ export function NewsTable() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
-                        <DropdownMenuItem onClick={() => router.push(`/news/${news._id}`)}>
-                          <Eye className="mr-2 h-4 w-4" />
-                          Xem
-                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => router.push(`/admin/news/edit/${news._id}`)}>
                           <Edit className="mr-2 h-4 w-4" />
-                          Chỉnh sửa
+                          Xem và chỉnh sửa
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={() => news._id && handleToggleStatus(news._id)}>
