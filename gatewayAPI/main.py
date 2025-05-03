@@ -112,6 +112,42 @@ async def get_cameras():
 
     return response.json()
 
+@app.get("/traffic/camera/{camera_id}/speed")
+async def get_camera_speed(
+    camera_id: str,
+    start_time: str = Query(...),
+    end_time: str = Query(...),
+    _=Depends(rate_limit),
+):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"{TRAFFIC_SERVICE_URL}/camera/{camera_id}/speed",
+            params={"start_time": start_time, "end_time": end_time}
+        )
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to fetch camera speed data")
+
+    return response.json()
+
+@app.get("/traffic/camera/{camera_id}/vehicle-types")
+async def get_vehicle_types(
+    camera_id: str,
+    start_time: str = Query(...),
+    end_time: str = Query(...),
+    _=Depends(rate_limit),
+):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"{TRAFFIC_SERVICE_URL}/camera/{camera_id}/vehicle-types",
+            params={"start_time": start_time, "end_time": end_time}
+        )
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to fetch vehicle types data")
+
+    return response.json()
+
 # News Service Routes
 @app.get("/news")
 async def get_all_news():

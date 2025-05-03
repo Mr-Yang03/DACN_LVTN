@@ -2760,3 +2760,545 @@ INFO:root:Request: GET http://localhost:9000/traffic/camera
 INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/traffic/camera
 INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/docs
+INFO:root:Request: GET http://localhost:9000/openapi.json
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:root:Request: GET http://localhost:9000/docs
+INFO:root:Request: GET http://localhost:9000/openapi.json
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T17:33:48.219Z&end_time=2025-05-03T18:33:48.219Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T17:38:52.392Z&end_time=2025-05-03T18:38:52.392Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T17:47:12.471Z&end_time=2025-05-03T18:47:12.471Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/56de42f611f398ec0c481280/speed?start_time=2025-05-03T17:47:18.443Z&end_time=2025-05-03T18:47:18.443Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T17:49:15.023Z&end_time=2025-05-03T18:49:15.023Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T17:51:07.428Z&end_time=2025-05-03T18:51:07.428Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T17%3A51%3A07.428Z&end_time=2025-05-03T18%3A51%3A07.428Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54898bfd3d90017ea77ae/speed?start_time=2025-05-03T17:52:06.864Z&end_time=2025-05-03T18:52:06.864Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54898bfd3d90017ea77ae/speed?start_time=2025-05-03T17%3A52%3A06.864Z&end_time=2025-05-03T18%3A52%3A06.864Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5d8cdc57766c88001718896e/speed?start_time=2025-05-03T17:52:21.357Z&end_time=2025-05-03T18:52:21.357Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5d8cdc57766c88001718896e/speed?start_time=2025-05-03T17%3A52%3A21.357Z&end_time=2025-05-03T18%3A52%3A21.357Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T17:53:57.973Z&end_time=2025-05-03T18:53:57.973Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T17%3A53%3A57.973Z&end_time=2025-05-03T18%3A53%3A57.973Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T17:54:34.832Z&end_time=2025-05-03T18:54:34.832Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T17%3A54%3A34.832Z&end_time=2025-05-03T18%3A54%3A34.832Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54968bfd3d90017ea7808/speed?start_time=2025-05-03T18:02:44.789Z&end_time=2025-05-03T19:02:44.789Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54968bfd3d90017ea7808/speed?start_time=2025-05-03T18%3A02%3A44.789Z&end_time=2025-05-03T19%3A02%3A44.789Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/584e738361cfea0012cf6951/speed?start_time=2025-05-03T18:02:56.696Z&end_time=2025-05-03T19:02:56.696Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/584e738361cfea0012cf6951/speed?start_time=2025-05-03T18%3A02%3A56.696Z&end_time=2025-05-03T19%3A02%3A56.696Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/587479b1b807da0011e33cf9/speed?start_time=2025-05-03T18:03:06.845Z&end_time=2025-05-03T19:03:06.845Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/587479b1b807da0011e33cf9/speed?start_time=2025-05-03T18%3A03%3A06.845Z&end_time=2025-05-03T19%3A03%3A06.845Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T18:04:40.978Z&end_time=2025-05-03T19:04:40.978Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T18%3A04%3A40.978Z&end_time=2025-05-03T19%3A04%3A40.978Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18:06:43.782Z&end_time=2025-05-03T19:06:43.782Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18:06:49.940Z&end_time=2025-05-03T19:06:49.940Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18:07:12.820Z&end_time=2025-05-03T19:07:12.820Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18%3A07%3A12.820Z&end_time=2025-05-03T19%3A07%3A12.820Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da77ea6068200171a6dd4/speed?start_time=2025-05-03T18:07:48.803Z&end_time=2025-05-03T19:07:48.803Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da77ea6068200171a6dd4/speed?start_time=2025-05-03T18%3A07%3A48.803Z&end_time=2025-05-03T19%3A07%3A48.803Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18:08:26.162Z&end_time=2025-05-03T19:08:26.162Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18%3A08%3A26.162Z&end_time=2025-05-03T19%3A08%3A26.162Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da77ea6068200171a6dd4/speed?start_time=2025-05-03T18:08:51.164Z&end_time=2025-05-03T19:08:51.164Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da77ea6068200171a6dd4/speed?start_time=2025-05-03T18%3A08%3A51.164Z&end_time=2025-05-03T19%3A08%3A51.164Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da72ca6068200171a6dbb/speed?start_time=2025-05-03T18:09:33.573Z&end_time=2025-05-03T19:09:33.573Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da72ca6068200171a6dbb/speed?start_time=2025-05-03T18%3A09%3A33.573Z&end_time=2025-05-03T19%3A09%3A33.573Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18:10:26.374Z&end_time=2025-05-03T19:10:26.374Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18%3A10%3A26.374Z&end_time=2025-05-03T19%3A10%3A26.374Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18:11:25.988Z&end_time=2025-05-03T19:11:25.988Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18%3A11%3A25.988Z&end_time=2025-05-03T19%3A11%3A25.988Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18:11:29.948Z&end_time=2025-05-03T19:11:29.948Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18%3A11%3A29.948Z&end_time=2025-05-03T19%3A11%3A29.948Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18:14:15.907Z&end_time=2025-05-03T19:14:15.907Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18%3A14%3A15.907Z&end_time=2025-05-03T19%3A14%3A15.907Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18:14:19.927Z&end_time=2025-05-03T19:14:19.927Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18:14:32.910Z&end_time=2025-05-03T19:14:32.910Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18%3A14%3A32.910Z&end_time=2025-05-03T19%3A14%3A32.910Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18:14:36.937Z&end_time=2025-05-03T19:14:36.937Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18%3A14%3A36.937Z&end_time=2025-05-03T19%3A14%3A36.937Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18:16:57.485Z&end_time=2025-05-03T19:16:57.485Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18:16:58.600Z&end_time=2025-05-03T19:16:58.600Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18%3A16%3A57.485Z&end_time=2025-05-03T19%3A16%3A57.485Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18%3A16%3A58.600Z&end_time=2025-05-03T19%3A16%3A58.600Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5b87c386ca057700116404a6/speed?start_time=2025-05-03T18:17:17.791Z&end_time=2025-05-03T19:17:17.791Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18:17:29.832Z&end_time=2025-05-03T19:17:29.832Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18%3A17%3A29.832Z&end_time=2025-05-03T19%3A17%3A29.832Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5b87c386ca057700116404a6/speed?start_time=2025-05-03T18:17:36.832Z&end_time=2025-05-03T19:17:36.832Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5b87c386ca057700116404a6/speed?start_time=2025-05-03T18%3A17%3A36.832Z&end_time=2025-05-03T19%3A17%3A36.832Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/56de42f611f398ec0c481286/speed?start_time=2025-05-03T18:18:19.585Z&end_time=2025-05-03T19:18:19.585Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/56de42f611f398ec0c481286/speed?start_time=2025-05-03T18%3A18%3A19.585Z&end_time=2025-05-03T19%3A18%3A19.585Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7966bfd3d90017e8f240/speed?start_time=2025-05-03T18:18:39.930Z&end_time=2025-05-03T19:18:39.930Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7966bfd3d90017e8f240/speed?start_time=2025-05-03T18%3A18%3A39.930Z&end_time=2025-05-03T19%3A18%3A39.930Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7a9cbfd3d90017e8f303/speed?start_time=2025-05-03T18:18:59.828Z&end_time=2025-05-03T19:18:59.828Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7a9cbfd3d90017e8f303/speed?start_time=2025-05-03T18%3A18%3A59.828Z&end_time=2025-05-03T19%3A18%3A59.828Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7cd3bfd3d90017e8f408/speed?start_time=2025-05-03T18:19:11.265Z&end_time=2025-05-03T19:19:11.265Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7cd3bfd3d90017e8f408/speed?start_time=2025-05-03T18%3A19%3A11.265Z&end_time=2025-05-03T19%3A19%3A11.265Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18:26:50.611Z&end_time=2025-05-03T19:26:50.611Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18%3A26%3A50.611Z&end_time=2025-05-03T19%3A26%3A50.611Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a824c905058170011f6eab0/speed?start_time=2025-05-03T18:27:00.144Z&end_time=2025-05-03T19:27:00.144Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a824c905058170011f6eab0/speed?start_time=2025-05-03T18%3A27%3A00.144Z&end_time=2025-05-03T19%3A27%3A00.144Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5d8cdc9d766c880017188970/speed?start_time=2025-05-03T18:27:08.164Z&end_time=2025-05-03T19:27:08.164Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5d8cdc9d766c880017188970/speed?start_time=2025-05-03T18%3A27%3A08.164Z&end_time=2025-05-03T19%3A27%3A08.164Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18:41:01.711Z&end_time=2025-05-03T19:41:01.711Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18%3A41%3A01.711Z&end_time=2025-05-03T19%3A41%3A01.711Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18:41:08.913Z&end_time=2025-05-03T19:41:08.913Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T18%3A41%3A08.913Z&end_time=2025-05-03T19%3A41%3A08.913Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18:41:12.267Z&end_time=2025-05-03T19:41:12.267Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/58175c81edeb6c0012a2d5c2/speed?start_time=2025-05-03T18%3A41%3A12.267Z&end_time=2025-05-03T19%3A41%3A12.267Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18:42:41.708Z&end_time=2025-05-03T19:42:41.708Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18%3A42%3A41.708Z&end_time=2025-05-03T19%3A42%3A41.708Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54938bfd3d90017ea77f6/speed?start_time=2025-05-03T18:42:45.448Z&end_time=2025-05-03T19:42:45.448Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54938bfd3d90017ea77f6/speed?start_time=2025-05-03T18%3A42%3A45.448Z&end_time=2025-05-03T19%3A42%3A45.448Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18:43:05.056Z&end_time=2025-05-03T19:43:05.056Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18%3A43%3A05.056Z&end_time=2025-05-03T19%3A43%3A05.056Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54938bfd3d90017ea77f6/speed?start_time=2025-05-03T18:43:57.995Z&end_time=2025-05-03T19:43:57.995Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54938bfd3d90017ea77f6/speed?start_time=2025-05-03T18%3A43%3A57.995Z&end_time=2025-05-03T19%3A43%3A57.995Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54aedbfd3d90017ea79c3/speed?start_time=2025-05-03T18:45:25.301Z&end_time=2025-05-03T19:45:25.301Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54aedbfd3d90017ea79c3/speed?start_time=2025-05-03T18%3A45%3A25.301Z&end_time=2025-05-03T19%3A45%3A25.301Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18:46:08.269Z&end_time=2025-05-03T19:46:08.269Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18%3A46%3A08.269Z&end_time=2025-05-03T19%3A46%3A08.269Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T18:46:14.882Z&end_time=2025-05-03T19:46:14.882Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T18%3A46%3A14.882Z&end_time=2025-05-03T19%3A46%3A14.882Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18:56:29.880Z&end_time=2025-05-03T19:56:29.880Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T18%3A56%3A29.880Z&end_time=2025-05-03T19%3A56%3A29.880Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b3c59fbfd3d90017e9ace8/speed?start_time=2025-05-03T18:56:32.348Z&end_time=2025-05-03T19:56:32.348Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b3c59fbfd3d90017e9ace8/speed?start_time=2025-05-03T18%3A56%3A32.348Z&end_time=2025-05-03T19%3A56%3A32.348Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b65e6abfd3d90017eaa361/speed?start_time=2025-05-03T18:56:50.429Z&end_time=2025-05-03T19:56:50.429Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b65e6abfd3d90017eaa361/speed?start_time=2025-05-03T18%3A56%3A50.429Z&end_time=2025-05-03T19%3A56%3A50.429Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54898bfd3d90017ea77ae/speed?start_time=2025-05-03T18:57:51.708Z&end_time=2025-05-03T19:57:51.708Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54898bfd3d90017ea77ae/speed?start_time=2025-05-03T18%3A57%3A51.708Z&end_time=2025-05-03T19%3A57%3A51.708Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6066608576340017d06617/speed?start_time=2025-05-03T18:58:36.655Z&end_time=2025-05-03T19:58:36.655Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6066608576340017d06617/speed?start_time=2025-05-03T18%3A58%3A36.655Z&end_time=2025-05-03T19%3A58%3A36.655Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/597bf277faa7ea0011c7c29f/speed?start_time=2025-05-03T19:02:56.099Z&end_time=2025-05-03T20:02:56.099Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/597bf277faa7ea0011c7c29f/speed?start_time=2025-05-03T19%3A02%3A56.099Z&end_time=2025-05-03T20%3A02%3A56.099Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:09:46.484Z&end_time=2025-05-03T20:09:46.484Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A09%3A46.484Z&end_time=2025-05-03T20%3A09%3A46.484Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/56df8274c062921100c143df/speed?start_time=2025-05-03T19:09:54.039Z&end_time=2025-05-03T20:09:54.039Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/56df8274c062921100c143df/speed?start_time=2025-05-03T19%3A09%3A54.039Z&end_time=2025-05-03T20%3A09%3A54.039Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:11:41.875Z&end_time=2025-05-03T20:11:41.875Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A11%3A41.875Z&end_time=2025-05-03T20%3A11%3A41.875Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:22:43.460Z&end_time=2025-05-03T20:22:43.460Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A22%3A43.460Z&end_time=2025-05-03T20%3A22%3A43.460Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T19:23:35.810Z&end_time=2025-05-03T20:23:35.810Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T19%3A23%3A35.810Z&end_time=2025-05-03T20%3A23%3A35.810Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:24:24.333Z&end_time=2025-05-03T20:24:24.333Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A24%3A24.333Z&end_time=2025-05-03T20%3A24%3A24.333Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:25:11.216Z&end_time=2025-05-03T20:25:11.216Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A25%3A11.216Z&end_time=2025-05-03T20%3A25%3A11.216Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:28:16.985Z&end_time=2025-05-03T20:28:16.985Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A28%3A16.985Z&end_time=2025-05-03T20%3A28%3A16.985Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:28:46.172Z&end_time=2025-05-03T20:28:46.172Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A28%3A46.172Z&end_time=2025-05-03T20%3A28%3A46.172Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/597bf0b8faa7ea0011c7c293/speed?start_time=2025-05-03T19:31:46.425Z&end_time=2025-05-03T20:31:46.425Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/597bf0b8faa7ea0011c7c293/speed?start_time=2025-05-03T19%3A31%3A46.425Z&end_time=2025-05-03T20%3A31%3A46.425Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/587654d3b807da0011e33d36/speed?start_time=2025-05-03T19:31:51.640Z&end_time=2025-05-03T20:31:51.640Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/587654d3b807da0011e33d36/speed?start_time=2025-05-03T19%3A31%3A51.640Z&end_time=2025-05-03T20%3A31%3A51.640Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:34:53.134Z&end_time=2025-05-03T20:34:53.134Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A34%3A53.134Z&end_time=2025-05-03T20%3A34%3A53.134Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63bd1f48bfd3d90017ec3d19/speed?start_time=2025-05-03T19:34:56.294Z&end_time=2025-05-03T20:34:56.294Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63bd1f48bfd3d90017ec3d19/speed?start_time=2025-05-03T19%3A34%3A56.294Z&end_time=2025-05-03T20%3A34%3A56.294Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:41:21.804Z&end_time=2025-05-03T20:41:21.804Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A41%3A21.804Z&end_time=2025-05-03T20%3A41%3A21.804Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:42:10.670Z&end_time=2025-05-03T20:42:10.670Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A42%3A10.670Z&end_time=2025-05-03T20%3A42%3A10.670Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:42:23.836Z&end_time=2025-05-03T20:42:23.836Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A42%3A23.836Z&end_time=2025-05-03T20%3A42%3A23.836Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:43:58.458Z&end_time=2025-05-03T20:43:58.458Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A43%3A58.458Z&end_time=2025-05-03T20%3A43%3A58.458Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54968bfd3d90017ea7808/speed?start_time=2025-05-03T19:44:00.051Z&end_time=2025-05-03T20:44:00.051Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54968bfd3d90017ea7808/speed?start_time=2025-05-03T19%3A44%3A00.051Z&end_time=2025-05-03T20%3A44%3A00.051Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a8267fe5058170011f6eae1/speed?start_time=2025-05-03T19:44:07.233Z&end_time=2025-05-03T20:44:07.233Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a8267fe5058170011f6eae1/speed?start_time=2025-05-03T19%3A44%3A07.233Z&end_time=2025-05-03T20%3A44%3A07.233Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:45:02.574Z&end_time=2025-05-03T20:45:02.574Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A45%3A02.574Z&end_time=2025-05-03T20%3A45%3A02.574Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:45:12.018Z&end_time=2025-05-03T20:45:12.018Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A45%3A12.018Z&end_time=2025-05-03T20%3A45%3A12.018Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:45:58.712Z&end_time=2025-05-03T20:45:58.712Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A45%3A58.712Z&end_time=2025-05-03T20%3A45%3A58.712Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T19:46:01.495Z&end_time=2025-05-03T20:46:01.495Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/649da495a6068200171a6cb6/speed?start_time=2025-05-03T19%3A46%3A01.495Z&end_time=2025-05-03T20%3A46%3A01.495Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:48:01.539Z&end_time=2025-05-03T20:48:01.539Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A48%3A01.539Z&end_time=2025-05-03T20%3A48%3A01.539Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T19:48:05.798Z&end_time=2025-05-03T20:48:05.798Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T19%3A48%3A05.798Z&end_time=2025-05-03T20%3A48%3A05.798Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:49:54.321Z&end_time=2025-05-03T20:49:54.321Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A49%3A54.321Z&end_time=2025-05-03T20%3A49%3A54.321Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:50:32.176Z&end_time=2025-05-03T20:50:32.176Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A50%3A32.176Z&end_time=2025-05-03T20%3A50%3A32.176Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:50:39.921Z&end_time=2025-05-03T20:50:39.921Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A50%3A39.921Z&end_time=2025-05-03T20%3A50%3A39.921Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:51:14.822Z&end_time=2025-05-03T20:51:14.822Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A51%3A14.822Z&end_time=2025-05-03T20%3A51%3A14.822Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:51:31.925Z&end_time=2025-05-03T20:51:31.925Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A51%3A31.925Z&end_time=2025-05-03T20%3A51%3A31.925Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:52:50.356Z&end_time=2025-05-03T20:52:50.356Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A52%3A50.356Z&end_time=2025-05-03T20%3A52%3A50.356Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T19:53:17.784Z&end_time=2025-05-03T20:53:17.784Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T19%3A53%3A17.784Z&end_time=2025-05-03T20%3A53%3A17.784Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/56de42f611f398ec0c481292/speed?start_time=2025-05-03T19:53:22.388Z&end_time=2025-05-03T20:53:22.388Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/56de42f611f398ec0c481292/speed?start_time=2025-05-03T19%3A53%3A22.388Z&end_time=2025-05-03T20%3A53%3A22.388Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:54:38.570Z&end_time=2025-05-03T20:54:38.570Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A54%3A38.570Z&end_time=2025-05-03T20%3A54%3A38.570Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:55:45.440Z&end_time=2025-05-03T20:55:45.440Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A55%3A45.440Z&end_time=2025-05-03T20%3A55%3A45.440Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:56:13.305Z&end_time=2025-05-03T20:56:13.305Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A56%3A13.305Z&end_time=2025-05-03T20%3A56%3A13.305Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:57:57.359Z&end_time=2025-05-03T20:57:57.359Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A57%3A57.359Z&end_time=2025-05-03T20%3A57%3A57.359Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19:58:25.123Z&end_time=2025-05-03T20:58:25.123Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T19%3A58%3A25.123Z&end_time=2025-05-03T20%3A58%3A25.123Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/56de42f611f398ec0c481292/speed?start_time=2025-05-03T20:00:54.170Z&end_time=2025-05-03T21:00:54.170Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/56de42f611f398ec0c481292/speed?start_time=2025-05-03T20%3A00%3A54.170Z&end_time=2025-05-03T21%3A00%3A54.170Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7903bfd3d90017e8f211/speed?start_time=2025-05-03T20:01:05.869Z&end_time=2025-05-03T21:01:05.869Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7903bfd3d90017e8f211/speed?start_time=2025-05-03T20%3A01%3A05.869Z&end_time=2025-05-03T21%3A01%3A05.869Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:03:04.876Z&end_time=2025-05-03T21:03:04.876Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A03%3A04.876Z&end_time=2025-05-03T21%3A03%3A04.876Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:09:43.174Z&end_time=2025-05-03T21:09:43.174Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A09%3A43.174Z&end_time=2025-05-03T21%3A09%3A43.174Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:09:46.252Z&end_time=2025-05-03T21:09:46.252Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A09%3A46.252Z&end_time=2025-05-03T21%3A09%3A46.252Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:10:50.923Z&end_time=2025-05-03T21:10:50.923Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A10%3A50.923Z&end_time=2025-05-03T21%3A10%3A50.923Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:11:14.378Z&end_time=2025-05-03T21:11:14.378Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A11%3A14.378Z&end_time=2025-05-03T21%3A11%3A14.378Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:11:17.945Z&end_time=2025-05-03T21:11:17.945Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A11%3A17.945Z&end_time=2025-05-03T21%3A11%3A17.945Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-02T21:11:31.786Z&end_time=2025-05-03T21:11:31.786Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-02T21%3A11%3A31.786Z&end_time=2025-05-03T21%3A11%3A31.786Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-04-26T21:11:49.317Z&end_time=2025-05-03T21:11:49.317Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:42:08.563Z&end_time=2025-05-03T21:12:08.563Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A42%3A08.563Z&end_time=2025-05-03T21%3A12%3A08.563Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:12:12.063Z&end_time=2025-05-03T21:12:12.063Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A12%3A12.063Z&end_time=2025-05-03T21%3A12%3A12.063Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-02T21:12:15.268Z&end_time=2025-05-03T21:12:15.268Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-02T21%3A12%3A15.268Z&end_time=2025-05-03T21%3A12%3A15.268Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:46:24.309Z&end_time=2025-05-03T21:16:24.309Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A46%3A24.309Z&end_time=2025-05-03T21%3A16%3A24.309Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:16:39.385Z&end_time=2025-05-03T21:16:39.385Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A16%3A39.385Z&end_time=2025-05-03T21%3A16%3A39.385Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:47:53.087Z&end_time=2025-05-03T21:17:53.087Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A47%3A53.087Z&end_time=2025-05-03T21%3A17%3A53.087Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:17:58.864Z&end_time=2025-05-03T21:17:58.864Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A17%3A58.864Z&end_time=2025-05-03T21%3A17%3A58.864Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-02T21:18:03.183Z&end_time=2025-05-03T21:18:03.183Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-02T21%3A18%3A03.183Z&end_time=2025-05-03T21%3A18%3A03.183Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:49:21.592Z&end_time=2025-05-03T21:19:21.592Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A49%3A21.592Z&end_time=2025-05-03T21%3A19%3A21.592Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:19:24.706Z&end_time=2025-05-03T21:19:24.706Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A19%3A24.706Z&end_time=2025-05-03T21%3A19%3A24.706Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-02T21:19:28.111Z&end_time=2025-05-03T21:19:28.111Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-02T21%3A19%3A28.111Z&end_time=2025-05-03T21%3A19%3A28.111Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:26:19.473Z&end_time=2025-05-03T21:26:19.473Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A26%3A19.473Z&end_time=2025-05-03T21%3A26%3A19.473Z "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:httpx:HTTP Request: POST http://localhost:8005/chatbot/ "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:httpx:HTTP Request: POST http://localhost:8005/chatbot/ "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:httpx:HTTP Request: POST http://localhost:8005/chatbot/ "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20:35:28.592Z&end_time=2025-05-03T21:35:28.592Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:35:25.582Z&end_time=2025-05-03T21:35:25.582Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b548c3bfd3d90017ea77c0/vehicle-types?start_time=2025-05-03T20:35:28.593Z&end_time=2025-05-03T21:35:28.593Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20:35:25.582Z&end_time=2025-05-03T21:35:25.582Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20%3A35%3A25.582Z&end_time=2025-05-03T21%3A35%3A25.582Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:35:32.324Z&end_time=2025-05-03T21:35:32.324Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20:35:32.324Z&end_time=2025-05-03T21:35:32.324Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A35%3A25.582Z&end_time=2025-05-03T21%3A35%3A25.582Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/speed?start_time=2025-05-03T20%3A35%3A28.592Z&end_time=2025-05-03T21%3A35%3A28.592Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b548c3bfd3d90017ea77c0/vehicle-types?start_time=2025-05-03T20%3A35%3A28.593Z&end_time=2025-05-03T21%3A35%3A28.593Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A35%3A32.324Z&end_time=2025-05-03T21%3A35%3A32.324Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20%3A35%3A32.324Z&end_time=2025-05-03T21%3A35%3A32.324Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T21:06:34.185Z&end_time=2025-05-03T21:36:34.185Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T21:06:34.185Z&end_time=2025-05-03T21:36:34.185Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T21%3A06%3A34.185Z&end_time=2025-05-03T21%3A36%3A34.185Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T21%3A06%3A34.185Z&end_time=2025-05-03T21%3A36%3A34.185Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-02T21:36:40.640Z&end_time=2025-05-03T21:36:40.640Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-02T21:36:40.640Z&end_time=2025-05-03T21:36:40.640Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-02T21%3A36%3A40.640Z&end_time=2025-05-03T21%3A36%3A40.640Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-02T21%3A36%3A40.640Z&end_time=2025-05-03T21%3A36%3A40.640Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T21:07:02.566Z&end_time=2025-05-03T21:37:02.566Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T21:07:02.567Z&end_time=2025-05-03T21:37:02.567Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T21%3A07%3A02.567Z&end_time=2025-05-03T21%3A37%3A02.567Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T21%3A07%3A02.566Z&end_time=2025-05-03T21%3A37%3A02.566Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:37:45.164Z&end_time=2025-05-03T21:37:45.164Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20:37:45.165Z&end_time=2025-05-03T21:37:45.165Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A37%3A45.164Z&end_time=2025-05-03T21%3A37%3A45.164Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20%3A37%3A45.165Z&end_time=2025-05-03T21%3A37%3A45.165Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T20:37:51.701Z&end_time=2025-05-03T21:37:51.701Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T20:37:51.701Z&end_time=2025-05-03T21:37:51.701Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T20%3A37%3A51.701Z&end_time=2025-05-03T21%3A37%3A51.701Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T20%3A37%3A51.701Z&end_time=2025-05-03T21%3A37%3A51.701Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-02T21:38:02.557Z&end_time=2025-05-03T21:38:02.557Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-02T21:38:02.557Z&end_time=2025-05-03T21:38:02.557Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-02T21%3A38%3A02.557Z&end_time=2025-05-03T21%3A38%3A02.557Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-02T21%3A38%3A02.557Z&end_time=2025-05-03T21%3A38%3A02.557Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T21:08:23.718Z&end_time=2025-05-03T21:38:23.718Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T21:08:23.718Z&end_time=2025-05-03T21:38:23.718Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T21%3A08%3A23.718Z&end_time=2025-05-03T21%3A38%3A23.718Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T21%3A08%3A23.718Z&end_time=2025-05-03T21%3A38%3A23.718Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T20:38:26.532Z&end_time=2025-05-03T21:38:26.532Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T20:38:26.533Z&end_time=2025-05-03T21:38:26.533Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T20%3A38%3A26.532Z&end_time=2025-05-03T21%3A38%3A26.532Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T20%3A38%3A26.533Z&end_time=2025-05-03T21%3A38%3A26.533Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-02T21:38:29.817Z&end_time=2025-05-03T21:38:29.817Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-02T21:38:29.817Z&end_time=2025-05-03T21:38:29.817Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-02T21%3A38%3A29.817Z&end_time=2025-05-03T21%3A38%3A29.817Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-02T21%3A38%3A29.817Z&end_time=2025-05-03T21%3A38%3A29.817Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T21:08:35.952Z&end_time=2025-05-03T21:38:35.952Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T21:08:35.952Z&end_time=2025-05-03T21:38:35.952Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T21%3A08%3A35.952Z&end_time=2025-05-03T21%3A38%3A35.952Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T21%3A08%3A35.952Z&end_time=2025-05-03T21%3A38%3A35.952Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T20:38:39.642Z&end_time=2025-05-03T21:38:39.642Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T20:38:39.643Z&end_time=2025-05-03T21:38:39.643Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T20%3A38%3A39.643Z&end_time=2025-05-03T21%3A38%3A39.643Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T20%3A38%3A39.642Z&end_time=2025-05-03T21%3A38%3A39.642Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-02T21:39:05.652Z&end_time=2025-05-03T21:39:05.652Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-02T21:39:05.652Z&end_time=2025-05-03T21:39:05.652Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-02T21%3A39%3A05.652Z&end_time=2025-05-03T21%3A39%3A05.652Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-02T21%3A39%3A05.652Z&end_time=2025-05-03T21%3A39%3A05.652Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T20:39:09.408Z&end_time=2025-05-03T21:39:09.408Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T20:39:09.408Z&end_time=2025-05-03T21:39:09.408Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-03T20%3A39%3A09.408Z&end_time=2025-05-03T21%3A39%3A09.408Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-03T20%3A39%3A09.408Z&end_time=2025-05-03T21%3A39%3A09.408Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-02T21:40:09.033Z&end_time=2025-05-03T21:40:09.033Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-02T21:40:09.033Z&end_time=2025-05-03T21:40:09.033Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/vehicle-types?start_time=2025-05-02T21%3A40%3A09.033Z&end_time=2025-05-03T21%3A40%3A09.033Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/583f926761cfea0012cf68f1/speed?start_time=2025-05-02T21%3A40%3A09.033Z&end_time=2025-05-03T21%3A40%3A09.033Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:42:08.215Z&end_time=2025-05-03T21:42:08.215Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20:42:08.216Z&end_time=2025-05-03T21:42:08.216Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A42%3A08.215Z&end_time=2025-05-03T21%3A42%3A08.215Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20%3A42%3A08.216Z&end_time=2025-05-03T21%3A42%3A08.216Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54968bfd3d90017ea7808/speed?start_time=2025-05-03T20:42:18.414Z&end_time=2025-05-03T21:42:18.414Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54968bfd3d90017ea7808/vehicle-types?start_time=2025-05-03T20:42:18.414Z&end_time=2025-05-03T21:42:18.414Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54968bfd3d90017ea7808/vehicle-types?start_time=2025-05-03T20%3A42%3A18.414Z&end_time=2025-05-03T21%3A42%3A18.414Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54968bfd3d90017ea7808/speed?start_time=2025-05-03T20%3A42%3A18.414Z&end_time=2025-05-03T21%3A42%3A18.414Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54968bfd3d90017ea7808/speed?start_time=2025-05-02T21:42:50.962Z&end_time=2025-05-03T21:42:50.962Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54968bfd3d90017ea7808/vehicle-types?start_time=2025-05-02T21:42:50.962Z&end_time=2025-05-03T21:42:50.962Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54968bfd3d90017ea7808/speed?start_time=2025-05-02T21%3A42%3A50.962Z&end_time=2025-05-03T21%3A42%3A50.962Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54968bfd3d90017ea7808/vehicle-types?start_time=2025-05-02T21%3A42%3A50.962Z&end_time=2025-05-03T21%3A42%3A50.962Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/59d34ce302eb490011a0a616/vehicle-types?start_time=2025-05-02T21:44:16.421Z&end_time=2025-05-03T21:44:16.421Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/59d34ce302eb490011a0a616/speed?start_time=2025-05-02T21:44:16.420Z&end_time=2025-05-03T21:44:16.420Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/59d34ce302eb490011a0a616/vehicle-types?start_time=2025-05-02T21%3A44%3A16.421Z&end_time=2025-05-03T21%3A44%3A16.421Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/59d34ce302eb490011a0a616/speed?start_time=2025-05-02T21%3A44%3A16.420Z&end_time=2025-05-03T21%3A44%3A16.420Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5abbb77298d8fc001102dfce/speed?start_time=2025-05-02T21:44:26.229Z&end_time=2025-05-03T21:44:26.229Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5abbb77298d8fc001102dfce/vehicle-types?start_time=2025-05-02T21:44:26.229Z&end_time=2025-05-03T21:44:26.229Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a8267fe5058170011f6eae1/speed?start_time=2025-05-02T21:44:27.030Z&end_time=2025-05-03T21:44:27.030Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a8267fe5058170011f6eae1/vehicle-types?start_time=2025-05-02T21:44:27.030Z&end_time=2025-05-03T21:44:27.030Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5abbb77298d8fc001102dfce/vehicle-types?start_time=2025-05-02T21%3A44%3A26.229Z&end_time=2025-05-03T21%3A44%3A26.229Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5abbb77298d8fc001102dfce/speed?start_time=2025-05-02T21%3A44%3A26.229Z&end_time=2025-05-03T21%3A44%3A26.229Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a8267fe5058170011f6eae1/vehicle-types?start_time=2025-05-02T21%3A44%3A27.030Z&end_time=2025-05-03T21%3A44%3A27.030Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a8267fe5058170011f6eae1/speed?start_time=2025-05-02T21%3A44%3A27.030Z&end_time=2025-05-03T21%3A44%3A27.030Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7938bfd3d90017e8f226/speed?start_time=2025-05-02T21:44:35.588Z&end_time=2025-05-03T21:44:35.588Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7938bfd3d90017e8f226/vehicle-types?start_time=2025-05-02T21:44:35.588Z&end_time=2025-05-03T21:44:35.588Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7938bfd3d90017e8f226/vehicle-types?start_time=2025-05-02T21%3A44%3A35.588Z&end_time=2025-05-03T21%3A44%3A35.588Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7938bfd3d90017e8f226/speed?start_time=2025-05-02T21%3A44%3A35.588Z&end_time=2025-05-03T21%3A44%3A35.588Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:48:24.143Z&end_time=2025-05-03T21:48:24.143Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20:48:24.143Z&end_time=2025-05-03T21:48:24.143Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A48%3A24.143Z&end_time=2025-05-03T21%3A48%3A24.143Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20%3A48%3A24.143Z&end_time=2025-05-03T21%3A48%3A24.143Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54968bfd3d90017ea7808/speed?start_time=2025-05-03T20:48:27.792Z&end_time=2025-05-03T21:48:27.792Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54968bfd3d90017ea7808/vehicle-types?start_time=2025-05-03T20:48:27.793Z&end_time=2025-05-03T21:48:27.793Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54968bfd3d90017ea7808/vehicle-types?start_time=2025-05-03T20%3A48%3A27.793Z&end_time=2025-05-03T21%3A48%3A27.793Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54968bfd3d90017ea7808/speed?start_time=2025-05-03T20%3A48%3A27.792Z&end_time=2025-05-03T21%3A48%3A27.792Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7903bfd3d90017e8f211/speed?start_time=2025-05-03T20:48:34.879Z&end_time=2025-05-03T21:48:34.879Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7903bfd3d90017e8f211/vehicle-types?start_time=2025-05-03T20:48:34.879Z&end_time=2025-05-03T21:48:34.879Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7903bfd3d90017e8f211/vehicle-types?start_time=2025-05-03T20%3A48%3A34.879Z&end_time=2025-05-03T21%3A48%3A34.879Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7903bfd3d90017e8f211/speed?start_time=2025-05-03T20%3A48%3A34.879Z&end_time=2025-05-03T21%3A48%3A34.879Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7be0bfd3d90017e8f3a8/speed?start_time=2025-05-03T20:48:43.976Z&end_time=2025-05-03T21:48:43.976Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7be0bfd3d90017e8f3a8/vehicle-types?start_time=2025-05-03T20:48:43.976Z&end_time=2025-05-03T21:48:43.976Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7be0bfd3d90017e8f3a8/speed?start_time=2025-05-03T20%3A48%3A43.976Z&end_time=2025-05-03T21%3A48%3A43.976Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7be0bfd3d90017e8f3a8/vehicle-types?start_time=2025-05-03T20%3A48%3A43.976Z&end_time=2025-05-03T21%3A48%3A43.976Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7be0bfd3d90017e8f3a8/speed?start_time=2025-05-02T21:49:21.052Z&end_time=2025-05-03T21:49:21.052Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7be0bfd3d90017e8f3a8/vehicle-types?start_time=2025-05-02T21:49:21.054Z&end_time=2025-05-03T21:49:21.054Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7be0bfd3d90017e8f3a8/speed?start_time=2025-05-02T21%3A49%3A21.052Z&end_time=2025-05-03T21%3A49%3A21.052Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7be0bfd3d90017e8f3a8/vehicle-types?start_time=2025-05-02T21%3A49%3A21.054Z&end_time=2025-05-03T21%3A49%3A21.054Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7be0bfd3d90017e8f3a8/speed?start_time=2025-05-03T21:20:03.825Z&end_time=2025-05-03T21:50:03.825Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7be0bfd3d90017e8f3a8/vehicle-types?start_time=2025-05-03T21:20:03.825Z&end_time=2025-05-03T21:50:03.825Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7be0bfd3d90017e8f3a8/vehicle-types?start_time=2025-05-03T21%3A20%3A03.825Z&end_time=2025-05-03T21%3A50%3A03.825Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7be0bfd3d90017e8f3a8/speed?start_time=2025-05-03T21%3A20%3A03.825Z&end_time=2025-05-03T21%3A50%3A03.825Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7be0bfd3d90017e8f3a8/speed?start_time=2025-05-03T20:50:06.735Z&end_time=2025-05-03T21:50:06.735Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7be0bfd3d90017e8f3a8/vehicle-types?start_time=2025-05-03T20:50:06.736Z&end_time=2025-05-03T21:50:06.736Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7be0bfd3d90017e8f3a8/speed?start_time=2025-05-03T20%3A50%3A06.735Z&end_time=2025-05-03T21%3A50%3A06.735Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7be0bfd3d90017e8f3a8/vehicle-types?start_time=2025-05-03T20%3A50%3A06.736Z&end_time=2025-05-03T21%3A50%3A06.736Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7be0bfd3d90017e8f3a8/speed?start_time=2025-05-02T21:50:11.821Z&end_time=2025-05-03T21:50:11.821Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63ae7be0bfd3d90017e8f3a8/vehicle-types?start_time=2025-05-02T21:50:11.821Z&end_time=2025-05-03T21:50:11.821Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7be0bfd3d90017e8f3a8/speed?start_time=2025-05-02T21%3A50%3A11.821Z&end_time=2025-05-03T21%3A50%3A11.821Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63ae7be0bfd3d90017e8f3a8/vehicle-types?start_time=2025-05-02T21%3A50%3A11.821Z&end_time=2025-05-03T21%3A50%3A11.821Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5d8cd2a3766c88001718893c/speed?start_time=2025-05-02T21:50:53.105Z&end_time=2025-05-03T21:50:53.105Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5d8cd2a3766c88001718893c/vehicle-types?start_time=2025-05-02T21:50:53.105Z&end_time=2025-05-03T21:50:53.105Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5d8cd2a3766c88001718893c/speed?start_time=2025-05-02T21%3A50%3A53.105Z&end_time=2025-05-03T21%3A50%3A53.105Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5d8cd2a3766c88001718893c/vehicle-types?start_time=2025-05-02T21%3A50%3A53.105Z&end_time=2025-05-03T21%3A50%3A53.105Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/api/cameras
+INFO:httpx:HTTP Request: GET http://localhost:8009/api/cameras "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:51:19.324Z&end_time=2025-05-03T21:51:19.324Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20:51:19.324Z&end_time=2025-05-03T21:51:19.324Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20%3A51%3A19.324Z&end_time=2025-05-03T21%3A51%3A19.324Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A51%3A19.324Z&end_time=2025-05-03T21%3A51%3A19.324Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54938bfd3d90017ea77f6/speed?start_time=2025-05-03T20:51:24.747Z&end_time=2025-05-03T21:51:24.747Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/63b54938bfd3d90017ea77f6/vehicle-types?start_time=2025-05-03T20:51:24.747Z&end_time=2025-05-03T21:51:24.747Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54938bfd3d90017ea77f6/vehicle-types?start_time=2025-05-03T20%3A51%3A24.747Z&end_time=2025-05-03T21%3A51%3A24.747Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/63b54938bfd3d90017ea77f6/speed?start_time=2025-05-03T20%3A51%3A24.747Z&end_time=2025-05-03T21%3A51%3A24.747Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20:51:54.918Z&end_time=2025-05-03T21:51:54.918Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20:51:54.918Z&end_time=2025-05-03T21:51:54.918Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20%3A51%3A54.918Z&end_time=2025-05-03T21%3A51%3A54.918Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A51%3A54.918Z&end_time=2025-05-03T21%3A51%3A54.918Z "HTTP/1.1 200 OK"

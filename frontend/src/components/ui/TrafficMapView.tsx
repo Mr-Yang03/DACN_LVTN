@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useLoadScript, GoogleMap, Marker, TrafficLayer } from "@react-google-maps/api";
-import { getCameras, getTrafficStatus } from "@/apis/trafficApi";
+import { getCameras, getRealTimeTrafficStatus } from "@/apis/trafficApi";
 import { MapPin, Layers, AlertTriangle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
