@@ -521,3 +521,44 @@ INFO:root:Request: GET http://localhost:9000/traffic/camera
 INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/traffic/camera
 INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/feedback/items/processed
+INFO:root:Request: OPTIONS http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/favicon.ico
+INFO:root:Request: OPTIONS http://localhost:9000/feedback/items/processed
+INFO:root:Request: OPTIONS http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:root:Request: OPTIONS http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:httpx:HTTP Request: GET http://localhost:8003/items/processed "HTTP/1.1 500 Internal Server Error"
+INFO:root:Request: GET http://localhost:9000/feedback/items/processed
+INFO:httpx:HTTP Request: GET http://localhost:8003/items/processed "HTTP/1.1 500 Internal Server Error"

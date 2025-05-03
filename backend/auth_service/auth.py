@@ -7,7 +7,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 auth_router = APIRouter()
 
 db = get_database()
-user_collection = db["user"]
+user_collection = db["Accounts"]
 
 
 class LoginInfo(BaseModel):

@@ -102,7 +102,41 @@ async def get_cameras():
 
     return response.json()
 
+# @app.post("/feedback")
+# async def submit_feedback(request: Request, token: str = Depends(verify_token)):
+#     body = await request.json()
+#     async with httpx.AsyncClient() as client:
+#         response = await client.post(
+#             f"{FEEDBACK_SERVICE_URL}/feedback",
+#             json={
+#                 "user_id": token["sub"],
+#                 "message": body.get("message"),
+#                 "rating": body.get("rating"),
+#             },
+#         )
+#     if response.status_code != 200:
+#         raise HTTPException(status_code=400, detail="Feedback submission failed")
+#     return {"message": "Feedback submitted successfully!"}
 
+@app.get("/feedback/all_items")
+async def get_feedback(token: str = Depends(verify_token)):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"{FEEDBACK_SERVICE_URL}/items"
+        )
+    if response.status_code != 200:
+        raise HTTPException(status_code=400, detail="Failed to fetch feedback")
+    return response.json()
+
+@app.get("/feedback/items/processed")
+async def get_processed_feedback():
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"{FEEDBACK_SERVICE_URL}/items/processed"
+        )
+    if response.status_code != 200:
+        raise HTTPException(status_code=400, detail="Failed to fetch processed feedback")
+    return response.json()
 
 if __name__ == "__main__":
     import uvicorn
