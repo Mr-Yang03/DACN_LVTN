@@ -44,8 +44,16 @@ export function AdminHeader() {
           <Link href="/admin/alerts" className="hover:text-gray-600">
             Cảnh báo
           </Link>
+<<<<<<< HEAD
           <Link href="/admin/monitor" className="hover:text-gray-400">
             Giám sát
+=======
+          <Link href="/admin/cameras" className="hover:text-gray-600">
+            Camera
+          </Link>
+          <Link href="/admin/profile" className="hover:text-gray-600">
+            Hồ sơ
+>>>>>>> a500c1ed53ea5003ed039d90d75174fd7f055ab2
           </Link>
           <Link href="/chatbot" className="hover:text-gray-600">
             Chatbot

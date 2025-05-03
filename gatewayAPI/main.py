@@ -26,6 +26,7 @@ FEEDBACK_SERVICE_URL = "http://localhost:8003"
 NEWS_SERVICE_URL = "http://localhost:8004"
 AGENT_SERVICE_URL = "http://localhost:8005"  # Assuming Agent service runs on port 8005
 
+CAMERA_SERVICE_URL = "http://localhost:8009"
 
 @app.post("/users/login")
 async def login(request: Request):
@@ -325,6 +326,49 @@ async def chat_with_agent(prompt: str = Form(...)):
                 status_code=500,
                 detail=f"An unexpected error occurred: {str(e)}"
             )
+
+# Camera Routes
+
+@app.get("/api/cameras")
+async def proxy_get_all_cameras():
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{CAMERA_SERVICE_URL}/api/cameras")
+    return response.json()
+
+@app.get("/api/cameras/{camera_id}")
+async def proxy_get_camera_by_id(camera_id: str):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{CAMERA_SERVICE_URL}/api/cameras/{camera_id}")
+    return response.json()
+
+@app.post("/api/cameras")
+async def proxy_create_camera(request: Request):
+    body = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.post(f"{CAMERA_SERVICE_URL}/api/cameras", json=body)
+    return response.json()
+
+@app.put("/api/cameras/{camera_id}")
+async def proxy_update_camera(camera_id: str, request: Request):
+    body = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.put(f"{CAMERA_SERVICE_URL}/api/cameras/{camera_id}", json=body)
+    return response.json()
+
+@app.delete("/api/cameras/{camera_id}")
+async def proxy_delete_camera(camera_id: str):
+    async with httpx.AsyncClient() as client:
+        response = await client.delete(f"{CAMERA_SERVICE_URL}/api/cameras/{camera_id}")
+    return response.json()
+
+@app.post("/api/cameras/{camera_id}/position")
+async def proxy_update_camera_position(camera_id: str, lat: float = Form(...), lng: float = Form(...)):
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            f"{CAMERA_SERVICE_URL}/api/cameras/{camera_id}/position",
+            params={"lat": lat, "lng": lng}
+        )
+    return response.json()
 
 
 if __name__ == "__main__":

@@ -1,38 +1,178 @@
 'use client'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useState, useRef, useEffect } from 'react'
-import dynamic from 'next/dynamic'
-import { Play, Pause, SkipBack, Maximize2, Volume2, Camera, Activity, AlertTriangle, Car, Clock, TrendingUp, BarChart3, MapPin } from 'lucide-react'
-import type { ApexOptions } from 'apexcharts'
+import { ApexOptions } from 'apexcharts';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
+import { useState, useRef, useEffect } from 'react';
+import { Play, Pause, SkipBack, Maximize2, Volume2, Camera, Activity, AlertTriangle, Car, Clock, TrendingUp, BarChart3, MapPin, RefreshCw } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { getCameras } from '@/apis/trafficApi';
 
+// Dynamic import for ApexCharts to avoid SSR issues
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
+
+interface SimpleGoogleMapProps {
+  center: {
+    lat: number;
+    lng: number;
+  };
+  zoom?: number;
+  markers?: Array<{
+    id: string; 
+    position: {
+      lat: number;
+      lng: number;
+    };
+    title: string;
+    status: 'online' | 'offline';
+    onClick?: () => void;
+  }>;
+}
+
+const GoogleMapComponent = dynamic<SimpleGoogleMapProps>(
+  () => import('@/components/ui/SimpleGoogleMap'),
+  { ssr: false }
+)
+
+interface Camera {
+  id: string
+  name: string
+  status: 'online' | 'offline'
+  location: {
+    lat: number
+    lng: number
+  }
+}
 
 export function TrafficMonitoringDashboard() {
   const [selectedCamera, setSelectedCamera] = useState({
-    id: 1,
-    name: 'Ngã tư Phố Huế - Tuệ Tĩnh',
+    id: '',
+    name: 'Hãy chọn một camera',
     status: 'online'
   })
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isFullScreen, setIsFullScreen] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const feedContainerRef = useRef<HTMLDivElement>(null)
   const [currentTime, setCurrentTime] = useState('0:00')
   const [duration, setDuration] = useState('5:00')
   const [activeTab, setActiveTab] = useState('thongke')
+  
+  const [availableCameras, setAvailableCameras] = useState<Camera[]>([])
+  const [mapCenter, setMapCenter] = useState({ lat: 10.7731, lng: 106.7024 })
+  const [mapZoom, setMapZoom] = useState(12)
+  const [isLoading, setIsLoading] = useState(true)
+  const [snapshotUrl, setSnapshotUrl] = useState('')
+  const [refreshInterval, setRefreshInterval] = useState<NodeJS.Timeout | null>(null)
+  const [refreshRate, setRefreshRate] = useState(1000)
+  const [isTestMode, setIsTestMode] = useState(false)
+  const testVideoUrl = "D:/HCMUT/DO_AN/final/output.mp4"
 
-  const handlePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause()
-      } else {
-        videoRef.current.play()
+  useEffect(() => {
+    const fetchCameras = async () => {
+      try {
+        setIsLoading(true)
+        const response = await getCameras({})
+        
+        const camerasData = response.cameras.map((camera: any) => ({
+          id: camera.Id,
+          name: camera.DisplayName,
+          status: camera.Status === 'active' ? 'online' : 'offline',
+          location: { 
+            lat: camera.Location.coordinates[1], 
+            lng: camera.Location.coordinates[0] 
+          }
+        }))
+        
+        setAvailableCameras(camerasData)
+        
+        if (camerasData.length > 0) {
+          setSelectedCamera(camerasData[0])
+          updateSnapshotUrl(camerasData[0].id)
+        }
+      } catch (err) {
+        console.error("Error fetching cameras:", err)
+      } finally {
+        setIsLoading(false)
       }
-      setIsPlaying(!isPlaying)
+    }
+
+    fetchCameras()
+  }, [])
+
+  const updateSnapshotUrl = (cameraId: string) => {
+    if (cameraId) {
+      setSnapshotUrl(`http://camera.thongtingiaothong.vn/api/snapshot/${cameraId}?t=${Date.now()}`)
     }
   }
 
-  // Thêm hiệu ứng đồng hồ thời gian thực
+  useEffect(() => {
+    if (isPlaying && selectedCamera.id) {
+      if (refreshInterval) {
+        clearInterval(refreshInterval)
+      }
+      
+      const interval = setInterval(() => {
+        updateSnapshotUrl(selectedCamera.id)
+      }, refreshRate)
+      
+      setRefreshInterval(interval)
+    } else {
+      if (refreshInterval) {
+        clearInterval(refreshInterval)
+        setRefreshInterval(null)
+      }
+    }
+    
+    return () => {
+      if (refreshInterval) {
+        clearInterval(refreshInterval)
+      }
+    }
+  }, [isPlaying, selectedCamera.id, refreshRate, refreshInterval])
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying)
+  }
+
+  const handleRefreshRateChange = (newRate: number) => {
+    setRefreshRate(newRate)
+  }
+
+  const handleCameraSelect = (camera: any) => {
+    setSelectedCamera(camera);
+    updateSnapshotUrl(camera.id);
+  }
+  
+  const handleMapCameraSelect = (camera: Camera) => {
+    setSelectedCamera(camera);
+    updateSnapshotUrl(camera.id);
+  }
+
+  const handleFullScreenToggle = () => {
+    if (feedContainerRef.current) {
+      if (!isFullScreen) {
+        if (feedContainerRef.current.requestFullscreen) {
+          feedContainerRef.current.requestFullscreen();
+        } else if ((feedContainerRef.current as any).webkitRequestFullscreen) {
+          (feedContainerRef.current as any).webkitRequestFullscreen();
+        } else if ((feedContainerRef.current as any).msRequestFullscreen) {
+          (feedContainerRef.current as any).msRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if ((document as any).webkitExitFullscreen) {
+          (document as any).webkitExitFullscreen();
+        } else if ((document as any).msExitFullscreen) {
+          (document as any).msExitFullscreen();
+        }
+      }
+      setIsFullScreen(!isFullScreen);
+    }
+  };
+
   const [currentDateTime, setCurrentDateTime] = useState(new Date())
   
   useEffect(() => {
@@ -56,7 +196,6 @@ export function TrafficMonitoringDashboard() {
     year: 'numeric'
   });
 
-  // Cập nhật dữ liệu biểu đồ với hiệu ứng gradient
   const vehicleOptions: ApexOptions = {
     chart: {
       type: 'line',
@@ -111,7 +250,7 @@ export function TrafficMonitoringDashboard() {
       categories: ['09:30 AM', '09:45 AM', '09:59 AM', '10:19 AM', '10:34 AM'],
       labels: {
         style: {
-          colors: '#718096',
+          colors: ['#718096'],
           fontSize: '11px',
           fontFamily: 'Inter, sans-serif',
           fontWeight: 500
@@ -130,13 +269,13 @@ export function TrafficMonitoringDashboard() {
       tickAmount: 4,
       labels: {
         style: {
-          colors: '#718096',
+          colors: ['#718096'],
           fontSize: '11px',
           fontFamily: 'Inter, sans-serif',
           fontWeight: 500
         },
-        formatter: function(value) {
-          return value.toFixed(0)
+        formatter: function(value: number) {
+          return value.toFixed(0);
         }
       }
     },
@@ -152,8 +291,8 @@ export function TrafficMonitoringDashboard() {
         format: 'HH:mm'
       },
       y: {
-        formatter: function(value) {
-          return value + ' xe'
+        formatter: function(value: number) {
+          return value + ' xe';
         }
       },
       marker: {
@@ -169,9 +308,8 @@ export function TrafficMonitoringDashboard() {
         size: 7
       }
     }
-  }
+  };
 
-  // Biểu đồ tốc độ với màu và hiệu ứng khác
   const speedOptions: ApexOptions = {
     ...vehicleOptions,
     fill: {
@@ -191,8 +329,8 @@ export function TrafficMonitoringDashboard() {
     tooltip: {
       ...vehicleOptions.tooltip,
       y: {
-        formatter: function(value) {
-          return value + ' km/h'
+        formatter: function(value: number) {
+          return value + ' km/h';
         }
       }
     },
@@ -200,24 +338,22 @@ export function TrafficMonitoringDashboard() {
       ...vehicleOptions.markers,
       colors: ['#059669']
     }
-  }
+  };
 
-  // Cập nhật dữ liệu động
   const vehicleSeries = [
     {
       name: 'Số lượng phương tiện',
       data: [20, 45, 30, 50, 35]
     }
-  ]
+  ];
 
   const speedSeries = [
     {
       name: 'Tốc độ trung bình',
       data: [30, 45, 25, 35, 20]
     }
-  ]
+  ];
 
-  // Dữ liệu phân tích
   const analyticsData = {
     totalVehicles: 96,
     avgSpeed: 51,
@@ -226,22 +362,8 @@ export function TrafficMonitoringDashboard() {
     congestionPercent: 37
   }
 
-  // Danh sách camera có thể chọn
-  const cameras = [
-    { id: 1, name: 'Ngã tư Phố Huế - Tuệ Tĩnh', status: 'online' },
-    { id: 2, name: 'Ngã tư Lê Duẩn - Hai Bà Trưng', status: 'online' },
-    { id: 3, name: 'Đại lộ Thăng Long', status: 'online' },
-    { id: 4, name: 'Cầu Thanh Trì', status: 'offline' }
-  ]
-
-  // Hàm chọn camera
-  const handleCameraSelect = (camera: typeof cameras[0]) => {
-    setSelectedCamera(camera);
-  }
-
   return (
     <div className="flex flex-col gap-6 mx-auto px-4 py-6 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 rounded-lg shadow-sm">
-      {/* Header với title và thời gian */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
         <div>
           <div className="flex items-center gap-2 mb-1">
@@ -258,44 +380,62 @@ export function TrafficMonitoringDashboard() {
           <span className="text-xs text-slate-500 capitalize">{formattedDate}</span>
         </div>
       </div>
-
-      {/* Camera và Dữ liệu phân tích */}
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2">
           <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="relative">
+            <div className="relative" ref={feedContainerRef}>
               <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
-                <div className="text-center px-6 py-10">
-                  <div className="w-16 h-16 rounded-full bg-blue-600/20 flex items-center justify-center mx-auto mb-3 animate-pulse">
-                    <Camera className="h-8 w-8 text-blue-500" />
+                {isTestMode ? (
+                  // <video 
+                  //   src={testVideoUrl} 
+                  //   controls 
+                  //   autoPlay 
+                  //   className="w-full h-full object-contain"
+                  // />
+                  <iframe width="946" height="514" src="https://www.youtube.com/embed/cCrahzMyTko" title="Speed estimation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                ) : snapshotUrl && selectedCamera.id ? (
+                  <Image 
+                    src={snapshotUrl} 
+                    alt={`Camera feed from ${selectedCamera.name}`}
+                    className="w-full h-full object-contain"
+                    onError={() => {
+                      console.error("Error loading snapshot")
+                    }}
+                    width={1280}
+                    height={720}
+                  />
+                ) : (
+                  <div className="text-center px-6 py-10">
+                    <div className="w-16 h-16 rounded-full bg-blue-600/20 flex items-center justify-center mx-auto mb-3 animate-pulse">
+                      <Camera className="h-8 w-8 text-blue-500" />
+                    </div>
+                    <p className="text-white font-medium mb-3">{selectedCamera.name}</p>
+                    <p className="text-sm text-slate-400">Đang tải dữ liệu video...</p>
                   </div>
-                  <p className="text-white font-medium mb-3">{selectedCamera.name}</p>
-                  <p className="text-sm text-slate-400">Đang tải dữ liệu video...</p>
-                </div>
+                )}
               </div>
               
-              {/* Status indicator */}
               <div className="absolute top-3 right-3 flex items-center gap-2 bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full">
                 <span className={`w-2 h-2 rounded-full ${selectedCamera.status === 'online' ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></span>
                 <span className="text-xs font-medium text-white capitalize">{selectedCamera.status === 'online' ? 'Trực tuyến' : 'Ngoại tuyến'}</span>
               </div>
               
-              {/* Video controls */}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-black/30 text-white p-3 flex items-center gap-3">
                 <button onClick={handlePlayPause} className="p-2 hover:bg-white/20 rounded-full transition-colors">
-                  {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                  {isPlaying ? <Play size={16} /> : <Pause size={16} />}
                 </button>
-                <button className="p-2 hover:bg-white/20 rounded-full transition-colors">
-                  <SkipBack size={16} />
+                <button 
+                  className="p-2 hover:bg-white/20 rounded-full transition-colors"
+                  onClick={() => updateSnapshotUrl(selectedCamera.id)}
+                >
+                  <RefreshCw size={16} />
                 </button>
-                <span className="text-xs font-medium">{currentTime} / {duration}</span>
-                <div className="h-1 bg-white/20 flex-1 mx-2 rounded-full overflow-hidden group cursor-pointer">
-                  <div className="bg-blue-500 h-1 w-1/3 rounded-full group-hover:bg-blue-400 transition-colors"></div>
-                </div>
-                <button className="p-2 hover:bg-white/20 rounded-full transition-colors">
-                  <Volume2 size={16} />
-                </button>
-                <button className="p-2 hover:bg-white/20 rounded-full transition-colors">
+                <div className="flex-1"></div>
+                <button 
+                  className="p-2 hover:bg-white/20 rounded-full transition-colors"
+                  onClick={handleFullScreenToggle}
+                >
                   <Maximize2 size={16} />
                 </button>
               </div>
@@ -309,31 +449,11 @@ export function TrafficMonitoringDashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-wrap gap-2 mt-1">
-                {cameras.map(camera => (
-                  <button
-                    key={camera.id}
-                    onClick={() => handleCameraSelect(camera)}
-                    className={`
-                      text-xs px-3 py-1.5 rounded-full font-medium transition-all
-                      ${selectedCamera.id === camera.id 
-                        ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 ring-2 ring-blue-500/50' 
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'}
-                      ${camera.status === 'offline' ? 'opacity-60' : ''}
-                    `}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      <span className={`w-1.5 h-1.5 rounded-full ${camera.status === 'online' ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                      {camera.name}
-                    </div>
-                  </button>
-                ))}
-              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Dữ liệu từ camera được chọn trên bản đồ. Nhấn vào biểu tượng camera để thay đổi góc nhìn.</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Dữ liệu phân tích */}
         <div>
           <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
             <CardHeader className="pb-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
@@ -507,7 +627,6 @@ export function TrafficMonitoringDashboard() {
         </div>
       </div>
 
-      {/* Thống kê giao thông */}
       <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
         <CardHeader className="pb-2 bg-gradient-to-r from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
           <div className="flex items-center justify-between">
@@ -521,19 +640,19 @@ export function TrafficMonitoringDashboard() {
           </div>
         </CardHeader>
         <CardContent className="pt-4">
-          <Tabs defaultValue="thongke" className="w-full">
+          <Tabs defaultValue="bando" className="w-full">
             <TabsList className="mb-6 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
+              <TabsTrigger 
+                value="bando"
+                className="data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm dark:data-[state=active]:bg-slate-700 dark:data-[state=active]:text-blue-300"
+              >
+                Bản đồ & Camera
+              </TabsTrigger>
               <TabsTrigger 
                 value="thongke" 
                 className="data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm dark:data-[state=active]:bg-slate-700 dark:data-[state=active]:text-blue-300"
               >
                 Thống kê
-              </TabsTrigger>
-              <TabsTrigger 
-                value="bando"
-                className="data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm dark:data-[state=active]:bg-slate-700 dark:data-[state=active]:text-blue-300"
-              >
-                Bản đồ
               </TabsTrigger>
               <TabsTrigger 
                 value="canhbao"
@@ -542,6 +661,56 @@ export function TrafficMonitoringDashboard() {
                 Cảnh báo
               </TabsTrigger>
             </TabsList>
+            
+            <TabsContent value="bando" className="animate-in fade-in-50 duration-300">
+              <div className="mb-4">
+                <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Bản đồ & Chọn camera</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Nhấn vào biểu tượng camera trên bản đồ để xem dữ liệu. Hiển thị {availableCameras.length} camera.</p>
+                  </div>
+                  <button 
+                    onClick={() => setIsTestMode(!isTestMode)} 
+                    className="px-4 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg shadow-sm hover:bg-blue-700 transition-colors"
+                  >
+                    {isTestMode ? 'Thoát thử nghiệm' : 'Thử nghiệm'}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="h-[500px] overflow-hidden rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 relative">
+                <GoogleMapComponent 
+                  center={mapCenter}
+                  zoom={mapZoom}
+                  markers={availableCameras.map(camera => ({
+                    id: camera.id,
+                    position: camera.location,
+                    title: camera.name,
+                    status: camera.status,
+                    onClick: () => handleMapCameraSelect(camera)
+                  }))}
+                />
+                
+                <div className="absolute top-2 right-2 bg-white dark:bg-slate-800 shadow-md rounded-md p-2 z-10 text-xs">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                    <span>Camera trực tuyến</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                    <span>Camera ngoại tuyến</span>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-2 left-2 bg-white dark:bg-slate-800 shadow-md rounded-md p-2 z-10">
+                  <h4 className="text-xs font-semibold mb-1">Đang hiển thị:</h4>
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                    <span className="text-xs">{selectedCamera.name}</span>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
             
             <TabsContent value="thongke" className="animate-in fade-in-50 duration-300">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -579,18 +748,6 @@ export function TrafficMonitoringDashboard() {
                       height={250} 
                     />
                   </div>
-                </div>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="bando" className="animate-in fade-in-50 duration-300">
-              <div className="h-[300px] flex items-center justify-center bg-slate-50 rounded-lg shadow-sm text-center p-6 dark:bg-slate-800">
-                <div>
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 dark:bg-blue-900/40">
-                    <MapPin className="h-6 w-6 text-blue-700 dark:text-blue-300" />
-                  </div>
-                  <h3 className="text-sm font-medium text-slate-800 mb-1 dark:text-slate-200">Bản đồ khu vực</h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Dữ liệu bản đồ đang được tải...</p>
                 </div>
               </div>
             </TabsContent>
