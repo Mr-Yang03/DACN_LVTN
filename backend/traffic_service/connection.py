@@ -6,7 +6,7 @@ MONGO_URI = os.getenv("mongodb://localhost:27017/")
 client = MongoClient(MONGO_URI)
 
 # Choose database and collection
-db = client["traffic"]
+db = client["bktraffic"]
 
 def get_database():
     return db

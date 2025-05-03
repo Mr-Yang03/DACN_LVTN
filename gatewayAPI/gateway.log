@@ -2433,3 +2433,31 @@ INFO:root:Request: GET http://localhost:9000/admin/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/admin/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:httpx:HTTP Request: POST http://localhost:8005/chatbot/ "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:httpx:HTTP Request: POST http://localhost:8005/chatbot/ "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:root:Request: DELETE http://localhost:9000/admin/news/68148d1e0faf32d9ea9f758c
+INFO:httpx:HTTP Request: DELETE http://localhost:8004/admin/news/68148d1e0faf32d9ea9f758c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:httpx:HTTP Request: POST http://localhost:8005/chatbot/ "HTTP/1.1 200 OK"
