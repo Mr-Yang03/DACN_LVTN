@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Depends, HTTPException, Query
+from fastapi import FastAPI, Request, Depends, HTTPException, Query, Form
 from forwarder import forward_request
 from auth import verify_token, create_access_token
 from rate_limiter import rate_limit
@@ -24,6 +24,7 @@ USER_SERVICE_URL = "http://localhost:8001"
 TRAFFIC_SERVICE_URL = "http://localhost:8002"
 FEEDBACK_SERVICE_URL = "http://localhost:8003"
 NEWS_SERVICE_URL = "http://localhost:8004"
+AGENT_SERVICE_URL = "http://localhost:8005"  # Assuming Agent service runs on port 8005
 
 
 @app.post("/users/login")
@@ -288,6 +289,42 @@ async def get_feedback_by_id(feedback_id: str):
         raise HTTPException(status_code=404, detail="Feedback not found")
 
     return response.json()
+
+# Agent Service Routes (Chatbot)
+@app.post("/chatbot/")
+async def chat_with_agent(prompt: str = Form(...)):
+    async with httpx.AsyncClient(timeout=60.0) as client:  # Set timeout to 60 seconds
+        try:
+            response = await client.post(
+                f"{AGENT_SERVICE_URL}/chatbot/",
+                data={"prompt": prompt},
+                headers={"Content-Type": "application/x-www-form-urlencoded"}
+            )
+            
+            if response.status_code != 200:
+                raise HTTPException(
+                    status_code=response.status_code, 
+                    detail="Failed to get response from chatbot service"
+                )
+                
+            return response.json()
+        except httpx.RequestError as e:
+            # Kiểm tra nếu lỗi là do timeout
+            if isinstance(e, httpx.TimeoutException):
+                raise HTTPException(
+                    status_code=504, 
+                    detail="Chatbot service request timed out. The operation took too long to complete."
+                )
+            else:
+                raise HTTPException(
+                    status_code=503, 
+                    detail="Chatbot service unavailable. Please try again later."
+                )
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"An unexpected error occurred: {str(e)}"
+            )
 
 
 if __name__ == "__main__":
