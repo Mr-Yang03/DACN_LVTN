@@ -27,7 +27,7 @@ const CameraTable: React.FC<CameraTableProps> = ({ cameras, onEditCamera, onDele
   //   camera.DisplayName?.toLowerCase().includes(search.toLowerCase())
   // );
   const filteredCameras = cameras.filter(camera =>
-    camera?.DisplayName?.toLowerCase().includes(search.toLowerCase())
+    camera.DisplayName?.toLowerCase().includes(search.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredCameras.length / pageSize);
