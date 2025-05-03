@@ -1,30 +1,28 @@
 import { api } from "./axiosInstance";
 
-export interface TrafficParams {
-  WSlat: number;
-  WSlng: number;
-  NElat: number;
-  NElng: number;
-  level?: number;
+
+export interface RealTimeTrafficParams {
+  lng: number;
+  lat: number;
+  start_time: string;
+  end_time: string;
 }
 
-export const getTrafficStatus = async ({
-  WSlat,
-  WSlng,
-  NElat,
-  NElng,
-  level = 0,
-}: TrafficParams) => {
+export const getRealTimeTrafficStatus = async ({
+  lng,
+  lat,
+  start_time,
+  end_time,
+}: RealTimeTrafficParams) => {
   const response = await api.get("/traffic/status", {
     params: {
-      WSlat,
-      WSlng,
-      NElat,
-      NElng,
-      level,
+      lng,
+      lat,
+      start_time,
+      end_time,
     },
   });
-  return response.data.data.features;
+  return response.data;
 };
 
 export const getCameras = async ({}) => {

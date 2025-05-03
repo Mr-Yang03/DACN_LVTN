@@ -2597,3 +2597,166 @@ INFO:root:Request: GET http://localhost:9000/traffic/camera
 INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/traffic/camera
 INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/api/cameras
+INFO:httpx:HTTP Request: GET http://localhost:8009/api/cameras "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/api/cameras
+INFO:httpx:HTTP Request: GET http://localhost:8009/api/cameras "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:httpx:HTTP Request: POST http://localhost:8005/chatbot/ "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:httpx:HTTP Request: POST http://localhost:8005/chatbot/ "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/news/upload
+INFO:httpx:HTTP Request: POST http://localhost:8004/news/upload "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:root:Request: PUT http://localhost:9000/admin/news/6814a1f60faf32d9ea9f758f
+INFO:httpx:HTTP Request: PUT http://localhost:8004/admin/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878c
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878c "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d578878c
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814889102df8655d578878c "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/admin/news
+INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:root:Request: POST http://localhost:9000/chatbot/
+INFO:httpx:HTTP Request: POST http://localhost:8005/chatbot/ "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 422 Unprocessable Entity"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 422 Unprocessable Entity"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 422 Unprocessable Entity"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 422 Unprocessable Entity"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 422 Unprocessable Entity"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 422 Unprocessable Entity"
+INFO:root:Request: GET http://localhost:9000/users/register
+INFO:root:Request: GET http://localhost:9000/favicon.ico
+INFO:root:Request: OPTIONS http://localhost:9000/users/register
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 422 Unprocessable Entity"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 422 Unprocessable Entity"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 200 OK"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/register
+INFO:httpx:HTTP Request: POST http://localhost:8001/register "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: OPTIONS http://localhost:9000/users/login
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 401 Unauthorized"
+INFO:root:Request: POST http://localhost:9000/users/login
+INFO:httpx:HTTP Request: POST http://localhost:8001/login "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"

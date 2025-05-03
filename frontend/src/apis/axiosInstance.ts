@@ -28,8 +28,11 @@ api.interceptors.response.use(
       // Token is invalid or expired
       localStorage.removeItem("token");
       if (typeof window !== 'undefined') {
-        // Redirect to login page only in browser context
-        window.location.href = "/auth/login";
+        const currentPath = window.location.pathname;
+        if (!currentPath.includes('/auth')) {
+          // Redirect to login page only in browser context
+          window.location.href = "/auth";
+        }
       }
     }
     

@@ -1,5 +1,6 @@
 @echo off
 
+echo Starting frontend
 cd frontend
 start cmd /k "npm run dev"
 cd ..
@@ -32,6 +33,7 @@ echo Starting backend/camera_service
 cd backend/camera_service
 call .venv\Scripts\activate
 start cmd /k "uvicorn main:app --host 0.0.0.0 --port 8009 --reload"
+cd ../..
 
 echo Starting API Gateway...
 cd gatewayAPI

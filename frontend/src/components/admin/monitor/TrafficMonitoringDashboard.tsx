@@ -393,7 +393,16 @@ export function TrafficMonitoringDashboard() {
                   //   autoPlay 
                   //   className="w-full h-full object-contain"
                   // />
-                  <iframe width="946" height="514" src="https://www.youtube.com/embed/cCrahzMyTko" title="Speed estimation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  <iframe 
+                    width="946" 
+                    height="514" 
+                    src="https://www.youtube.com/embed/cCrahzMyTko" 
+                    title="Speed estimation" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerPolicy="strict-origin-when-cross-origin" 
+                    allowFullScreen 
+                  />
                 ) : snapshotUrl && selectedCamera.id ? (
                   <Image 
                     src={snapshotUrl} 
