@@ -565,7 +565,7 @@ INFO:root:Request: GET http://localhost:9000/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:root:Request: GET http://localhost:9000/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news
@@ -574,13 +574,13 @@ INFO:root:Request: GET http://localhost:9000/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/T\u1ea1i n\u1ea1n
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/T%E1%BA%A1i%20n%E1%BA%A1n "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Quy \u0111\u1ecbnh m\u1edbi
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Quy%20%C4%91%E1%BB%8Bnh%20m%E1%BB%9Bi "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Công trình
+INFO:root:Request: GET http://localhost:9000/news/category/Cï¿½ng trï¿½nh
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/C%C3%B4ng%20tr%C3%ACnh "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Th\u1eddi ti\u1ebft
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Th%E1%BB%9Di%20ti%E1%BA%BFt "HTTP/1.1 200 OK"
@@ -592,13 +592,13 @@ INFO:root:Request: GET http://localhost:9000/news/category/T\u1ea1i n\u1ea1n
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/T%E1%BA%A1i%20n%E1%BA%A1n "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Quy \u0111\u1ecbnh m\u1edbi
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Quy%20%C4%91%E1%BB%8Bnh%20m%E1%BB%9Bi "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Công trình
+INFO:root:Request: GET http://localhost:9000/news/category/Cï¿½ng trï¿½nh
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/C%C3%B4ng%20tr%C3%ACnh "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Th\u1eddi ti\u1ebft
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Th%E1%BB%9Di%20ti%E1%BA%BFt "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Quy \u0111\u1ecbnh m\u1edbi
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Quy%20%C4%91%E1%BB%8Bnh%20m%E1%BB%9Bi "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Công trình
+INFO:root:Request: GET http://localhost:9000/news/category/Cï¿½ng trï¿½nh
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/C%C3%B4ng%20tr%C3%ACnh "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Th\u1eddi ti\u1ebft
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Th%E1%BB%9Di%20ti%E1%BA%BFt "HTTP/1.1 200 OK"
@@ -612,7 +612,7 @@ INFO:root:Request: GET http://localhost:9000/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/T\u1ea1i n\u1ea1n
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/T%E1%BA%A1i%20n%E1%BA%A1n "HTTP/1.1 200 OK"
@@ -628,7 +628,7 @@ INFO:root:Request: GET http://localhost:9000/news/category/T\u1ea1i n\u1ea1n
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/T%E1%BA%A1i%20n%E1%BA%A1n "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Tai n\u1ea1n
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Tai%20n%E1%BA%A1n "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
@@ -656,7 +656,7 @@ INFO:root:Request: GET http://localhost:9000/news
 INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured "HTTP/1.1 500 Internal Server Error"
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Tai n\u1ea1n
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Tai%20n%E1%BA%A1n "HTTP/1.1 200 OK"
@@ -706,13 +706,13 @@ INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1
 INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Tai n\u1ea1n
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Tai%20n%E1%BA%A1n "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Quy \u0111\u1ecbnh m\u1edbi
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Quy%20%C4%91%E1%BB%8Bnh%20m%E1%BB%9Bi "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Công trình
+INFO:root:Request: GET http://localhost:9000/news/category/Cï¿½ng trï¿½nh
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/C%C3%B4ng%20tr%C3%ACnh "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Th\u1eddi ti\u1ebft
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Th%E1%BB%9Di%20ti%E1%BA%BFt "HTTP/1.1 200 OK"
@@ -788,7 +788,7 @@ INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1
 INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Tai n\u1ea1n
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Tai%20n%E1%BA%A1n "HTTP/1.1 200 OK"
@@ -853,10 +853,10 @@ INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1
 INFO:root:Request: GET http://localhost:9000/news/6814610f88466ac0ec7af887
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814610f88466ac0ec7af887 "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/6814610f88466ac0ec7af887
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814610f88466ac0ec7af887 "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news
 INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
@@ -869,26 +869,26 @@ INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1
 INFO:root:Request: GET http://localhost:9000/news/6814610f88466ac0ec7af887
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814610f88466ac0ec7af887 "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/6814610f88466ac0ec7af887
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814610f88466ac0ec7af887 "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
-INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/6814610f88466ac0ec7af887
-INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814610f88466ac0ec7af887 "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/6814610f88466ac0ec7af887
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
-INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814610f88466ac0ec7af887 "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/6814610f88466ac0ec7af887
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814610f88466ac0ec7af887 "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/6814610f88466ac0ec7af887
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814610f88466ac0ec7af887 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814610f88466ac0ec7af887
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814610f88466ac0ec7af887 "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/news/6814610f88466ac0ec7af887
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814610f88466ac0ec7af887 "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news
 INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
@@ -1285,7 +1285,7 @@ INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1
 INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Tai n\u1ea1n
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Tai%20n%E1%BA%A1n "HTTP/1.1 200 OK"
@@ -1980,7 +1980,7 @@ INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/category/Quy \u0111\u1ecbnh
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Quy%20%C4%91%E1%BB%8Bnh "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Công trình
+INFO:root:Request: GET http://localhost:9000/news/category/Cï¿½ng trï¿½nh
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/C%C3%B4ng%20tr%C3%ACnh "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/admin/news
 INFO:httpx:HTTP Request: GET http://localhost:8004/admin/news "HTTP/1.1 200 OK"
@@ -2301,7 +2301,7 @@ INFO:root:Request: GET http://localhost:9000/news
 INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/news/6814889102df8655d5788790
 INFO:root:Request: GET http://localhost:9000/news/featured?limit=3
@@ -2660,7 +2660,7 @@ INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1
 INFO:root:Request: GET http://localhost:9000/news/featured?limit=4
 INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
-INFO:root:Request: GET http://localhost:9000/news/category/Giao thông
+INFO:root:Request: GET http://localhost:9000/news/category/Giao thï¿½ng
 INFO:httpx:HTTP Request: GET http://localhost:8004/news/category/Giao%20th%C3%B4ng "HTTP/1.1 200 OK"
 INFO:root:Request: GET http://localhost:9000/traffic/camera
 INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
