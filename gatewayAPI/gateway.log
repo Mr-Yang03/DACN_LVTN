@@ -3302,3 +3302,177 @@ INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d0
 INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20:51:54.918Z&end_time=2025-05-03T21:51:54.918Z
 INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-03T20%3A51%3A54.918Z&end_time=2025-05-03T21%3A51%3A54.918Z "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-03T20%3A51%3A54.918Z&end_time=2025-05-03T21%3A51%3A54.918Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-04T01:13:41.297Z&end_time=2025-05-04T02:13:41.297Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-04T01:13:41.296Z&end_time=2025-05-04T02:13:41.296Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/56de42f611f398ec0c48128e/speed?start_time=2025-05-04T01:13:53.767Z&end_time=2025-05-04T02:13:53.767Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/56de42f611f398ec0c48128e/vehicle-types?start_time=2025-05-04T01:13:53.767Z&end_time=2025-05-04T02:13:53.767Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/speed?start_time=2025-05-04T01:16:24.933Z&end_time=2025-05-04T02:16:24.933Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-04T01:16:24.933Z&end_time=2025-05-04T02:16:24.933Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-04T01%3A16%3A24.933Z&end_time=2025-05-04T02%3A16%3A24.933Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-04T01%3A16%3A24.933Z&end_time=2025-05-04T02%3A16%3A24.933Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58b5752e17139d0010f35d5f/speed?start_time=2025-05-04T01:16:32.402Z&end_time=2025-05-04T02:16:32.402Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58b5752e17139d0010f35d5f/vehicle-types?start_time=2025-05-04T01:16:32.403Z&end_time=2025-05-04T02:16:32.403Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/58b5752e17139d0010f35d5f/speed?start_time=2025-05-04T01%3A16%3A32.402Z&end_time=2025-05-04T02%3A16%3A32.402Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/58b5752e17139d0010f35d5f/vehicle-types?start_time=2025-05-04T01%3A16%3A32.403Z&end_time=2025-05-04T02%3A16%3A32.403Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58b5752e17139d0010f35d5f/speed?start_time=2025-05-03T02:16:54.400Z&end_time=2025-05-04T02:16:54.400Z
+INFO:root:Request: GET http://localhost:9000/traffic/camera/58b5752e17139d0010f35d5f/vehicle-types?start_time=2025-05-03T02:16:54.400Z&end_time=2025-05-04T02:16:54.400Z
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/58b5752e17139d0010f35d5f/speed?start_time=2025-05-03T02%3A16%3A54.400Z&end_time=2025-05-04T02%3A16%3A54.400Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/58b5752e17139d0010f35d5f/vehicle-types?start_time=2025-05-03T02%3A16%3A54.400Z&end_time=2025-05-04T02%3A16%3A54.400Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET http://localhost:9000/traffic/camera
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET /traffic/camera | Service: traffic | Status: 200 | Time: 1.2923s
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-04T01%3A40%3A10.166Z&end_time=2025-05-04T02%3A40%3A10.166Z "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-04T01%3A40%3A10.166Z&end_time=2025-05-04T02%3A40%3A10.166Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET /traffic/camera/5a6065c58576340017d06615/speed | Service: traffic | Status: 200 | Time: 1.6775s
+INFO:root:Request: GET /traffic/camera/5a6065c58576340017d06615/vehicle-types | Service: traffic | Status: 200 | Time: 1.7257s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0332s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0345s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0332s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0316s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0345s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0533s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0327s
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET /traffic/camera | Service: traffic | Status: 200 | Time: 1.0190s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0513s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.3742s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 1.7156s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 2.1461s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.7806s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 0.6081s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/6814a1f60faf32d9ea9f758f | Service: news | Status: 200 | Time: 0.9558s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.9872s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.4319s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/6814a1f60faf32d9ea9f758f "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/6814a1f60faf32d9ea9f758f | Service: news | Status: 200 | Time: 0.8329s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=3 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.6908s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0285s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0578s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0322s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0497s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0699s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0640s
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET /traffic/camera | Service: traffic | Status: 200 | Time: 1.1151s
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera "HTTP/1.1 200 OK"
+INFO:root:Request: GET /traffic/camera | Service: traffic | Status: 200 | Time: 1.2643s
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/speed?start_time=2025-05-04T01%3A42%3A51.347Z&end_time=2025-05-04T02%3A42%3A51.347Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET /traffic/camera/5a6065c58576340017d06615/speed | Service: traffic | Status: 200 | Time: 1.0658s
+INFO:httpx:HTTP Request: GET http://localhost:8002/camera/5a6065c58576340017d06615/vehicle-types?start_time=2025-05-04T01%3A42%3A51.348Z&end_time=2025-05-04T02%3A42%3A51.348Z "HTTP/1.1 200 OK"
+INFO:root:Request: GET /traffic/camera/5a6065c58576340017d06615/vehicle-types | Service: traffic | Status: 200 | Time: 0.6661s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0341s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0299s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0390s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0467s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0327s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0419s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0280s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0289s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0470s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0280s
+INFO:httpx:HTTP Request: POST http://localhost:8005/chatbot/ "HTTP/1.1 200 OK"
+INFO:root:Request: POST /chatbot/ | Service: chatbot | Status: 200 | Time: 1.9596s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0435s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0386s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0364s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0324s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0302s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0497s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0469s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0320s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0325s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0293s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0294s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0343s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0584s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0375s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0428s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0407s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0277s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0449s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0355s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.3283s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0334s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0344s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0406s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0517s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0441s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0314s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0372s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0338s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0351s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0403s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0442s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0301s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0355s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0321s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0315s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0329s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0333s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0644s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0272s
+INFO:root:Request: GET /metrics/dashboard | Service: metrics | Status: 200 | Time: 0.0357s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 1.0683s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.9277s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 0.6888s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.6517s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 0.8235s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 1.1234s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 0.6596s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.6149s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 0.7862s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.8285s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 0.8576s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.7127s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.6743s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 1.2769s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.6583s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 0.6263s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 1.2674s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 1.0924s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 0.6236s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.5052s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 1.0272s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.9666s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news | Service: news | Status: 200 | Time: 0.6218s
+INFO:httpx:HTTP Request: GET http://localhost:8004/news/featured?limit=4 "HTTP/1.1 200 OK"
+INFO:root:Request: GET /news/featured | Service: news | Status: 200 | Time: 0.5954s
