@@ -44,8 +44,14 @@ export function AdminHeader() {
           <Link href="/admin/alerts" className="hover:text-gray-600">
             Cảnh báo
           </Link>
+          <Link href="/admin/cameras" className="hover:text-gray-600">
+            Camera
+          </Link>
           <Link href="/admin/profile" className="hover:text-gray-600">
             Hồ sơ
+          </Link>
+          <Link href="/chatbot" className="hover:text-gray-600">
+            Chatbot
           </Link>
         </nav>
 
@@ -100,6 +106,9 @@ export function AdminHeader() {
           </Link>
           <Link href="/admin/profile" className="block py-2 hover:text-gray-400">
             Hồ sơ
+          </Link>
+          <Link href="/admin/chatbot" className="block py-2 hover:text-gray-400">
+            Chatbot
           </Link>
           {isAuthenticated ? (
             <button

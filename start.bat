@@ -28,11 +28,17 @@ call .venv\Scripts\activate
 start cmd /k "uvicorn main:app --host 0.0.0.0 --port 8004 --reload"
 cd ../..
 
+echo Starting backend/camera_service
+cd backend/camera_service
+call .venv\Scripts\activate
+start cmd /k "uvicorn main:app --host 0.0.0.0 --port 8009 --reload"
+
 echo Starting API Gateway...
 cd gatewayAPI
 call .venv\Scripts\activate
 start cmd /k "uvicorn main:app --host 0.0.0.0 --port 9000 --reload"
 cd ..
+
 
 echo.
 echo All services started in new terminals.
