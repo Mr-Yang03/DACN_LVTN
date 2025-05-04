@@ -23,6 +23,7 @@ export default function AuthPage() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log("isAuthenticated", isAuthenticated);
     if (isAuthenticated) {
       router.back();
     }

@@ -1,12 +1,14 @@
 from pymongo import MongoClient
 import os
+from dotenv import load_dotenv
 
 # Connect MongoDB using environment variable for security
-MONGO_URI = os.getenv("mongodb://localhost:27017/")
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI", "")
 client = MongoClient(MONGO_URI)
 
 # Choose database and collection
-db = client["traffic"]
+db = client["traffic-road"]
 
 def get_database():
     return db

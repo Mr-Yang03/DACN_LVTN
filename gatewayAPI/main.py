@@ -25,6 +25,7 @@ TRAFFIC_SERVICE_URL = "http://localhost:8002"
 FEEDBACK_SERVICE_URL = "http://localhost:8003"
 NEWS_SERVICE_URL = "http://localhost:8004"
 AGENT_SERVICE_URL = "http://localhost:8005"  # Assuming Agent service runs on port 8005
+
 CAMERA_SERVICE_URL = "http://localhost:8009"
 
 @app.post("/users/login")
@@ -33,7 +34,7 @@ async def login(request: Request):
     async with httpx.AsyncClient() as client:
         response = await client.post(
             f"{USER_SERVICE_URL}/login",
-            json={"email": body.get("email"), "password": body.get("password")},
+            json={"username": body.get("username"), "password": body.get("password")},
         )
 
     if response.status_code != 200:
@@ -41,7 +42,11 @@ async def login(request: Request):
 
     user_data = response.json()
     access_token = create_access_token(
-        data={"sub": user_data["email"]}, expires_delta=timedelta(minutes=60)
+        data={
+            "sub": user_data["username"],
+            "account_type": user_data["account_type"]
+        }, 
+        expires_delta=timedelta(minutes=60)
     )
     return {"access_token": access_token, "token_type": "bearer", "user": user_data}
 
@@ -53,9 +58,12 @@ async def register(request: Request):
         response = await client.post(
             f"{USER_SERVICE_URL}/register",
             json={
-                "fullname": body.get("fullname"),
-                "email": body.get("email"),
+                "username": body.get("username"),
                 "password": body.get("password"),
+                "full_name": body.get("full_name"),
+                "date_of_birth": body.get("date_of_birth"),
+                "phone_number": body.get("phone_number"),
+                "license_number": body.get("license_number"),
             },
         )
     if response.status_code != 200:
@@ -101,6 +109,42 @@ async def get_cameras():
 
     if response.status_code != 200:
         raise HTTPException(status_code=500, detail="Failed to fetch camera data")
+
+    return response.json()
+
+@app.get("/traffic/camera/{camera_id}/speed")
+async def get_camera_speed(
+    camera_id: str,
+    start_time: str = Query(...),
+    end_time: str = Query(...),
+    _=Depends(rate_limit),
+):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"{TRAFFIC_SERVICE_URL}/camera/{camera_id}/speed",
+            params={"start_time": start_time, "end_time": end_time}
+        )
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to fetch camera speed data")
+
+    return response.json()
+
+@app.get("/traffic/camera/{camera_id}/vehicle-types")
+async def get_vehicle_types(
+    camera_id: str,
+    start_time: str = Query(...),
+    end_time: str = Query(...),
+    _=Depends(rate_limit),
+):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"{TRAFFIC_SERVICE_URL}/camera/{camera_id}/vehicle-types",
+            params={"start_time": start_time, "end_time": end_time}
+        )
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to fetch vehicle types data")
 
     return response.json()
 
