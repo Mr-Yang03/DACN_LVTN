@@ -1,9 +1,6 @@
 from pymongo import MongoClient
-import os
 from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
+import os
 
 # Connect MongoDB using environment variable for security
 MONGO_URI = os.getenv("MONGO_URI","")

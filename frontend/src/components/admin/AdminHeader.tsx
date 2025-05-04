@@ -28,8 +28,8 @@ export function AdminHeader() {
           <Link href="/admin/news" className="hover:text-gray-600">
             Tin tức
           </Link>
-          <Link href="/admin/alerts" className="hover:text-gray-600">
-            Cảnh báo
+          <Link href="/admin/feedback" className="hover:text-gray-600">
+            Phản ánh
           </Link>
           <Link href="/admin/monitor" className="hover:text-gray-400">
             Giám sát

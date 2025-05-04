@@ -43,7 +43,7 @@ async def check_authentication(authorization: Optional[str] = Header(None)):
         return {"user_id": "user123", "username": "nguyenvana"}
     return None
 
-@feedback_router.get("/items")
+@feedback_router.get("/feedback/items")
 async def get_all_items():
     """
     Lấy tất cả các items từ collection Items trong database Feedback
@@ -58,7 +58,7 @@ async def get_all_items():
     
     return {"status": "success", "data": items, "total": len(items)}
 
-@feedback_router.get("/items/{item_id}")
+@feedback_router.get("/feedback/items/{item_id}")
 async def get_item_by_id(item_id: str):
     """
     Lấy item theo ID
@@ -73,7 +73,7 @@ async def get_item_by_id(item_id: str):
     
     return {"status": "error", "message": "Item không tồn tại"}
 
-@feedback_router.post("/items")
+@feedback_router.post("/feedback/items")
 async def create_feedback(feedback: FeedbackCreate, request: Request, user=Depends(check_authentication)):
     """
     Thêm mới feedback vào database
@@ -113,33 +113,33 @@ async def create_feedback(feedback: FeedbackCreate, request: Request, user=Depen
     
     return {"status": "error", "message": "Không thể tạo phản hồi"}
 
-@feedback_router.get("/items/search")
-async def search_items(q: str = Query(None, description="Từ khóa tìm kiếm trong tiêu đề hoặc địa điểm")):
-    """
-    Tìm kiếm phản ánh theo tiêu đề hoặc địa điểm
-    """
-    if not q:
-        # Nếu không có từ khóa tìm kiếm, trả về tất cả items
-        return await get_all_items()
+# @feedback_router.get("/items/search")
+# async def search_items(q: str = Query(None, description="Từ khóa tìm kiếm trong tiêu đề hoặc địa điểm")):
+#     """
+#     Tìm kiếm phản ánh theo tiêu đề hoặc địa điểm
+#     """
+#     if not q:
+#         # Nếu không có từ khóa tìm kiếm, trả về tất cả items
+#         return await get_all_items()
     
-    # Tạo truy vấn tìm kiếm với $regex để tìm kiếm không phân biệt hoa thường
-    query = {
-        "$or": [
-            {"title": {"$regex": q, "$options": "i"}},
-            {"location": {"$regex": q, "$options": "i"}}
-        ]
-    }
+#     # Tạo truy vấn tìm kiếm với $regex để tìm kiếm không phân biệt hoa thường
+#     query = {
+#         "$or": [
+#             {"title": {"$regex": q, "$options": "i"}},
+#             {"location": {"$regex": q, "$options": "i"}}
+#         ]
+#     }
     
-    items = []
-    cursor = items_collection.find(query)
+#     items = []
+#     cursor = items_collection.find(query)
     
-    for document in cursor:
-        document["_id"] = str(document["_id"])
-        items.append(document)
+#     for document in cursor:
+#         document["_id"] = str(document["_id"])
+#         items.append(document)
     
-    return {"status": "success", "data": items, "total": len(items), "search_term": q}
+#     return {"status": "success", "data": items, "total": len(items), "search_term": q}
 
-@feedback_router.get("/items/filter")
+@feedback_router.get("feedback/items/filter")
 async def filter_items(
     severity: Optional[str] = Query(None, description="Mức độ nghiêm trọng"),
     type: Optional[str] = Query(None, description="Loại vấn đề"),
@@ -197,7 +197,7 @@ async def filter_items(
     }
 
 # Để hỗ trợ cho giao diện, thêm API lấy danh sách các giá trị có thể có
-@feedback_router.get("/items/metadata")
+@feedback_router.get("feedback/items/metadata")
 async def get_metadata():
     """
     Lấy dữ liệu metadata cho các bộ lọc: danh sách mức độ nghiêm trọng và loại vấn đề
@@ -228,7 +228,7 @@ async def check_admin(user = Depends(check_authentication)):
     return user
 
 # API duyệt phản ánh (chuyển từ "Đang xử lý" sang "Đã xử lý")
-@feedback_router.patch("/items/{item_id}/approve")
+@feedback_router.patch("feedback/items/{item_id}/approve")
 async def approve_feedback(item_id: str, admin=Depends(check_admin)):
     """
     Duyệt phản ánh (chuyển từ "Đang xử lý" sang "Đã xử lý")
@@ -259,7 +259,7 @@ async def approve_feedback(item_id: str, admin=Depends(check_admin)):
         return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
 # API hủy duyệt phản ánh (chuyển từ "Đã xử lý" sang "Đang xử lý")
-@feedback_router.patch("/items/{item_id}/unapprove")
+@feedback_router.patch("feedback/items/{item_id}/unapprove")
 async def unapprove_feedback(item_id: str, admin=Depends(check_admin)):
     """
     Hủy duyệt phản ánh (chuyển từ "Đã xử lý" sang "Đang xử lý")
@@ -325,7 +325,7 @@ async def unapprove_feedback(item_id: str, admin=Depends(check_admin)):
 #         return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
 # API hiển thị những phản ánh đã xử lý
-@feedback_router.get("/items/processed")
+@feedback_router.get("feedback/items/processed", response_model=List[dict])
 async def get_processed_items():
     """
     Lấy danh sách phản ánh đã được xử lý (status = "Đã xử lý")

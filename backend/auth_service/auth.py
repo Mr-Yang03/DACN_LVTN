@@ -11,7 +11,6 @@ db = get_database()
 accounts_collection = db["accounts"]
 users_collection = db["users"]
 
-
 class LoginInfo(BaseModel):
     username: str
     password: str
