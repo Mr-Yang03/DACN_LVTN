@@ -24,7 +24,7 @@ USER_SERVICE_URL = "http://localhost:8001"
 TRAFFIC_SERVICE_URL = "http://localhost:8002"
 FEEDBACK_SERVICE_URL = "http://localhost:8003"
 NEWS_SERVICE_URL = "http://localhost:8004"
-AGENT_SERVICE_URL = "http://localhost:8005"
+AGENT_SERVICE_URL = "http://localhost:8005"  # Assuming Agent service runs on port 8005
 
 CAMERA_SERVICE_URL = "http://localhost:8009"
 
@@ -334,6 +334,16 @@ async def get_feedback_by_id(feedback_id: str):
 
     return response.json()
 
+@app.get("/feedback/processed")
+async def get_processed_feedback():
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/items/processed")
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to fetch processed feedback data")
+
+    return response.json()
+
 # Agent Service Routes (Chatbot)
 @app.post("/chatbot/")
 async def chat_with_agent(prompt: str = Form(...)):
@@ -416,5 +426,4 @@ async def proxy_update_camera_position(camera_id: str, lat: float = Form(...), l
 
 if __name__ == "__main__":
     import uvicorn
-
     uvicorn.run(app, host="0.0.0.0", port=9000)
