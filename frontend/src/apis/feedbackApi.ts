@@ -1,5 +1,22 @@
 import { api } from "./axiosInstance";
 
+export interface FeedbackArticle {
+    _id?: string;
+    location: string;
+    issueType: string;
+    severity: "slight" | "medium" | "serious";
+    status?: string;
+    author?: string;
+    phone?: string;
+    email?: string;
+    date?: string;
+    time?: string;
+    description: string;
+    images?: string[];
+    created_at?: Date;
+    updated_at?: Date;
+}
+
 export const sendFeedback = async (
     fullName: string,
     email: string,
@@ -32,6 +49,6 @@ export const getFeedbackList = async ({}) => {
 }
 
 export const getUserFeedbackList = async ({}) => {
-    const response = await api.get("/feedback/items/processed");
+    const response = await api.get("/feedback/processed");
     return response.data;
 }

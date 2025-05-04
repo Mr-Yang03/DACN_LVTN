@@ -29,6 +29,7 @@ import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Card} from "@/components/ui/card"
 import { getUserFeedbackList } from "@/apis/feedbackApi";
+import { useToast } from '@/hooks/use-toast';
 
 export default function ReportPage() {
   const [severityFilter, setSeverityFilter] = useState("allSeverity")
@@ -38,26 +39,55 @@ export default function ReportPage() {
   const [currentFeedbackPage, setCurrentFeedbackPage] = useState(1)
   const [search, setSearch] = useState<string>("");
   const [feedbackItems, setFeedbackItems] = useState<any[]>([]); // Dữ liệu phản ánh giả lập
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<any[]>([]);
+  const { toast } = useToast();
+  
   const itemsPerPage = 3 // Số lượng phản ánh hiển thị trên mỗi trang
 
+  // useEffect(() => {
+  //   const fetchFeedbackList = async () => {
+  //     try {
+  //       const response = await getUserFeedbackList({});
+  //       console.log(response)
+  //       // setFeedbackItems(response);
+  //     } catch (err) {
+  //       console.error("Lỗi khi tải phản hồi:", err);
+  //     }
+  //   };
+
+  //   fetchFeedbackList();
+
+    
+  //   setTimeout(() => {}, 500)
+  // }, []);
+  // Load data on component mount
   useEffect(() => {
+    // Fetch feedback data from API
     const fetchFeedbackList = async () => {
       try {
-        const response = await getUserFeedbackList({});
-        console.log(response)
-        // setFeedbackItems(response);
+        setIsLoading(true);
+        setError(null);
+        const feedbackData = await getUserFeedbackList({});
+        setData(feedbackData);
       } catch (err) {
-        console.error("Lỗi khi tải phản hồi:", err);
+        console.error('Failed to fetch feedbacks:', err);
+        setError('Không thể tải dữ liệu phản ánh. Vui lòng thử lại sau.');
+        toast({
+          variant: 'destructive',
+          title: 'Lỗi',
+          description: 'Không thể tải dữ liệu phản ánh. Vui lòng thử lại sau.',
+        });
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchFeedbackList();
-
     const now = new Date();
     setCurrentDate(now.toISOString().split("T")[0]); // YYYY-MM-DD
-    setTimeout(() => {}, 500)
-  }, []);
+  }, [toast]);
 
   const filteredFeedbacks = feedbackItems.filter(feedback =>
     feedback.title.toLowerCase().includes(search.toLowerCase()) ||

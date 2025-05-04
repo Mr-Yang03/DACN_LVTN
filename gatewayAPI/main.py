@@ -290,6 +290,16 @@ async def get_feedback_by_id(feedback_id: str):
 
     return response.json()
 
+@app.get("/feedback/processed")
+async def get_processed_feedback():
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/items/processed")
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to fetch processed feedback data")
+
+    return response.json()
+
 # Agent Service Routes (Chatbot)
 @app.post("/chatbot/")
 async def chat_with_agent(prompt: str = Form(...)):
