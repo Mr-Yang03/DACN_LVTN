@@ -23,7 +23,7 @@ class FeedbackCreate(BaseModel):
 feedback_router = APIRouter()
 
 db = get_database()
-items_collection = db["Items"]  # Chỉnh sửa tên collection thành "Items"
+items_collection = db["Items"]  
 
 # Hàm kiểm tra xác thực
 async def check_authentication(authorization: Optional[str] = Header(None)):
@@ -56,7 +56,7 @@ async def get_all_items():
         document["_id"] = str(document["_id"])
         items.append(document)
     
-    return {"status": "success", "data": items, "total": len(items)}
+    return items
 
 @feedback_router.get("/feedback/items/{item_id}")
 async def get_item_by_id(item_id: str):
@@ -139,7 +139,7 @@ async def create_feedback(feedback: FeedbackCreate, request: Request, user=Depen
     
 #     return {"status": "success", "data": items, "total": len(items), "search_term": q}
 
-@feedback_router.get("feedback/items/filter")
+@feedback_router.get("/feedback/items/filter")
 async def filter_items(
     severity: Optional[str] = Query(None, description="Mức độ nghiêm trọng"),
     type: Optional[str] = Query(None, description="Loại vấn đề"),
@@ -197,7 +197,7 @@ async def filter_items(
     }
 
 # Để hỗ trợ cho giao diện, thêm API lấy danh sách các giá trị có thể có
-@feedback_router.get("feedback/items/metadata")
+@feedback_router.get("/feedback/items/metadata")
 async def get_metadata():
     """
     Lấy dữ liệu metadata cho các bộ lọc: danh sách mức độ nghiêm trọng và loại vấn đề
@@ -228,7 +228,7 @@ async def check_admin(user = Depends(check_authentication)):
     return user
 
 # API duyệt phản ánh (chuyển từ "Đang xử lý" sang "Đã xử lý")
-@feedback_router.patch("feedback/items/{item_id}/approve")
+@feedback_router.patch("/feedback/items/{item_id}/approve")
 async def approve_feedback(item_id: str, admin=Depends(check_admin)):
     """
     Duyệt phản ánh (chuyển từ "Đang xử lý" sang "Đã xử lý")
@@ -259,7 +259,7 @@ async def approve_feedback(item_id: str, admin=Depends(check_admin)):
         return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
 # API hủy duyệt phản ánh (chuyển từ "Đã xử lý" sang "Đang xử lý")
-@feedback_router.patch("feedback/items/{item_id}/unapprove")
+@feedback_router.patch("/feedback/items/{item_id}/unapprove")
 async def unapprove_feedback(item_id: str, admin=Depends(check_admin)):
     """
     Hủy duyệt phản ánh (chuyển từ "Đã xử lý" sang "Đang xử lý")
@@ -325,7 +325,7 @@ async def unapprove_feedback(item_id: str, admin=Depends(check_admin)):
 #         return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
 # API hiển thị những phản ánh đã xử lý
-@feedback_router.get("feedback/items/processed", response_model=List[dict])
+@feedback_router.get("/feedback/processed", response_model=List[dict])
 async def get_processed_items():
     """
     Lấy danh sách phản ánh đã được xử lý (status = "Đã xử lý")
@@ -337,4 +337,4 @@ async def get_processed_items():
         document["_id"] = str(document["_id"])
         items.append(document)
     
-    return {"status": "success", "data": items, "total": len(items)}
+    return items

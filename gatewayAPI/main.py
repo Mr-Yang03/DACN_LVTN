@@ -303,10 +303,10 @@ async def upload_news_image(request: Request):
     return response.json()
 
 # Feedback Service Routes
-@app.get("/feedback")
+@app.get("/feedback/all_items")
 async def get_all_feedback():
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback")
+        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/items")
 
     if response.status_code != 200:
         raise HTTPException(status_code=500, detail="Failed to fetch feedback data")
@@ -337,7 +337,7 @@ async def get_feedback_by_id(feedback_id: str):
 @app.get("/feedback/processed")
 async def get_processed_feedback():
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/items/processed")
+        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/processed")
 
     if response.status_code != 200:
         raise HTTPException(status_code=500, detail="Failed to fetch processed feedback data")

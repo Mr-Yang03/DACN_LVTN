@@ -41,27 +41,10 @@ export default function ReportPage() {
   const [feedbackItems, setFeedbackItems] = useState<any[]>([]); // Dữ liệu phản ánh giả lập
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<any[]>([]);
   const { toast } = useToast();
   
   const itemsPerPage = 3 // Số lượng phản ánh hiển thị trên mỗi trang
 
-  // useEffect(() => {
-  //   const fetchFeedbackList = async () => {
-  //     try {
-  //       const response = await getUserFeedbackList({});
-  //       console.log(response)
-  //       // setFeedbackItems(response);
-  //     } catch (err) {
-  //       console.error("Lỗi khi tải phản hồi:", err);
-  //     }
-  //   };
-
-  //   fetchFeedbackList();
-
-    
-  //   setTimeout(() => {}, 500)
-  // }, []);
   // Load data on component mount
   useEffect(() => {
     // Fetch feedback data from API
@@ -69,8 +52,8 @@ export default function ReportPage() {
       try {
         setIsLoading(true);
         setError(null);
-        const feedbackData = await getUserFeedbackList({});
-        setData(feedbackData);
+        const feedbackData = await getUserFeedbackList();
+        setFeedbackItems(feedbackData);
       } catch (err) {
         console.error('Failed to fetch feedbacks:', err);
         setError('Không thể tải dữ liệu phản ánh. Vui lòng thử lại sau.');
@@ -88,6 +71,8 @@ export default function ReportPage() {
     const now = new Date();
     setCurrentDate(now.toISOString().split("T")[0]); // YYYY-MM-DD
   }, [toast]);
+
+  console.log(feedbackItems)
 
   const filteredFeedbacks = feedbackItems.filter(feedback =>
     feedback.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -241,7 +226,7 @@ export default function ReportPage() {
       {/* Feedback List */}
       <div className="space-y-6 p-6 pt-9">
         {currentFeedbackItems.map((item) => (
-          <Card key={item.id} className="bg-white border-gray-200 overflow-hidden rounded-xl shadow-md p-4">
+          <Card className="bg-white border-gray-200 overflow-hidden rounded-xl shadow-md p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="relative h-[200px] md:h-auto">
                 <Image

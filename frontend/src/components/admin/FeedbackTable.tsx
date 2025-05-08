@@ -34,12 +34,14 @@ import { isWithinInterval } from 'date-fns';
 import {
   PaginationDemo
 } from "@/components/sections/pagination-demo"
+import { useToast } from '@/hooks/use-toast';
+import { getFeedbackList } from "@/apis/feedbackApi";
 
 export default function FeedbackTable() {
     const [sortColumn, setSortColumn] = useState<string | null>(null);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
     const [isLoading, setIsLoading] = useState(false);
-    // const [data, setData] = useState<FeedbackArticle[]>([]);
+    const [data, setData] = useState<FeedbackArticle[]>([]);
     const [currentDate, setCurrentDate] = useState("");
     const [severityFilter, setSeverityFilter] = useState("allSeverity")
     const [issueFilter, setIssueFilter] = useState("allIssueType")
@@ -48,86 +50,35 @@ export default function FeedbackTable() {
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState<string | null>(null);
     const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+    const { toast } = useToast();
+    const [error, setError] = useState<string | null>(null);
 
     const itemsPerPage = 5 // Số lượng phản ánh hiển thị trên mỗi trang
 
-    const data = [
-        {
-            _id: "1",
-            location: "Ngã tư Hàng Xanh",
-            date: "24/03/2025",
-            time: "07:45",
-            issueType: "Tắc đường",
-            severity: "serious",
-            description: "Tình trạng ùn tắc kéo dài hơn 1km, thời gian di chuyển qua ngã tư mất khoảng 30 phút.",
-            status: "publishing",
-            images: ["/placeholder.svg?height=200&width=300&text=Ùn tắc 1"],
-            author: "Nguyễn Văn A",
-        },
-        {
-            _id: "2",
-            location: "Quận 3, TP.HCM",
-            date: "23/03/2025",
-            time: "16:30",
-            issueType: "Hư hỏng đèn giao thông",
-            severity: "medium",
-            description:
-                "Đèn tín hiệu giao thông bị hỏng hoàn toàn, không có cảnh sát giao thông điều tiết, gây nguy hiểm cho người tham gia giao thông.",
-            status: "published",
-            images: ["/placeholder.svg?height=200&width=300&text=Đèn tín hiệu"],
-            author: "Trần Thị B",
-        },
-        {
-            _id: "3",
-            location: "Đường Nguyễn Hữu Cảnh",
-            date: "22/03/2025",
-            time: "10:15",
-            issueType: "Hư hỏng đường",
-            severity: "serious",
-            description:
-                "Xuất hiện ổ gà lớn trên đường, đường kính khoảng 1m, sâu 30cm, đã gây ra nhiều vụ tai nạn cho xe máy.",
-            status: "publishing",
-            images: ["/placeholder.svg?height=200&width=300&text=Hư hỏng đường"],
-            author: "Lê Văn C",
-        },
-        {
-            _id: "4",
-            location: "Đường Lê Văn Sỹ",
-            date: "21/03/2025",
-            time: "14:20",
-            issueType: "Khác",
-            severity: "slight",
-            description: "Nhiều xe tải đỗ dọc theo đường Lê Văn Sỹ gây cản trở giao thông, làm thu hẹp lòng đường.",
-            status: "published",
-            images: ["/placeholder.svg?height=200&width=300&text=Đỗ xe trái phép"],
-            author: "Phạm Thị D",
-        },
-        {
-            _id: "5",
-            location: "Quận 1, TP.HCM",
-            date: "20/03/2025",
-            time: "08:30",
-            issueType: "Tai nạn giao thông",
-            severity: "medium",
-            description: "Tai nạn giữa xe máy và ô tô, có người bị thương nhẹ, gây ùn tắc cục bộ trong khoảng 30 phút.",
-            status: "published",
-            images: ["/placeholder.svg?height=200&width=300&text=Tai nạn"],
-            author: "Hoàng Văn E",
-        },
-        {
-            _id: "6",
-            location: "Đường Nguyễn Hữu Cảnh",
-            date: "19/03/2025",
-            time: "17:00",
-            issueType: "Ngập nước",
-            severity: "serious",
-            description:
-                "Đường ngập sâu khoảng 50cm sau cơn mưa lớn, nhiều phương tiện không thể di chuyển, gây ùn tắc kéo dài.",
-            status: "published",
-            images: ["/placeholder.svg?height=200&width=300&text=Ngập nước"],
-            author: "Vũ Thị F",
-        },
-    ]
+    // Load data on component mount
+    useEffect(() => {
+        // Fetch news data from API
+        const fetchNews = async () => {
+            try {
+                setIsLoading(true);
+                setError(null);
+                const feedbackData = await getFeedbackList();
+                setData(feedbackData);
+            } catch (err) {
+                console.error('Failed to fetch news:', err);
+                setError('Không thể tải dữ liệu tin tức. Vui lòng thử lại sau.');
+                toast({
+                    variant: 'destructive',
+                    title: 'Lỗi',
+                    description: 'Không thể tải dữ liệu tin tức. Vui lòng thử lại sau.',
+                });
+            } finally {
+                setIsLoading(false);
+            }
+        };
+    
+        fetchNews();
+    }, [toast]);
     
     const handleSort = (column: string) => {
         if (sortColumn === column) {
@@ -164,11 +115,11 @@ export default function FeedbackTable() {
 
     const getSeverityColor = (severity: string) => {
         switch (severity) {
-            case 'serious':
+            case 'Nghiêm trọng':
                 return 'bg-red-500 hover:bg-red-600';
-            case 'medium':
+            case 'Trung bình':
                 return 'bg-yellow-500 hover:bg-yellow-600';
-            case 'slight':
+            case 'Nhẹ':
                 return 'bg-green-500 hover:bg-green-600';
             default:
                 return 'bg-blue-500 hover:bg-blue-600';
@@ -223,9 +174,9 @@ export default function FeedbackTable() {
                 valueA = a.location || '';
                 valueB = b.location || '';
                 break;
-            case 'issueType':
-                valueA = a.issueType || '';
-                valueB = b.issueType || '';
+            case 'type':
+                valueA = a.type || '';
+                valueB = b.type || '';
                 break;
             case 'author':
                 valueA = a.author || '';
@@ -235,14 +186,15 @@ export default function FeedbackTable() {
                 // Use our new parsePublishDateTime function for more accurate sorting
                 valueA = parsePublishDateTime(a.date, a.time)?.getTime() || 0;
                 valueB = parsePublishDateTime(b.date, b.time)?.getTime() || 0;
+                break; 
+            case 'severity':
+                const severityValues = { "serious": 3, "medium": 2, "slight": 1 };
+                valueA = severityValues[a.severity as keyof typeof severityValues] || 0;
+                valueB = severityValues[b.severity as keyof typeof severityValues] || 0;
                 break;
             case 'status':
                 valueA = a.status || '';
                 valueB = b.status || '';
-                break;
-            case 'severity':
-                valueA = a.severity ? 1 : 0;
-                valueB = b.severity ? 1 : 0;
                 break;
             default:
                 return 0;
@@ -317,7 +269,7 @@ export default function FeedbackTable() {
                     </div>
                     
                     <div className="w-1/5">
-                        <Label htmlFor="issueType">Loại vấn đề</Label>
+                        <Label htmlFor="type">Loại vấn đề</Label>
                         <div
                             className="mt-2"
                         >
@@ -389,13 +341,13 @@ export default function FeedbackTable() {
                                 </Button>
                             </TableHead>
                             <TableHead className="w-1/5 text-black">
-                                <Button variant="ghost" onClick={() => handleSort('title')} className="flex items-center justify-center w-full">
+                                <Button variant="ghost" onClick={() => handleSort('location')} className="flex items-center justify-center w-full">
                                 Địa điểm
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </TableHead>
                             <TableHead className="text-black text-center w-1/10">
-                                <Button variant="ghost" onClick={() => handleSort('category')}>
+                                <Button variant="ghost" onClick={() => handleSort('type')}>
                                 Loại vấn đề
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
@@ -413,13 +365,13 @@ export default function FeedbackTable() {
                                 </Button>
                             </TableHead>
                             <TableHead className="text-black text-center w-1/10">
-                                <Button variant="ghost" onClick={() => handleSort('status')}>
+                                <Button variant="ghost" onClick={() => handleSort('severity')}>
                                 Mức độ nghiêm trọng
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </TableHead>
                             <TableHead className="text-black text-center w-1/10">
-                                <Button variant="ghost" onClick={() => handleSort('featured')}>
+                                <Button variant="ghost" onClick={() => handleSort('status')}>
                                 Trạng thái
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
@@ -438,25 +390,25 @@ export default function FeedbackTable() {
                             <TableRow>
                                 <TableCell colSpan={8} className="h-24 text-center">
                                     {searchTerm || dateRange ? 
-                                    "Không tìm thấy bài viết nào phù hợp với bộ lọc." : 
-                                    "Chưa có bài viết nào."}
+                                    "Không tìm thấy phản ánh nào phù hợp với bộ lọc." : 
+                                    "Chưa có phản ánh nào."}
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            currentFeedbackItems.map((feedback) => (
+                            currentFeedbackItems.map((feedback, index) => (
                                 <TableRow key={feedback._id}>
-                                    <TableCell className="text-center">{feedback._id}</TableCell>
+                                    <TableCell className="text-center">{index + 1}</TableCell>
                                     <TableCell className="font-medium">{feedback.location}</TableCell>
-                                    <TableCell className="text-center">{feedback.issueType}</TableCell>
+                                    <TableCell className="text-center">{feedback.type}</TableCell>
                                     <TableCell className='text-center'>{feedback.author}</TableCell>
                                     <TableCell className='text-center'>
                                         {feedback.time} {feedback.date && `- ${feedback.date}`}
                                     </TableCell>
-                                    <TableCell>
-                                        <Badge className={getSeverityColor(feedback.severity || 'default')}>{feedback.severity == "serious" ? "Nghiêm trọng" : (feedback.severity == "medium" ? "Trung bình" : "Nhẹ")}</Badge>
+                                    <TableCell className='text-center'>
+                                        <Badge className={getSeverityColor(feedback.severity || 'default')}>{feedback.severity}</Badge>
                                     </TableCell>
                                     <TableCell className='text-center'>
-                                        {feedback.status === 'published' ? (
+                                        {feedback.status === 'Đã xử lý' ? (
                                             <Badge
                                                 variant="outline"
                                                 className="bg-green-50 text-green-700 border-green-200"
@@ -474,7 +426,7 @@ export default function FeedbackTable() {
                                             </Badge>
                                         )}
                                     </TableCell>
-                                    {/* 
+                                    
                                     <TableCell className="text-center">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
@@ -485,75 +437,13 @@ export default function FeedbackTable() {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
                                                 <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
-                                                <DropdownMenuItem onClick={() => router.push(`/admin/news/edit/${news._id}`)}>
+                                                <DropdownMenuItem>
                                                     <Edit className="mr-2 h-4 w-4" />
-                                                    Xem và chỉnh sửa
+                                                    Xem chi tiết
                                                 </DropdownMenuItem>
-                                                <DropdownMenuSeparator />
-                                                <DropdownMenuItem onClick={() => feedback._id && handleToggleStatus(news._id)}>
-                                                    {feedback.status === 'published' ? (
-                                                        <>
-                                                            <XCircle className="mr-2 h-4 w-4" />
-                                                            Chuyển sang nháp
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <CheckCircle className="mr-2 h-4 w-4" />
-                                                            Đăng bài
-                                                        </>
-                                                    )}
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => feedback._id && handleToggleFeatured(news._id)}>
-                                                    {feedback.featured ? (
-                                                        <>
-                                                            <XCircle className="mr-2 h-4 w-4" />
-                                                            Bỏ nổi bật
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <CheckCircle className="mr-2 h-4 w-4" />
-                                                            Đánh dấu nổi bật
-                                                        </>
-                                                    )}
-                                                </DropdownMenuItem>
-                                                <DropdownMenuSeparator />
-                                                <AlertDialog open={deleteId === news._id} onOpenChange={(isOpen: boolean) => !isOpen && setDeleteId(null)}>
-                                                    <AlertDialogTrigger asChild>
-                                                        <DropdownMenuItem
-                                                            className="text-red-600 focus:text-red-600"
-                                                            onClick={(e: React.MouseEvent) => {
-                                                                e.preventDefault();
-                                                                // Kiểm tra news._id tồn tại trước khi set state
-                                                                if (feedback._id) {
-                                                                setDeleteId(feedback._id);
-                                                                }
-                                                            }}
-                                                            >
-                                                            <Trash className="mr-2 h-4 w-4" />
-                                                            Xóa
-                                                        </DropdownMenuItem>
-                                                    </AlertDialogTrigger>
-                                                    <AlertDialogContent>
-                                                        <AlertDialogHeader>
-                                                            <AlertDialogTitle>Bạn có chắc chắn muốn xóa?</AlertDialogTitle>
-                                                            <AlertDialogDescription>
-                                                                Hành động này không thể hoàn tác. Bài viết sẽ bị xóa vĩnh viễn khỏi hệ thống.
-                                                            </AlertDialogDescription>
-                                                        </AlertDialogHeader>
-                                                        <AlertDialogFooter>
-                                                            <AlertDialogCancel>Hủy</AlertDialogCancel>
-                                                            <AlertDialogAction
-                                                                className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
-                                                                onClick={() => feedback._id && handleDelete(feedback._id)}
-                                                            >
-                                                                Xóa
-                                                            </AlertDialogAction>
-                                                        </AlertDialogFooter>
-                                                    </AlertDialogContent>
-                                                </AlertDialog>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
-                                    </TableCell> */}
+                                    </TableCell>
                                 </TableRow>
                             ))
                         )}

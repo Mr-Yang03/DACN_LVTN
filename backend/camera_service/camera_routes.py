@@ -18,7 +18,7 @@ import httpx
 camera_router = APIRouter()
 
 db = get_database()
-camera_collection = db["Cameras"]
+camera_collection = db["cameras"]
 
 # Helper: Convert ObjectId to string
 def serialize_camera(camera):

@@ -3,7 +3,7 @@ import { api } from "./axiosInstance";
 export interface FeedbackArticle {
     _id?: string;
     location: string;
-    issueType: string;
+    type: string;
     severity: "slight" | "medium" | "serious";
     status?: string;
     author?: string;
@@ -43,12 +43,12 @@ export const getFeedback = async (id: string) => {
     return response.data;
 }
 
-export const getFeedbackList = async ({}) => {
+export const getFeedbackList = async () => {
     const response = await api.get("/feedback/all_items");
     return response.data;
 }
 
-export const getUserFeedbackList = async ({}) => {
+export const getUserFeedbackList = async () => {
     const response = await api.get("/feedback/processed");
     return response.data;
 }
