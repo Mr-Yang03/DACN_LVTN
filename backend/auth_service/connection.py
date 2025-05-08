@@ -6,7 +6,6 @@ import os
 load_dotenv()
 
 # Connect MongoDB using environment variable for security
-load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI","")
 client = MongoClient(MONGO_URI)
 
