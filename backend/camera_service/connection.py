@@ -6,7 +6,6 @@ load_dotenv()
 
 # Connect MongoDB using environment variable for security
 MONGO_URI = os.getenv("MONGO_URI","")
-print("MONGO_URI =", MONGO_URI)
 client = MongoClient(MONGO_URI)
 
 # Choose database and collection
