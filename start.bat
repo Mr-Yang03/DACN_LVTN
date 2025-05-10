@@ -35,6 +35,12 @@ call .venv\Scripts\activate
 start cmd /k "uvicorn main:app --host 0.0.0.0 --port 8009 --reload"
 cd ../..
 
+echo Starting backend/userboard_service
+cd backend/userboard_service
+call .venv\Scripts\activate
+start cmd /k "uvicorn main:app --host 0.0.0.0 --port 8010 --reload"
+cd ../..
+
 echo Starting API Gateway...
 cd gatewayAPI
 call .venv\Scripts\activate
