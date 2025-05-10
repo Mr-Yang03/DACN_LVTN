@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -11,11 +12,21 @@ interface UserData {
   fullname: string;
   email: string;
   phone?: string;
+  cccd?: string;
+  birthday?: string;
 }
+
+const defaultAdminData: UserData = {
+  fullname: "Nguyễn Văn An",
+  email: "an.nguyen@admin.gov.vn",
+  phone: "0912345678",
+  cccd: "012345678901",
+  birthday: "1980-05-15",
+};
 
 export default function UserProfilePage() {
   const { isAuthenticated } = useAuth();
-  const [userData, setUserData] = useState<UserData>({ fullname: "", email: "" });
+  const [userData, setUserData] = useState<UserData>(defaultAdminData);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -31,7 +42,6 @@ export default function UserProfilePage() {
 
   const handleSave = () => {
     setLoading(true);
-    // Fake saving logic, should be API call
     setTimeout(() => {
       localStorage.setItem("user_data", JSON.stringify(userData));
       toast.success("Thông tin đã được cập nhật");
@@ -39,33 +49,69 @@ export default function UserProfilePage() {
     }, 800);
   };
 
-  if (!isAuthenticated) return <p className="p-4">Bạn cần đăng nhập để xem thông tin cá nhân.</p>;
+  if (!isAuthenticated)
+    return <p className="p-4 text-center text-sm text-gray-500">Bạn cần đăng nhập để xem thông tin cá nhân.</p>;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>Thông tin tài khoản</CardTitle>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-8">
+      <Card className="w-full max-w-xl shadow-md border border-gray-200">
+        <CardHeader className="text-center">
+          <CardTitle className="text-xl font-bold text-gray-800">Thông tin tài khoản quản trị</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-5">
           <div>
-            <label className="block text-sm font-medium mb-1">Họ tên</label>
-            <Input value={userData.fullname} onChange={e => handleChange("fullname", e.target.value)} />
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Họ tên</label>
+            <Input
+              value={userData.fullname}
+              onChange={e => handleChange("fullname", e.target.value)}
+              placeholder="Họ và tên"
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <Input type="email" value={userData.email} onChange={e => handleChange("email", e.target.value)} />
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+            <Input
+              type="email"
+              value={userData.email}
+              onChange={e => handleChange("email", e.target.value)}
+              placeholder="Địa chỉ email"
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Số điện thoại</label>
-            <Input type="tel" value={userData.phone || ""} onChange={e => handleChange("phone", e.target.value)} />
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Số điện thoại</label>
+            <Input
+              type="tel"
+              value={userData.phone || ""}
+              onChange={e => handleChange("phone", e.target.value)}
+              placeholder="Số điện thoại"
+            />
           </div>
 
-          <Button onClick={handleSave} disabled={loading} className="mt-4">
-            {loading ? "Đang lưu..." : "Lưu thay đổi"}
-          </Button>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Số căn cước công dân</label>
+            <Input
+              type="text"
+              value={userData.cccd || ""}
+              onChange={e => handleChange("cccd", e.target.value)}
+              placeholder="012345678901"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Ngày sinh</label>
+            <Input
+              type="date"
+              value={userData.birthday || ""}
+              onChange={e => handleChange("birthday", e.target.value)}
+            />
+          </div>
+
+          <div className="pt-4 text-center">
+            <Button onClick={handleSave} disabled={loading} className="w-full">
+              {loading ? "Đang lưu..." : "Lưu thay đổi"}
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
