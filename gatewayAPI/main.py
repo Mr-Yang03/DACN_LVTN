@@ -27,6 +27,8 @@ NEWS_SERVICE_URL = "http://localhost:8004"
 AGENT_SERVICE_URL = "http://localhost:8005"  # Assuming Agent service runs on port 8005
 
 CAMERA_SERVICE_URL = "http://localhost:8009"
+USERBOARD_SERVICE_URL = "http://localhost:8010"  # hoặc URL tương ứng nếu khác
+
 
 @app.post("/users/login")
 async def login(request: Request):
@@ -423,6 +425,49 @@ async def proxy_update_camera_position(camera_id: str, lat: float = Form(...), l
         )
     return response.json()
 
+# Userboard Service Routes
+
+@app.get("/userboard/ub")
+async def proxy_get_all_users():
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{USERBOARD_SERVICE_URL}/userboard/ub")
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail="Failed to fetch users")
+    return {"status": "success", "data": response.json()}
+
+@app.get("/userboard/ub/{user_id}")
+async def proxy_get_user(user_id: str):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{USERBOARD_SERVICE_URL}/userboard/ub/{user_id}")
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail="User not found")
+    return {"status": "success", "data": response.json()}
+
+@app.post("/userboard/ub")
+async def proxy_create_user(request: Request):
+    data = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.post(f"{USERBOARD_SERVICE_URL}/userboard/ub", json=data)
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail="Failed to create user")
+    return {"status": "success", "data": response.json()}
+
+@app.put("/userboard/ub/{user_id}")
+async def proxy_update_user(user_id: str, request: Request):
+    data = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.put(f"{USERBOARD_SERVICE_URL}/userboard/ub/{user_id}", json=data)
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail="Failed to update user")
+    return {"status": "success", "data": response.json()}
+
+@app.delete("/userboard/ub/{user_id}")
+async def proxy_delete_user(user_id: str):
+    async with httpx.AsyncClient() as client:
+        response = await client.delete(f"{USERBOARD_SERVICE_URL}/userboard/ub/{user_id}")
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail="Failed to delete user")
+    return {"status": "success", "message": "User deleted successfully"}
 
 if __name__ == "__main__":
     import uvicorn
