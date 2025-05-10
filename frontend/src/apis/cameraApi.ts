@@ -42,15 +42,15 @@ export async function deleteCamera(id: string) {
 }
 
 // PUT: Cập nhật vị trí camera (lat/lng)
-export async function updateCameraPosition(id: string, lat: number, lng: number) {
-  const formData = new URLSearchParams()
-  formData.append("lat", lat.toString())
-  formData.append("lng", lng.toString())
+// export async function updateCameraPosition(id: string, lat: number, lng: number) {
+//   const formData = new URLSearchParams()
+//   formData.append("lat", lat.toString())
+//   formData.append("lng", lng.toString())
 
-  return await api.post(`/api/cameras/${id}/position`, formData, {
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  })
-}
+//   return await api.post(`/api/cameras/${id}/position`, formData, {
+//     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+//   })
+// }
 
 // POST: Tạo camera mới (bỏ _id, CreatedDate, ModifiedDate)
 export async function createCamera(camera: Omit<Camera, "_id" | "CreatedDate" | "ModifiedDate">) {
@@ -63,3 +63,10 @@ export async function updateCamera(id: string, updatedData: Partial<Camera>) {
   const response = await api.put(`/api/cameras/${id}`, updatedData)
   return response.data
 }
+
+export async function updateCameraPosition(id: string, lat: number, lng: number) {
+  const params = new URLSearchParams({ lat: lat.toString(), lng: lng.toString() });
+
+  return await api.post(`/api/cameras/${id}/position?${params.toString()}`);
+}
+
