@@ -1,4 +1,4 @@
-# ✅ camera_service backend using FastAPI + MongoDB with soft delete
+# camera_service backend using FastAPI + MongoDB with soft delete
 
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import JSONResponse
@@ -23,7 +23,7 @@ camera_collection = db["cameras"]
 # Helper: Convert ObjectId to string
 def serialize_camera(camera):
     camera["_id"] = str(camera["_id"])
-    # print("Cameras from DB:", camera)  # ✅ In dữ liệu ra terminal
+    # print("Cameras from DB:", camera)  # In dữ liệu ra terminal
     return camera
 
 # Pydantic models
