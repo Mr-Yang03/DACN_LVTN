@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query, Header, HTTPException, Depends, Request, status
+from fastapi import APIRouter, Query, Header, HTTPException, Depends, Request, status, Body
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import httpx
@@ -19,6 +19,8 @@ class FeedbackCreate(BaseModel):
     author: str
     phone_number: str
     email: str
+    date: str
+    time: str
 
 feedback_router = APIRouter()
 
@@ -58,6 +60,21 @@ async def get_all_items():
     
     return items
 
+# API hiển thị những phản ánh đã xử lý
+@feedback_router.get("/feedback/processed", response_model=List[dict])
+async def get_processed_items():
+    """
+    Lấy danh sách phản ánh đã được xử lý (status = "Đã xử lý")
+    """
+    items = []
+    cursor = items_collection.find({"status": "Đã xử lý"})
+    
+    for document in cursor:
+        document["_id"] = str(document["_id"])
+        items.append(document)
+    
+    return items
+
 @feedback_router.get("/feedback/items/{item_id}")
 async def get_item_by_id(item_id: str):
     """
@@ -74,44 +91,27 @@ async def get_item_by_id(item_id: str):
     return {"status": "error", "message": "Item không tồn tại"}
 
 @feedback_router.post("/feedback/items")
-async def create_feedback(feedback: FeedbackCreate, request: Request, user=Depends(check_authentication)):
+async def create_feedback(feedback: dict = Body(...)):
     """
     Thêm mới feedback vào database
     Yêu cầu người dùng đăng nhập, nếu không sẽ điều hướng đến trang đăng nhập
     """
-    # Kiểm tra xác thực
-    if not user:
-        # Trả về status code 401 và thông tin cần để client redirect
-        return JSONResponse(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            content={
-                "status": "error", 
-                "message": "Bạn cần đăng nhập để gửi phản hồi",
-                "redirect_url": "/login",  # URL trang đăng nhập
-                "redirect": True
-            }
-        )
-    
-    # Tạo dữ liệu feedback
-    current_time = datetime.now()
-    feedback_data = feedback.dict()
-    
-    # Thêm các trường bổ sung
-    feedback_data["date"] = current_time.strftime("%d/%m/%Y")
-    feedback_data["time"] = current_time.strftime("%H:%M")
-    # feedback_data["author"] = user.get("username", feedback_data["author"])
-    
-    # Chèn vào database
-    result = items_collection.insert_one(feedback_data)
-    
-    if result.inserted_id:
-        return {
-            "status": "success", 
-            "message": "Đã gửi phản hồi thành công",
-            "id": str(result.inserted_id)
-        }
-    
-    return {"status": "error", "message": "Không thể tạo phản hồi"}
+    try:
+        # Add metadata
+        feedback["created_at"] = datetime.utcnow()
+        feedback["updated_at"] = datetime.utcnow()
+        
+        # Chèn vào database
+        result = items_collection.insert_one(feedback)
+        
+        # Return created news with ID
+        created_feedback = feedback.copy()
+        created_feedback["_id"] = str(result.inserted_id)
+        
+        return created_feedback
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # @feedback_router.get("/items/search")
 # async def search_items(q: str = Query(None, description="Từ khóa tìm kiếm trong tiêu đề hoặc địa điểm")):
@@ -324,17 +324,3 @@ async def unapprove_feedback(item_id: str, admin=Depends(check_admin)):
 #     except Exception as e:
 #         return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
-# API hiển thị những phản ánh đã xử lý
-@feedback_router.get("/feedback/processed", response_model=List[dict])
-async def get_processed_items():
-    """
-    Lấy danh sách phản ánh đã được xử lý (status = "Đã xử lý")
-    """
-    items = []
-    cursor = items_collection.find({"status": "Đã xử lý"})
-    
-    for document in cursor:
-        document["_id"] = str(document["_id"])
-        items.append(document)
-    
-    return items

@@ -315,17 +315,6 @@ async def get_all_feedback():
 
     return response.json()
 
-@app.post("/feedback")
-async def create_feedback(request: Request):
-    body = await request.json()
-    async with httpx.AsyncClient() as client:
-        response = await client.post(f"{FEEDBACK_SERVICE_URL}/feedback", json=body)
-
-    if response.status_code != 200:
-        raise HTTPException(status_code=500, detail="Failed to submit feedback")
-
-    return response.json()
-
 @app.get("/feedback/{feedback_id}")
 async def get_feedback_by_id(feedback_id: str):
     async with httpx.AsyncClient() as client:
@@ -343,6 +332,17 @@ async def get_processed_feedback():
 
     if response.status_code != 200:
         raise HTTPException(status_code=500, detail="Failed to fetch processed feedback data")
+
+    return response.json()
+
+@app.post("/feedback/item")
+async def create_feedback(request: Request):
+    body = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.post(f"{FEEDBACK_SERVICE_URL}/feedback/items", json=body)
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to submit feedback")
 
     return response.json()
 

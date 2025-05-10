@@ -130,9 +130,9 @@ export default function FeedbackTable() {
     const filteredData = data.filter((item) => {
         // Text search filter
         const matchesSearch = 
-            item.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             (item.author?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-            (item.description.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+            (item.description?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
             (item._id?.toLowerCase() || '').includes(searchTerm.toLowerCase()); // Thêm tìm kiếm theo ID
         
         // Date range filter

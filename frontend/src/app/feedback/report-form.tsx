@@ -51,7 +51,7 @@ const getAuthToken = () => {
   return '';
 };
 
-export function ReportForm() {
+export function ReportForm({ userFullName }: { userFullName: any }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -59,7 +59,7 @@ export function ReportForm() {
   const form = useForm<FeedbackFormValues>({
     resolver: zodResolver(feedbackSchema),
     defaultValues: {
-      fullName: "",
+      fullName: `${userFullName}`,
       email: "",
       phone: "",
       location: {
@@ -69,7 +69,7 @@ export function ReportForm() {
       date: new Date(),
       time: "",
       issueType: "",
-      severity: "medium",
+      severity: "low",
       description: "",
     },
   });
@@ -77,68 +77,46 @@ export function ReportForm() {
   async function onSubmit(values: FeedbackFormValues) {
     setIsSubmitting(true);
 
+    // Format data to match API expectations
+    const feedbackData = {
+      title: `Phản ánh về ${values.issueType === 'traffic_jam' ? 'tắc đường' : 
+              values.issueType === 'accident' ? 'tai nạn' : 
+              values.issueType === 'construction' ? 'công trình đang thi công' :
+              values.issueType === 'road_damage' ? 'hư hỏng đường' :
+              values.issueType === 'traffic_light' ? 'đèn tín hiệu hỏng' :
+              values.issueType === 'flooding' ? 'ngập nước' : 'vấn đề khác'}`,
+      location: `${values.location.lat}, ${values.location.lng}`, // Convert location object to string format
+      type: values.issueType === 'traffic_jam' ? 'Ùn tắc giao thông' : 
+            values.issueType === 'accident' ? 'Tai nạn' : 
+            values.issueType === 'construction' ? 'Công trình đang thi công' :
+            values.issueType === 'road_damage' ? 'Hư hỏng đường' :
+            values.issueType === 'traffic_light' ? 'Đèn tín hiệu hỏng' :
+            values.issueType === 'flooding' ? 'Ngập nước' : 'Khác',
+      severity: values.severity === 'low' ? 'Nhẹ' : 
+                values.severity === 'medium' ? 'Trung bình' : 'Nghiêm trọng',
+      description: values.description,
+      images: values.attachments ? values.attachments.map((file: { url?: string }) => file.url || '') : [],
+      author: userFullName, 
+      phone_number: values.phone,
+      email: values.email,
+      status: "Đang xử lý",
+      date: format(values.date, "dd-MM-yyyy"),
+      time: values.time,
+    };
+
     try {
-      // Format data to match API expectations
-      const feedbackData = {
-        title: `Phản ánh về ${values.issueType === 'traffic_jam' ? 'tắc đường' : 
-               values.issueType === 'accident' ? 'tai nạn' : 
-               values.issueType === 'construction' ? 'công trình đang thi công' :
-               values.issueType === 'road_damage' ? 'hư hỏng đường' :
-               values.issueType === 'traffic_light' ? 'đèn tín hiệu hỏng' :
-               values.issueType === 'flooding' ? 'ngập nước' : 'vấn đề khác'}`,
-        location: `${values.location.lat}, ${values.location.lng}`, // Convert location object to string format
-        type: values.issueType === 'traffic_jam' ? 'Ùn tắc giao thông' : 
-             values.issueType === 'accident' ? 'Tai nạn' : 
-             values.issueType === 'construction' ? 'Công trình đang thi công' :
-             values.issueType === 'road_damage' ? 'Hư hỏng đường' :
-             values.issueType === 'traffic_light' ? 'Đèn tín hiệu hỏng' :
-             values.issueType === 'flooding' ? 'Ngập nước' : 'Khác',
-        severity: values.severity === 'low' ? 'Nhẹ' : 
-                 values.severity === 'medium' ? 'Trung bình' : 'Nghiêm trọng',
-        description: values.description,
-        images: values.attachments ? values.attachments.map((file: { url?: string }) => file.url || '') : [],
-        author: values.fullName, 
-        phone_number: values.phone,
-        email: values.email
-      };
-
       // Call API endpoint
-      const response = await fetch('/api/items', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getAuthToken()}`
-        },
-        body: JSON.stringify(feedbackData)
-      });
-
-      const result = await response.json();
-
-      // Handle unauthorized (redirect to login)
-      if (response.status === 401 && result.redirect) {
-        // Store the current form data in session storage to recover after login
-        sessionStorage.setItem('pendingFeedback', JSON.stringify(values));
-        // Redirect to login page
-        router.push(result.redirect_url);
-        return;
-      }
-
-      // Handle success
-      if (response.ok) {
+      const response = await sendFeedback(feedbackData)
+      if (response) {
         setIsSuccess(true);
         toast?.({
           title: "Phản ánh đã được gửi",
-          description: "Cảm ơn bạn đã gửi phản ánh về tình trạng giao thông",
+          description: "Cảm ơn bạn đã phản ánh về tình trạng giao thông.",
+          variant: "default"
         });
-        router.push("/thanks");
-      } else {
-        // Handle API error
-        toast?.({
-          title: "Có lỗi xảy ra",
-          description: result.message || "Không thể gửi phản ánh. Vui lòng thử lại sau.",
-          variant: "destructive"
-        });
+        router.push("/feedback");
       }
+    
     } catch (error) {
       console.error("Lỗi khi gửi phản ánh:", error);
       toast?.({
@@ -164,7 +142,7 @@ export function ReportForm() {
                 <FormItem>
                   <FormLabel>Họ tên</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nguyễn Văn A" {...field} />
+                    <Input placeholder={userFullName} {...field} readOnly />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
