@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Đặt URI kết nối MongoDB của bạn tại đây (có thể lấy từ MongoDB Atlas)
-MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://sinhthanhf012:sinhthanhf012@accounts-traffin.vxinrou.mongodb.net/")
+MONGO_URI = os.getenv("MONGO_URI", "")
 
 client = MongoClient(MONGO_URI)
 db = client["accounts-traffic"]
