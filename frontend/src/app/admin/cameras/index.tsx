@@ -16,6 +16,12 @@ export default function CameraManagementPage() {
     fetchCameras();
   }, []); // Lấy danh sách camera khi trang load
 
+  const handleUpdatePosition = async (camera: Camera) => {
+    // Ví dụ mở một dialog hoặc cập nhật vị trí trực tiếp
+    console.log("Mở dialog cập nhật vị trí cho:", camera.DisplayName);
+    // Nếu bạn có dialog riêng thì mở nó ở đây
+  };
+
   const fetchCameras = async () => {
     try {
       const data = await getCameras();
@@ -82,6 +88,7 @@ export default function CameraManagementPage() {
         cameras={cameras}
         onEditCamera={handleEditCamera}
         onDeleteCamera={handleDeleteCamera}
+        onUpdatePosition={handleUpdatePosition}
       />
 
       {openForm && (
@@ -98,3 +105,4 @@ export default function CameraManagementPage() {
     </div>
   );
 }
+
