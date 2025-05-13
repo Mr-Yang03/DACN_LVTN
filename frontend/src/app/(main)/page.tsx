@@ -5,11 +5,45 @@ import "leaflet/dist/leaflet.css";
 import GoongMap from "@/components/ui/GoongMap";
 import CardStatistic from "@/components/ui/CardStatistic";
 import { useWeather } from "@/hooks/useWeather";
+import { useEffect, useState } from "react";
+import { getCameras } from "@/apis/trafficApi";
+import Image from "next/image";
 
-// import "@/app/globals.css";
+interface Camera {
+  Id: string;
+  Title: string;
+  DisplayName: string;
+  SnapshotUrl: string | null;
+  Location: {
+    type: "Point";
+    coordinates: [number, number];
+  };
+  Status: string;
+}
 
 const Page: React.FC = () => {
   const { weather, loading: weatherLoading, error: weatherError } = useWeather();
+  const [cameras, setCameras] = useState<Camera[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchCameras = async () => {
+    try {
+      setIsLoading(true);
+      const response = await getCameras({});
+      setCameras(response.cameras);
+    } catch (error) {
+      console.error("Error fetching cameras:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCameras();
+  }, []);
+
+  const activeCameras = cameras.filter((camera) => camera.Status === "active");
+  const inactiveCameras = cameras.filter((camera) => camera.Status !== "active");
 
   return (
     <>
@@ -107,8 +141,8 @@ const Page: React.FC = () => {
           />
           <CardStatistic
             title="Camera hoạt động"
-            value="12/15"
-            description="3 camera đang bảo trì"
+            value={`${activeCameras.length}/${cameras.length}`}
+            description={`${inactiveCameras.length} camera đang bảo trì`}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -243,23 +277,70 @@ const Page: React.FC = () => {
           className="w-5/12 m-2 p-5 border-2 rounded-lg bg-white"
         >
           <div
-            className="py-3"
+            className="py-3 flex"
           >
-            <p
-              className="text-2xl font-bold"
+            <div className="flex w-3/5">
+              <p
+                className="text-2xl font-bold"
+              >
+                Camera giao thông
+              </p>
+            </div>
+            <div
+              className="flex w-2/5 justify-end items-center text-blue-600"
             >
-              Camera giao thông
-            </p>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className="lucide lucide-chevrons-right"
+              >
+                <path d="m6 17 5-5-5-5"/>
+                <path d="m13 17 5-5-5-5"/>
+              </svg>
+              <a href="/ggmap">Xem thêm camera</a>
+            </div>
           </div>
           <div
             className="h-[450] overflow-y-auto"
           >
-            <p>Đang cập nhật dữ liệu ...</p>
+            <div className="grid grid-rows-2 gap-2">
+              <div className="p-2 border-gray-900 border-2 rounded-lg">
+                <div key={activeCameras[0]?.Id} className="relative w-full h-[200px]">
+                  <Image
+                    src={activeCameras[0]?.SnapshotUrl || "/placeholder.png"}
+                    alt={activeCameras[0]?.DisplayName || "Camera"}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {activeCameras.slice(3, 7).map((camera) => (
+                  <div key={camera.Id} className="w-full">
+                    <div className="relative h-[100px]">
+                      <Image
+                        src={camera.SnapshotUrl || "/placeholder.png"}
+                        alt={camera.DisplayName || "Camera"}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>  
     </>
   );
-};
+}
 
 export default Page;
