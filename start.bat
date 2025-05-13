@@ -5,6 +5,11 @@ cd frontend
 start cmd /k "npm run dev"
 cd ..
 
+echo Starting admin frontend
+cd frontend_admin
+start cmd /k "npm run dev"
+cd ..
+
 echo Starting backend/auth_service
 cd backend/auth_service
 call .venv\Scripts\activate
