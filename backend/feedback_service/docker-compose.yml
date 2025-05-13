@@ -1,0 +1,8 @@
+services:
+  app:
+    image: feedback_service:latest
+    ports:
+      - "8003:8003"
+    volumes:
+      - .:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8003
