@@ -1,0 +1,15 @@
+# Ignore type definitions for quill-image-resize-module-react
+src/types/quill-image-resize-module-react.d.ts
+
+# Ignore build output
+.next/
+out/
+build/
+dist/
+
+# Ignore node modules
+node_modules/
+
+# Other common ignores
+**/*.min.js
+**/public/
