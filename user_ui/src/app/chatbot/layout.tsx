@@ -18,7 +18,6 @@ export default function RootLayout({
 
         <main className="flex-1 bg-white">{children}</main>
         <Toaster />
-        <SiteFooter />
       </div>
     </div>
   );
