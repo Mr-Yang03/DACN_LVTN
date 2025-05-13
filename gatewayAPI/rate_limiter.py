@@ -1,7 +1,8 @@
 import redis.asyncio as redis
 from fastapi import Request, HTTPException
+from config import HOST_IP
 
-redis_client = redis.Redis(host="localhost", port=6379, decode_responses=True)
+redis_client = redis.Redis(host=HOST_IP, port=6379, decode_responses=True)
 
 async def rate_limit(request: Request):
     """Giới hạn số request từ mỗi IP"""

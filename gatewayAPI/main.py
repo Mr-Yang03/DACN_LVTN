@@ -20,14 +20,15 @@ app.add_middleware(
 
 setup_monitoring(app)
 
-USER_SERVICE_URL = "http://localhost:8001"
-TRAFFIC_SERVICE_URL = "http://localhost:8002"
-FEEDBACK_SERVICE_URL = "http://localhost:8003"
-NEWS_SERVICE_URL = "http://localhost:8004"
-AGENT_SERVICE_URL = "http://localhost:8005"  # Assuming Agent service runs on port 8005
+from config import HOST_IP
+USER_SERVICE_URL = f"http://{HOST_IP}:8001"
+TRAFFIC_SERVICE_URL = f"http://{HOST_IP}:8002"
+FEEDBACK_SERVICE_URL = f"http://{HOST_IP}:8003"
+NEWS_SERVICE_URL = f"http://{HOST_IP}:8004"
+AGENT_SERVICE_URL = f"http://{HOST_IP}:8005"  # Assuming Agent service runs on port 8005
 
-CAMERA_SERVICE_URL = "http://localhost:8009"
-USERBOARD_SERVICE_URL = "http://localhost:8010"  # hoặc URL tương ứng nếu khác
+CAMERA_SERVICE_URL = f"http://{HOST_IP}:8009"
+USERBOARD_SERVICE_URL = f"http://{HOST_IP}:8010"  # hoặc URL tương ứng nếu khác
 
 
 @app.post("/users/login")
