@@ -1,0 +1,32 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Logs
+*.log
+
+# Git & metadata
+.git/
+.gitignore
+
+# Docker-related files (không cần trong image)
+docker-compose.yml
+.dockerignore
+Dockerfile
+
+# IDE/editor configs
+.vscode/
+*.swp
+*.bak
+
+# Secrets & env
+.env
+*.pem
+*.key
