@@ -100,7 +100,7 @@ export default function ReportPage() {
     );
     return userData
   };
-  console.log(userData())
+
   return (
     <>
       {isAuthenticated ? (
@@ -188,7 +188,7 @@ export default function ReportPage() {
                       <SelectItem value="accident">Tai nạn giao thông</SelectItem>
                       <SelectItem value="construction">Công trình đang thi công</SelectItem>
                       <SelectItem value="bad-road">Hư hỏng đường</SelectItem>
-                      <SelectItem value="bad-traffic-light">Hư hỏng đèn giao thông</SelectItem>
+                      <SelectItem value="bad-traffic-light">Đèn tín hiệu hỏng</SelectItem>
                       <SelectItem value="flood">Ngập nước</SelectItem>
                       <SelectItem value="other">Khác</SelectItem>
                     </SelectContent>
@@ -203,7 +203,7 @@ export default function ReportPage() {
                     id="startDate"
                     type="date"
                     className="w-full bg-white border-gray-200 text-black rounded-full"
-                    defaultValue={currentDate}
+                    defaultValue=""
                     onChange={(e) => setCurrentDate(e.target.value)}
                   />
                 </div>
@@ -216,7 +216,7 @@ export default function ReportPage() {
                     id="endDate"
                     type="date"
                     className="w-full bg-white border-gray-200 text-black rounded-full"
-                    defaultValue={currentDate}
+                    defaultValue=""
                     onChange={(e) => setCurrentDate(e.target.value)}
                   />
                 </div>

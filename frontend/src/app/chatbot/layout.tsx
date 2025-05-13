@@ -1,21 +1,24 @@
-// File: /app/admin/layout.tsx
-'use client';
+"use client";
 
-import type { ReactNode } from 'react';
-// import { Sidebar } from '@/components/admin/Sidebar';
-import { AdminHeader } from '@/components/admin/AdminHeader';
+import type React from "react";
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+import { SiteHeader } from "@/components/sections/site-header";
+import { SiteFooter } from "@/components/sections/site-footer";
+import { Toaster } from "@/components/ui/toaster"
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex flex-col lg:flex-row">
-      {/* Main Content */}
-      <div className="fixed flex flex-col flex-1 h-screen w-screen">
-        <AdminHeader />
-        <main className="flex-1">
-          <div className="w-full max-w-screen-2xl mx-auto h-full">
-            {children}
-          </div>
-        </main>
+    <div className="min-h-screen bg-background">
+      <div className="min-h-screen flex flex-col">
+        <SiteHeader />
+
+        <main className="flex-1 bg-white">{children}</main>
+        <Toaster />
+        <SiteFooter />
       </div>
     </div>
   );
