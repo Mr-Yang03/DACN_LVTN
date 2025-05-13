@@ -1,12 +1,12 @@
 @echo off
 
-echo Starting frontend
-cd frontend
+echo Starting user_ui
+cd user_ui
 start cmd /k "npm run dev"
 cd ..
 
-echo Starting admin frontend
-cd frontend_admin
+echo Starting admin ui
+cd admin_ui
 start cmd /k "npm run dev"
 cd ..
 
