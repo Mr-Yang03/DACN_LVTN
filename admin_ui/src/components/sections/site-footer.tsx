@@ -4,7 +4,7 @@ import { Github } from "lucide-react"
 
 export function SiteFooter() {
   return (
-    <footer className="w-full bg-[#FFFFFF] text-black py-8 shadow">
+    <footer className="w-full bg-[#FFFFFF] text-black py-8 shadow-lg border-t-2 border-[#0a2158]">
       <div className="mx-4 px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left column - University info */}

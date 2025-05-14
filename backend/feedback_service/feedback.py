@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query, Header, HTTPException, Depends, Request, status, Body
+from fastapi import APIRouter, Query, Header, HTTPException, Depends, Request, status, Body, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import httpx
@@ -7,6 +7,18 @@ from pydantic import BaseModel
 from datetime import datetime
 from bson import ObjectId
 from connection import get_database
+from google.cloud import storage
+import os
+import uuid
+
+# Use path relative to the script file instead of working directory
+script_dir = os.path.dirname(os.path.abspath(__file__))
+key_path = os.path.join(script_dir, "key", "ggmap-456203-58579108ac37.json")
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = key_path
+
+storage_client = storage.Client()
+
+BUCKET_NAME = "bucket_ggmap-456203"
 
 class FeedbackCreate(BaseModel):
     title: str
@@ -324,3 +336,82 @@ async def unapprove_feedback(item_id: str, admin=Depends(check_admin)):
 #     except Exception as e:
 #         return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
+@feedback_router.post("/feedback/upload")
+async def upload_feedback_files(files: List[UploadFile] = File(...)):
+    """
+    Upload multiple images/videos from a feedback form to Google Cloud Storage.
+    """
+    try:
+        uploaded_files = []
+        
+        for file in files:
+            # Generate a unique filename
+            file_extension = file.filename.split(".")[-1] if "." in file.filename else ""
+            unique_filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{uuid.uuid4().hex}.{file_extension}"
+            
+            # Log the file info for debugging
+            print(f"Uploading file: {file.filename}, Size: {file.size}, Content-Type: {file.content_type}")
+            
+            # Read file content
+            content = await file.read()
+            print(f"File content read, size: {len(content)} bytes")
+            
+            try:
+                # Get bucket
+                bucket = storage_client.bucket(BUCKET_NAME)
+                
+                # Check if bucket exists
+                if not bucket.exists():
+                    return JSONResponse(
+                        status_code=500,
+                        content={"detail": f"Bucket {BUCKET_NAME} does not exist or is not accessible"}
+                    )
+                    
+                # Upload to Google Cloud Storage
+                blob = bucket.blob(f"feedback_files/{unique_filename}")
+                
+                # Get the correct content type or default to a safe option
+                content_type = file.content_type or "application/octet-stream"
+                print(f"Using content type: {content_type}")
+                
+                # Set content type 
+                blob.content_type = content_type
+                
+                # Upload the file
+                print(f"Uploading file {file.filename} to Cloud Storage...")
+                blob.upload_from_string(
+                    content,
+                    content_type=content_type
+                )
+                print(f"File {file.filename} uploaded successfully")
+                
+                # Generate a public URL
+                public_url = f"https://storage.googleapis.com/{BUCKET_NAME}/feedback_files/{unique_filename}"
+                print(f"Public URL: {public_url}")
+                
+                # Add to the list of uploaded files
+                uploaded_files.append({
+                    "original_filename": file.filename,
+                    "file_url": public_url,
+                    "public_url": public_url
+                })
+                
+            except Exception as storage_error:
+                print(f"Storage error for file {file.filename}: {str(storage_error)}")
+                # Continue with other files instead of failing completely
+                uploaded_files.append({
+                    "original_filename": file.filename,
+                    "error": str(storage_error)
+                })
+        
+        return {
+            "uploaded_files": uploaded_files,
+            "count": len(uploaded_files)
+        }
+            
+    except Exception as e:
+        print(f"Failed to upload files: {str(e)}")
+        return JSONResponse(
+            status_code=500,
+            content={"detail": f"Failed to upload files: {str(e)}"}
+        )
