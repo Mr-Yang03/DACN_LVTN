@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { api } from '@/apis/axiosInstance';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -51,11 +52,11 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
-        const response = await fetch('http://localhost:9000/metrics/dashboard');
-        if (!response.ok) {
+        const response = await api.get('/metrics/dashboard');
+        if (response.status !== 200) {
           throw new Error('Không thể kết nối với API Gateway');
         }
-        const data = await response.json();
+        const data = response.data;
         setMetrics(data);
         setError(null);
       } catch (error) {

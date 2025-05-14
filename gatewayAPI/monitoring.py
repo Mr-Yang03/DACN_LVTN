@@ -6,9 +6,10 @@ import redis.asyncio as redis
 from collections import defaultdict
 from datetime import datetime, timedelta
 import json
+from config import HOST_IP
 
 # Khởi tạo Redis client
-redis_client = redis.Redis(host="localhost", port=6379, decode_responses=True)
+redis_client = redis.Redis(host=HOST_IP, port=6379, decode_responses=True)
 
 logging.basicConfig(filename="gateway.log", level=logging.INFO)
 

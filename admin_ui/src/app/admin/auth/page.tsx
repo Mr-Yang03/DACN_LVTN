@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import LoginForm from "@/app/auth/LoginForm";
-import RegisterForm from "@/app/auth/RegisterForm";
+import LoginForm from "@/app/admin/auth/LoginForm";
+import RegisterForm from "@/app/admin/auth/RegisterForm";
 import { Car, Building2, Bus, Truck, Bike, Plane } from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
@@ -57,7 +57,7 @@ export default function AuthPage() {
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 p-4">
+    <div className="h-full flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 p-4">
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-10 place-items-center relative">
         <div className="hidden lg:flex flex-col items-center justify-center space-y-8 p-8">
           <h1 className="text-3xl font-bold text-slate-800">
