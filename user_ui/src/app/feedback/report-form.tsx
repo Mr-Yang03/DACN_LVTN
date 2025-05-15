@@ -39,7 +39,7 @@ import { useRouter } from "next/navigation";
 import { LocationPicker } from "@/app/feedback/location-picker";
 import { feedbackSchema } from "@/validations/feedbackSchema";
 import { toast } from "@/components/ui/use-toast";
-import { sendFeedback } from "@/apis/feedbackApi";
+import { sendFeedback, uploadFeedbackFiles } from "@/apis/feedbackApi";
 
 type FeedbackFormValues = z.infer<typeof feedbackSchema>;
 
@@ -77,7 +77,65 @@ export function ReportForm({ userFullName }: { userFullName: any }) {
   async function onSubmit(values: FeedbackFormValues) {
     setIsSubmitting(true);
 
-    // Format data to match API expectations
+    // Array to store uploaded file URLs
+    let uploadedFileUrls: string[] = [];
+
+    // Process files if present
+    if (values.attachments && values.attachments.length > 0) {
+      const filesToUpload: File[] = [];
+
+      // Process each file
+      for (const file of values.attachments) {
+        if (file instanceof File) {
+          // Case 1: Already a File object
+          filesToUpload.push(file);
+        } else if (typeof file === 'string') {
+          // Case 2: It's a data URL (Base64)
+          if (file.startsWith('data:')) {
+            try {
+              // Extract MIME type and data from Base64
+              const arr = file.split(',');
+              const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
+              const bstr = atob(arr[1]);
+              let n = bstr.length;
+              const u8arr = new Uint8Array(n);
+              
+              while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+              }
+              
+              // Create File from Base64 data
+              const fileObj = new File(
+                [u8arr], 
+                `feedback-file-${Date.now()}.${mime.split('/')[1] || 'jpg'}`, 
+                { type: mime }
+              );
+              
+              filesToUpload.push(fileObj);
+            } catch (error) {
+              console.error("Error converting Base64 to File:", error);
+            }
+          } else if (file.startsWith('https://storage.googleapis.com')) {
+            // Case 3: Already a Google Cloud URL
+            uploadedFileUrls.push(file);
+          }
+        }
+      }
+
+      console.log("Files to upload:", filesToUpload);
+
+      // Upload all files in a single request if there are any to upload
+      if (filesToUpload.length > 0) {
+        const uploadResult = await uploadFeedbackFiles(filesToUpload);
+        
+        // Extract URLs from the response
+        if (uploadResult && uploadResult.uploaded_files) {
+          const newUrls = uploadResult.uploaded_files.map((item: any) => item.public_url);
+          uploadedFileUrls = [...uploadedFileUrls, ...newUrls];
+        }
+      }
+    }
+
     const feedbackData = {
       title: `Phản ánh về ${values.issueType === 'traffic_jam' ? 'tắc đường' : 
               values.issueType === 'accident' ? 'tai nạn' : 
@@ -95,7 +153,7 @@ export function ReportForm({ userFullName }: { userFullName: any }) {
       severity: values.severity === 'low' ? 'Nhẹ' : 
                 values.severity === 'medium' ? 'Trung bình' : 'Nghiêm trọng',
       description: values.description,
-      images: values.attachments ? values.attachments.map((file: { url?: string }) => file.url || '') : [],
+      images: uploadedFileUrls,
       author: userFullName, 
       phone_number: values.phone,
       email: values.email,
@@ -103,9 +161,93 @@ export function ReportForm({ userFullName }: { userFullName: any }) {
       date: format(values.date, "dd-MM-yyyy"),
       time: values.time,
     };
+    console.log("Feedback Data:", feedbackData);
 
     try {
-      // Call API endpoint
+      // // Array to store uploaded file URLs
+      // let uploadedFileUrls: string[] = [];
+
+      // // Process files if present
+      // if (values.attachments && values.attachments.length > 0) {
+      //   const filesToUpload: File[] = [];
+
+      //   // Process each file
+      //   for (const file of values.attachments) {
+      //     if (file instanceof File) {
+      //       // Case 1: Already a File object
+      //       filesToUpload.push(file);
+      //     } else if (typeof file === 'string') {
+      //       // Case 2: It's a data URL (Base64)
+      //       if (file.startsWith('data:')) {
+      //         try {
+      //           // Extract MIME type and data from Base64
+      //           const arr = file.split(',');
+      //           const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
+      //           const bstr = atob(arr[1]);
+      //           let n = bstr.length;
+      //           const u8arr = new Uint8Array(n);
+                
+      //           while (n--) {
+      //             u8arr[n] = bstr.charCodeAt(n);
+      //           }
+                
+      //           // Create File from Base64 data
+      //           const fileObj = new File(
+      //             [u8arr], 
+      //             `feedback-file-${Date.now()}.${mime.split('/')[1] || 'jpg'}`, 
+      //             { type: mime }
+      //           );
+                
+      //           filesToUpload.push(fileObj);
+      //         } catch (error) {
+      //           console.error("Error converting Base64 to File:", error);
+      //         }
+      //       } else if (file.startsWith('https://storage.googleapis.com')) {
+      //         // Case 3: Already a Google Cloud URL
+      //         uploadedFileUrls.push(file);
+      //       }
+      //     }
+      //   }
+
+      //   // Upload all files in a single request if there are any to upload
+      //   if (filesToUpload.length > 0) {
+      //     const uploadResult = await uploadFeedbackFiles(filesToUpload);
+          
+      //     // Extract URLs from the response
+      //     if (uploadResult && uploadResult.uploaded_files) {
+      //       const newUrls = uploadResult.uploaded_files.map((item: any) => item.public_url);
+      //       uploadedFileUrls = [...uploadedFileUrls, ...newUrls];
+      //     }
+      //   }
+      // }
+
+      // // Format data to match API expectations
+      // const feedbackData = {
+      //   title: `Phản ánh về ${values.issueType === 'traffic_jam' ? 'tắc đường' : 
+      //           values.issueType === 'accident' ? 'tai nạn' : 
+      //           values.issueType === 'construction' ? 'công trình đang thi công' :
+      //           values.issueType === 'road_damage' ? 'hư hỏng đường' :
+      //           values.issueType === 'traffic_light' ? 'đèn tín hiệu hỏng' :
+      //           values.issueType === 'flooding' ? 'ngập nước' : 'vấn đề khác'}`,
+      //   location: `${values.location.lat}, ${values.location.lng}`, // Convert location object to string format
+      //   type: values.issueType === 'traffic_jam' ? 'Ùn tắc giao thông' : 
+      //         values.issueType === 'accident' ? 'Tai nạn' : 
+      //         values.issueType === 'construction' ? 'Công trình đang thi công' :
+      //         values.issueType === 'road_damage' ? 'Hư hỏng đường' :
+      //         values.issueType === 'traffic_light' ? 'Đèn tín hiệu hỏng' :
+      //         values.issueType === 'flooding' ? 'Ngập nước' : 'Khác',
+      //   severity: values.severity === 'low' ? 'Nhẹ' : 
+      //             values.severity === 'medium' ? 'Trung bình' : 'Nghiêm trọng',
+      //   description: values.description,
+      //   images: uploadedFileUrls,
+      //   author: userFullName, 
+      //   phone_number: values.phone,
+      //   email: values.email,
+      //   status: "Đang xử lý",
+      //   date: format(values.date, "dd-MM-yyyy"),
+      //   time: values.time,
+      // };
+
       const response = await sendFeedback(feedbackData)
       if (response) {
         setIsSuccess(true);

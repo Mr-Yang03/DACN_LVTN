@@ -347,6 +347,43 @@ async def create_feedback(request: Request):
 
     return response.json()
 
+@app.post("/feedback/upload")
+async def upload_feedback_image(request: Request):
+    form_data = await request.form()
+    
+    # Check if any files were provided
+    if not form_data.getlist("files"):
+        raise HTTPException(status_code=400, detail="No files provided")
+    
+    files_data = []
+
+    print("Form data:", form_data)
+    print("Files in form data:", form_data.getlist("files"))
+    
+    # Process each file in the form data
+    for file in form_data.getlist("files"):
+        print("File:", file)
+        if file.filename:
+            # Read file content
+            content = await file.read()
+            # Add to files dictionary with unique keys for each file
+            files_data.append(("files", (file.filename, content, file.content_type)))
+    
+    if not files_data:
+        raise HTTPException(status_code=400, detail="No valid files found")
+    
+    # Send all files to feedback service
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            f"{FEEDBACK_SERVICE_URL}/feedback/upload",
+            files=files_data
+        )
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to upload files")
+
+    return response.json()
+
 # Agent Service Routes (Chatbot)
 @app.post("/chatbot/")
 async def chat_with_agent(prompt: str = Form(...)):

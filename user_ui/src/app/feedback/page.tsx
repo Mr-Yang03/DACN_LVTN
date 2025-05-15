@@ -101,6 +101,11 @@ export default function ReportPage() {
     return userData
   };
 
+  const handleLogin = () => {
+    setToken(null);
+    window.location.href = "/auth";
+  }
+
   return (
     <>
       {isAuthenticated ? (
@@ -321,7 +326,7 @@ export default function ReportPage() {
           <div className="flex flex-col items-center justify-center h-screen">
             <h1 className="text-3xl font-bold mb-4">Bạn cần đăng nhập để truy cập trang này</h1>
             <p className="text-gray-600 mb-6">Vui lòng đăng nhập để tiếp tục.</p>
-            <Button onClick={() => setToken(null)} className="bg-black hover:bg-gray-800 rounded-full">
+            <Button onClick={handleLogin} className="bg-black hover:bg-gray-800 rounded-full">
               Đăng nhập
             </Button>
           </div>
