@@ -9,8 +9,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import { Camera } from "@/types/camera";
+import { useGoogleMapsScript } from "@/lib/google-maps-loader";
 
 interface UpdateCameraPositionDialogProps {
   open: boolean;
@@ -30,9 +31,7 @@ export default function UpdateCameraPositionDialog({
   onClose,
   onSave,
 }: UpdateCameraPositionDialogProps) {
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || "",
-  });
+  const { isLoaded } = useGoogleMapsScript();
 
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);

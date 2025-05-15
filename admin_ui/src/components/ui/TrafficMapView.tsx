@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useLoadScript, GoogleMap, Marker, TrafficLayer } from "@react-google-maps/api";
+import { GoogleMap, Marker, TrafficLayer } from "@react-google-maps/api";
 import { getCameras, getRealTimeTrafficStatus } from "@/apis/trafficApi";
 import { MapPin, Layers, AlertTriangle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Image from "next/image";
+import { useGoogleMapsScript } from "@/lib/google-maps-loader";
 
 interface Camera {
   Id: string;
@@ -25,8 +26,6 @@ interface TrafficMapViewProps {
   showTrafficFlow?: boolean;
 }
 
-const libraries: ("places" | "drawing" | "geometry" | "visualization")[] = ["places"];
-
 const TrafficMapView = ({ selectedCameraId, onCameraSelect, showTrafficFlow = true }: TrafficMapViewProps) => {
   const [cameras, setCameras] = useState<Camera[]>([]);
   const [mapCenter, setMapCenter] = useState({ lat: 10.7731, lng: 106.7024 }); // Default center (HCM City)
@@ -38,10 +37,7 @@ const TrafficMapView = ({ selectedCameraId, onCameraSelect, showTrafficFlow = tr
   const [snapshotUrl, setSnapshotUrl] = useState<string | null>(null);
   
   // Load Google Maps
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || "",
-    libraries,
-  });
+  const { isLoaded } = useGoogleMapsScript();
 
   // Fetch cameras
   useEffect(() => {

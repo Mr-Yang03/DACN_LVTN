@@ -11,6 +11,7 @@ import { DashboardHeader } from "./DashboardHeader";
 import { VideoFeed } from "./VideoFeed";
 import { AnalyticsDashboard } from "./AnalyticsDashboard";
 import { MapAndStats } from "./MapAndStats";
+import { TrafficCharts } from "./TrafficCharts";
 import { 
   Camera, 
   VehicleTypeData, 
@@ -74,13 +75,37 @@ export function TrafficMonitoringDashboard() {
 
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
-  // Update snapshot URL
-  const updateSnapshotUrl = useCallback((cameraId: string) => {
-    if (cameraId) {
-      setSnapshotUrl(
-        `http://camera.thongtingiaothong.vn/api/snapshot/${cameraId}?t=${Date.now()}`
-      );
-    }
+  // Fetch cameras on initial load
+  useEffect(() => {
+    const fetchCameras = async () => {
+      try {
+        setIsLoading(true);
+        const response = await getCameras({});
+
+        const camerasData = response.cameras.map((camera: any) => ({
+          id: camera.Id,
+          name: camera.DisplayName,
+          status: camera.Status === "active" ? "online" : "offline",
+          location: {
+            lat: camera.Location.coordinates[1],
+            lng: camera.Location.coordinates[0],
+          },
+        }));
+
+        setAvailableCameras(camerasData);
+
+        if (camerasData.length > 0) {
+          setSelectedCamera(camerasData[0]);
+          updateSnapshotUrl(camerasData[0].id);
+        }
+      } catch (err) {
+        console.error("Error fetching cameras:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCameras();
   }, []);
 
   // Fetch speed data for the selected camera
@@ -111,22 +136,14 @@ export function TrafficMonitoringDashboard() {
           
           formattedData = distributedData;
         }
-        // Format data for display
-        const timestamps = formattedData.map((item: any) => {
-          // Parse DD/MM/YYYY HH:MM:SS format
-          const [datePart, timePart] = item.timestamp.split(' ');
-          if (datePart && timePart) {
-            const [day, month, year] = datePart.split('/');
-            const dateObj = new Date(`${year}-${month}-${day}T${timePart}`);
-            
-            return dateObj.toLocaleTimeString("vi-VN", {
-              hour: "2-digit",
-              minute: "2-digit",
-            });
-          }
-          return "00:00"; // Fallback
-        });
 
+        // Format data for display
+        const timestamps = formattedData.map((item: any) =>
+          new Date(item.timestamp).toLocaleTimeString("vi-VN", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        );
 
         const speeds = formattedData.map((item: any) => item.averageSpeed || 0);
         const vehicleCounts = formattedData.map(
@@ -201,39 +218,6 @@ export function TrafficMonitoringDashboard() {
     }
   }, [timeRange.hours]);
 
-  // Fetch cameras on initial load
-  useEffect(() => {
-    const fetchCameras = async () => {
-      try {
-        setIsLoading(true);
-        const response = await getCameras({});
-
-        const camerasData = response.cameras.map((camera: any) => ({
-          id: camera.Id,
-          name: camera.DisplayName,
-          status: camera.Status === "active" ? "online" : "offline",
-          location: {
-            lat: camera.Location.coordinates[1],
-            lng: camera.Location.coordinates[0],
-          },
-        }));
-
-        setAvailableCameras(camerasData);
-
-        if (camerasData.length > 0) {
-          setSelectedCamera(camerasData[0]);
-          updateSnapshotUrl(camerasData[0].id);
-        }
-      } catch (err) {
-        console.error("Error fetching cameras:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCameras();
-  }, [updateSnapshotUrl]);
-
   // Fetch data when selected camera or time range changes
   useEffect(() => {
     if (selectedCamera.id) {
@@ -251,6 +235,15 @@ export function TrafficMonitoringDashboard() {
     return () => clearInterval(timer);
   }, []);
 
+  // Update snapshot URL
+  const updateSnapshotUrl = useCallback((cameraId: string) => {
+    if (cameraId) {
+      setSnapshotUrl(
+        `http://camera.thongtingiaothong.vn/api/snapshot/${cameraId}?t=${Date.now()}`
+      );
+    }
+  }, []);
+
   // Auto-refresh snapshot when playing
   useEffect(() => {
     if (isPlaying && selectedCamera.id) {
@@ -266,16 +259,16 @@ export function TrafficMonitoringDashboard() {
     }
   }, [isPlaying, selectedCamera.id, updateSnapshotUrl]);
 
-  const handlePlayPause = () => {
+  const handlePlayPause = useCallback(() => {
     setIsPlaying(!isPlaying);
-  };
+  }, [isPlaying]);
 
-  const handleCameraSelect = (camera: Camera) => {
+  const handleCameraSelect = useCallback((camera: Camera) => {
     setSelectedCamera(camera as Camera & { name: string });
     updateSnapshotUrl(camera.id);
-  };
+  }, [updateSnapshotUrl]);
 
-  const handleFullScreenToggle = () => {
+  const handleFullScreenToggle = useCallback(() => {
     if (feedContainerRef.current) {
       if (!isFullScreen) {
         if (feedContainerRef.current.requestFullscreen) {
@@ -296,15 +289,15 @@ export function TrafficMonitoringDashboard() {
       }
       setIsFullScreen(!isFullScreen);
     }
-  };
+  }, [isFullScreen]);
 
-  const handleTestModeToggle = () => {
+  const handleTestModeToggle = useCallback(() => {
     setIsTestMode(!isTestMode);
-  };
+  }, [isTestMode]);
 
-  const handleTimeRangeChange = (newTimeRange: TimeRange) => {
+  const handleTimeRangeChange = useCallback((newTimeRange: TimeRange) => {
     setTimeRange(newTimeRange);
-  };
+  }, []);
 
   const formattedTime = currentDateTime.toLocaleTimeString("vi-VN", {
     hour: "2-digit",
@@ -317,9 +310,9 @@ export function TrafficMonitoringDashboard() {
       {/* Dashboard Header */}
       <DashboardHeader />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Video Feed */}
-        <div className="lg:col-span-2">
+        <div className="md:col-span-2">
           <VideoFeed 
             selectedCamera={selectedCamera}
             isTestMode={isTestMode}

@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { 
   GoogleMap, 
-  useJsApiLoader, 
   Marker as GoogleMapMarker,
   TrafficLayer,
   StandaloneSearchBox
 } from "@react-google-maps/api";
+import { useGoogleMapsScript } from "@/lib/google-maps-loader";
 
 interface MarkerProps {
   id: string;
@@ -30,19 +30,13 @@ interface SimpleGoogleMapProps {
   showTraffic?: boolean;
 }
 
-const libraries: ("places" | "drawing" | "geometry" | "visualization")[] = ["places"];
-
 export default function SimpleGoogleMap({ 
   center, 
   zoom = 12, 
   markers = [],
   showTraffic = false
 }: SimpleGoogleMapProps) {
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || "",
-    libraries,
-  });
+  const { isLoaded } = useGoogleMapsScript();
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [searchBox, setSearchBox] = useState<google.maps.places.SearchBox | null>(null);

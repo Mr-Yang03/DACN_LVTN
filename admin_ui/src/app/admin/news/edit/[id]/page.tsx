@@ -23,7 +23,7 @@ export default async function ModifyNewsPage({ params }: NewsEditPageProps) {
   const id = resolvedParams?.id || 'unknown'; // Fallback for missing id
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-6 pt-1">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Chỉnh sửa bài viết</h1>
         <p className="mt-1 italic text-gray-500">

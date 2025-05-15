@@ -229,7 +229,6 @@ export default function AdminDashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="absolute h-1 w-full bg-blue-500 top-0 left-0"></div>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Tổng số Requests</CardTitle>
                 <div className="h-10 w-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
@@ -245,7 +244,6 @@ export default function AdminDashboard() {
             </Card>
           
             <Card className="overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="absolute h-1 w-full bg-indigo-500 top-0 left-0"></div>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Thời gian phản hồi</CardTitle>
                 <div className="h-10 w-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center">
@@ -263,7 +261,6 @@ export default function AdminDashboard() {
             </Card>
           
             <Card className="overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="absolute h-1 w-full bg-green-500 top-0 left-0"></div>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Tỉ lệ thành công</CardTitle>
                 <div className="h-10 w-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
@@ -286,7 +283,6 @@ export default function AdminDashboard() {
             </Card>
           
             <Card className="overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="absolute h-1 w-full bg-red-500 top-0 left-0"></div>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Tổng số lỗi</CardTitle>
                 <div className="h-10 w-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">

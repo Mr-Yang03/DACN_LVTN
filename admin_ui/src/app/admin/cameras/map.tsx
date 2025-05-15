@@ -1,17 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { GoogleMap, Marker, useLoadScript, Libraries } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import { getCameras, updateCameraPosition } from "@/apis/cameraApi";
 import { Camera } from "@/types/camera";
-
-const libraries: Libraries = ["places"];
+import { useGoogleMapsScript } from "@/lib/google-maps-loader";
 
 export default function CameraMapEditor() {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || "",
-    libraries,
-  });
+  const { isLoaded } = useGoogleMapsScript();
 
   const [cameras, setCameras] = useState<Camera[]>([]);
 

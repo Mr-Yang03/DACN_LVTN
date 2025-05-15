@@ -529,7 +529,7 @@ export function NewsTable() {
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="text-center text-black">Thao tác</TableHead>
+              <TableHead className="w-[200px] text-center text-black ">Thao tác</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -552,7 +552,7 @@ export function NewsTable() {
                 <TableRow key={news._id}>
                   <TableCell className="text-center">{news._id}</TableCell>
                   <TableCell className="font-medium">{news.title}</TableCell>
-                  <TableCell>
+                  <TableCell className="text-center">
                     <Badge className={getCategoryColor(news.category || 'default')}>{news.category || 'Chung'}</Badge>
                   </TableCell>
                   <TableCell className='text-center'>{news.author}</TableCell>

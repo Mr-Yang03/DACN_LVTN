@@ -295,12 +295,20 @@ export function TrafficMonitoringDashboard() {
         // If we have fewer than 12 data points, use all available data
 
         // Format data for display
-        const timestamps = formattedData.map((item: any) =>
-          new Date(item.timestamp).toLocaleTimeString("vi-VN", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-        );
+        const timestamps = formattedData.map((item: any) => {
+          // Parse DD/MM/YYYY HH:MM:SS format
+          const [datePart, timePart] = item.timestamp.split(' ');
+          if (datePart && timePart) {
+            const [day, month, year] = datePart.split('/');
+            const dateObj = new Date(`${year}-${month}-${day}T${timePart}`);
+            
+            return dateObj.toLocaleTimeString("vi-VN", {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+          }
+          return "00:00"; // Fallback
+        });
 
         const speeds = formattedData.map((item: any) => item.averageSpeed || 0);
         const vehicleCounts = formattedData.map(

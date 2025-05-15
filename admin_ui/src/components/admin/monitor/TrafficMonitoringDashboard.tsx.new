@@ -111,22 +111,14 @@ export function TrafficMonitoringDashboard() {
           
           formattedData = distributedData;
         }
-        // Format data for display
-        const timestamps = formattedData.map((item: any) => {
-          // Parse DD/MM/YYYY HH:MM:SS format
-          const [datePart, timePart] = item.timestamp.split(' ');
-          if (datePart && timePart) {
-            const [day, month, year] = datePart.split('/');
-            const dateObj = new Date(`${year}-${month}-${day}T${timePart}`);
-            
-            return dateObj.toLocaleTimeString("vi-VN", {
-              hour: "2-digit",
-              minute: "2-digit",
-            });
-          }
-          return "00:00"; // Fallback
-        });
 
+        // Format data for display
+        const timestamps = formattedData.map((item: any) =>
+          new Date(item.timestamp).toLocaleTimeString("vi-VN", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        );
 
         const speeds = formattedData.map((item: any) => item.averageSpeed || 0);
         const vehicleCounts = formattedData.map(
@@ -317,9 +309,9 @@ export function TrafficMonitoringDashboard() {
       {/* Dashboard Header */}
       <DashboardHeader />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Video Feed */}
-        <div className="lg:col-span-2">
+        <div className="md:col-span-2">
           <VideoFeed 
             selectedCamera={selectedCamera}
             isTestMode={isTestMode}
