@@ -52,6 +52,7 @@ call .venv\Scripts\activate
 start cmd /k "uvicorn main:app --host 0.0.0.0 --port 9000 --reload"
 cd ..
 
+start cmd /c "docker run -d -p 6379:6379 redis"
 
 echo.
 echo All services started in new terminals.
