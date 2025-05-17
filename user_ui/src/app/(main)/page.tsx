@@ -41,6 +41,7 @@ const Page: React.FC = () => {
   const [cameras, setCameras] = useState<Camera[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [cameraUrls, setCameraUrls] = useState<{ [key: string]: string }>({});
+  const [cameraCount, setCameraCount] = useState(0);
 
   const fetchCameras = async () => {
     try {
@@ -82,6 +83,7 @@ const Page: React.FC = () => {
         firstthree.map((cam) => [cam.Id, cam.SnapshotUrl])
       ),
     };
+    setCameraCount(firstthree.length);
   }, [activeCameras]);
 
   // Update camera snapshots every 1 second
@@ -116,7 +118,7 @@ const Page: React.FC = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [cameraRefs.current.ids.length]);
+  }, [cameraCount]);
 
   return (
     <>
@@ -280,8 +282,7 @@ const Page: React.FC = () => {
                       </div>
                       <div className="absolute bottom-0 right-0 bg-green-600 text-white text-[10px] px-1 py-0.5 rounded-tl-md z-10">
                         LIVE
-                      </div>
-                      <div
+                      </div>                      <div
                         className={`relative ${
                           index === 0 
                             ? "h-[200px] sm:h-[300px]" 
@@ -289,12 +290,12 @@ const Page: React.FC = () => {
                         } w-full`}
                       >
                         <Image
-                          src={cameraUrls[id] || "/placeholder.png"}
+                          src={cameraUrls[id] || "/placeholder.svg"}
                           alt={camera.DisplayName || "Camera"}
                           fill
                           className="object-cover"
                           priority={index === 0}
-                          sizes={index === 0 ? "100vw" : "50vw"}
+                          sizes={index === 0 ? "(max-width: 1024px) 100vw, 58.33vw" : "(max-width: 640px) 100vw, 29vw"}
                         />
                       </div>
                     </div>
