@@ -20,9 +20,11 @@ import {
 } from "@/components/sections/pagination-demo"
 import { useToast } from "@/hooks/use-toast"
 import { getPublicNews, getNewsByCategory, getNewsById, getFeaturedNews, NewsArticle } from "@/apis/newsApi"
+import { useRouter } from "next/navigation"
 
 const Page: React.FC = () => {
     const { toast } = useToast();
+    const router = useRouter();
     const [currentNewsPage, setCurrentNewsPage] = useState(1);
     const [newsItems, setNewsItems] = useState<NewsArticle[]>([]);
     const [featuredNews, setFeaturedNews] = useState<NewsArticle | null>(null);
@@ -169,21 +171,11 @@ const Page: React.FC = () => {
     const filteredNews = activeCategory === "all"
         ? newsItems
         : categoryNewsMap[activeCategory];
-            
-    // Lọc tin tức theo từ khóa tìm kiếm
-    const searchedNews = searchTerm 
-        ? filteredNews.filter(item => 
-            item.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.summary?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
-          )
-        : filteredNews;
 
     // Tính toán tin tức hiển thị trên trang hiện tại
     const indexOfLastNews = currentNewsPage * newsPerPage;
     const indexOfFirstNews = indexOfLastNews - newsPerPage;
-    const currentNewsItems = searchedNews.slice(indexOfFirstNews, indexOfLastNews);
+    const currentNewsItems = filteredNews.slice(indexOfFirstNews, indexOfLastNews);
 
     // Hàm xử lý khi người dùng chuyển trang tin tức
     const handleNewsPageChange = (page: number) => {
@@ -192,10 +184,32 @@ const Page: React.FC = () => {
         window.scrollTo({ top: document.getElementById("news-list")?.offsetTop || 0, behavior: "smooth" });
     };
 
-    // Hàm xử lý tìm kiếm
+    // Hàm xử lý tìm kiếm để chuyển hướng đến trang tìm kiếm
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        // Reset về trang 1 khi tìm kiếm
+        
+        if (searchTerm.trim()) {
+            // Chuyển hướng đến trang tìm kiếm với query parameter
+            router.push(`/news/search?q=${encodeURIComponent(searchTerm)}`);
+        }
+    };
+
+    // Hàm để chọn tag làm từ khoá tìm kiếm và chuyển hướng đến trang tìm kiếm
+    const handleTagClick = (tagName: string) => {
+        // Chuyển hướng đến trang tìm kiếm với query parameter
+        router.push(`/news/search?q=${encodeURIComponent(tagName)}`);
+        
+        // Hiển thị thông báo
+        toast({
+            title: "Đã chọn chủ đề",
+            description: `Chuyển đến kết quả tìm kiếm cho "${tagName}"`,
+            duration: 3000,
+        });
+    };
+
+    // Hàm để xóa từ khóa tìm kiếm
+    const clearSearch = () => {
+        setSearchTerm("");
         setCurrentNewsPage(1);
     };
 
@@ -249,7 +263,7 @@ const Page: React.FC = () => {
             </div>
 
             <PaginationDemo
-                totalItems={searchedNews.length}
+                totalItems={filteredNews.length}
                 itemsPerPage={newsPerPage}
                 currentPage={currentNewsPage}
                 onPageChange={handleNewsPageChange}
@@ -280,19 +294,7 @@ const Page: React.FC = () => {
         </div>
     );
 
-    // Render empty state for search
-    const renderEmptySearch = () => (
-        <div className="text-center py-12 text-gray-600">
-            <p>Không tìm thấy kết quả phù hợp với từ khóa &quot;{searchTerm}&quot;</p>
-            <Button 
-                onClick={() => setSearchTerm("")} 
-                variant="outline" 
-                className="mt-4"
-            >
-                Xóa bộ lọc
-            </Button>
-        </div>
-    );
+
 
     return (
         <>
@@ -378,13 +380,11 @@ const Page: React.FC = () => {
                             <TabsContent value="all" className="mt-6">
                                 {isLoading ? renderLoading() : 
                                  error ? renderError(error) : 
-                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
                                  renderNewsGrid(currentNewsItems)}
                             </TabsContent>
 
                             <TabsContent value="traffic" className="mt-6">
                                 {categoryLoading.traffic ? renderLoading() : 
-                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
                                  categoryNewsMap.traffic.length === 0 ? 
                                     <div className="text-center py-8 text-gray-600">Không có tin tức nào về Giao thông</div> : 
                                     renderNewsGrid(currentNewsItems)}
@@ -392,7 +392,6 @@ const Page: React.FC = () => {
 
                             <TabsContent value="accident" className="mt-6">
                                 {categoryLoading.accident ? renderLoading() : 
-                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
                                  categoryNewsMap.accident.length === 0 ? 
                                     <div className="text-center py-8 text-gray-600">Không có tin tức nào về Tai nạn</div> : 
                                     renderNewsGrid(currentNewsItems)}
@@ -400,7 +399,6 @@ const Page: React.FC = () => {
 
                             <TabsContent value="regulation" className="mt-6">
                                 {categoryLoading.regulation ? renderLoading() : 
-                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
                                  categoryNewsMap.regulation.length === 0 ? 
                                     <div className="text-center py-8 text-gray-600">Không có tin tức nào về Quy định</div> : 
                                     renderNewsGrid(currentNewsItems)}
@@ -408,7 +406,6 @@ const Page: React.FC = () => {
 
                             <TabsContent value="construction" className="mt-6">
                                 {categoryLoading.construction ? renderLoading() : 
-                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
                                  categoryNewsMap.construction.length === 0 ? 
                                     <div className="text-center py-8 text-gray-600">Không có tin tức nào về Công trình</div> : 
                                     renderNewsGrid(currentNewsItems)}
@@ -416,7 +413,6 @@ const Page: React.FC = () => {
 
                             <TabsContent value="weather" className="mt-6">
                                 {categoryLoading.weather ? renderLoading() : 
-                                 searchTerm && searchedNews.length === 0 ? renderEmptySearch() : 
                                  categoryNewsMap.weather.length === 0 ? 
                                     <div className="text-center py-8 text-gray-600">Không có tin tức nào về Thời tiết</div> : 
                                     renderNewsGrid(currentNewsItems)}
@@ -430,16 +426,27 @@ const Page: React.FC = () => {
                         <div className="mb-8">
                             <div className="relative">
                                 <form onSubmit={handleSearch}>
-                                    <input
-                                        type="text"
-                                        placeholder="Tìm kiếm tin tức..."
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                        className="w-full bg-white border border-gray-200 rounded-full py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                    />
-                                    <Button type="submit" className="absolute right-1 top-1 h-8 w-8 p-0 bg-blue-600 rounded-full">
-                                        <Search className="h-4 w-4" />
-                                    </Button>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Tìm kiếm tin tức..."
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="w-full bg-white border border-gray-200 rounded-full py-2 pl-4 pr-20 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                        />
+                                        {searchTerm && (
+                                            <button 
+                                                type="button" 
+                                                onClick={clearSearch}
+                                                className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                            >
+                                                ×
+                                            </button>
+                                        )}
+                                        <Button type="submit" className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 bg-blue-600 rounded-full">
+                                            <Search className="h-4 w-4" />
+                                        </Button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -448,13 +455,36 @@ const Page: React.FC = () => {
                         <div className="mb-8">
                             <h3 className="text-lg font-bold mb-4">Chủ đề phổ biến</h3>
                             <div className="flex flex-wrap gap-2">
-                                <Badge className="bg-blue-600 hover:bg-blue-700">Giao thông thông minh</Badge>
-                                <Badge className="bg-blue-600 hover:bg-blue-700">AI</Badge>
-                                <Badge className="bg-blue-600 hover:bg-blue-700">Camera giám sát</Badge>
-                                <Badge className="bg-blue-600 hover:bg-blue-700">Đô thị thông minh</Badge>
-                                <Badge className="bg-blue-600 hover:bg-blue-700">Phân tích dữ liệu</Badge>
-                                <Badge className="bg-blue-600 hover:bg-blue-700">IoT</Badge>
-                                <Badge className="bg-blue-600 hover:bg-blue-700">Hạ tầng</Badge>
+                                <Badge 
+                                    className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                                    onClick={() => handleTagClick("Giao thông")}
+                                >
+                                    Giao thông
+                                </Badge>
+                                <Badge 
+                                    className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                                    onClick={() => handleTagClick("Đô thị")}
+                                >
+                                    Đô thị
+                                </Badge>
+                                <Badge 
+                                    className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                                    onClick={() => handleTagClick("Phân tích dữ liệu")}
+                                >
+                                    Phân tích dữ liệu
+                                </Badge>
+                                <Badge 
+                                    className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                                    onClick={() => handleTagClick("IoT")}
+                                >
+                                    IoT
+                                </Badge>
+                                <Badge 
+                                    className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                                    onClick={() => handleTagClick("Hạ tầng")}
+                                >
+                                    Hạ tầng
+                                </Badge>
                             </div>
                         </div>
 

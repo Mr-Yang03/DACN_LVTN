@@ -22,6 +22,7 @@ import {
   Twitter,
   Linkedin,
   ChevronRight,
+  Search,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { RichTextContent } from "@/components/admin/RichTextContent";
@@ -38,6 +39,7 @@ const NewsDetailPage = () => {
   const [isLoadingPopular, setIsLoadingPopular] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [errorPopular, setErrorPopular] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchNewsDetail = async () => {
@@ -96,6 +98,34 @@ const NewsDetailPage = () => {
 
     fetchPopularNews();
   }, [newsId]);
+
+  // Hàm xử lý tìm kiếm để chuyển hướng đến trang tìm kiếm
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (searchTerm.trim()) {
+      // Chuyển hướng đến trang tìm kiếm với query parameter
+      router.push(`/news/search?q=${encodeURIComponent(searchTerm)}`);
+    }
+  };
+
+  // Hàm để xóa từ khóa tìm kiếm
+  const clearSearch = () => {
+    setSearchTerm("");
+  };
+
+  // Hàm để xử lý khi người dùng click vào tag
+  const handleTagClick = (tagName: string) => {
+    // Chuyển hướng đến trang tìm kiếm với query parameter
+    router.push(`/news/search?q=${encodeURIComponent(tagName)}`);
+    
+    // Hiển thị thông báo
+    toast({
+      title: "Đã chọn chủ đề",
+      description: `Chuyển đến kết quả tìm kiếm cho "${tagName}"`,
+      duration: 3000,
+    });
+  };
 
   // Format date for display
   const formatDate = (dateString?: string | Date, timeString?: string) => {
@@ -238,7 +268,8 @@ const NewsDetailPage = () => {
                     <Badge
                       key={index}
                       variant="secondary"
-                      className="bg-gray-100"
+                      className="bg-gray-100 cursor-pointer hover:bg-gray-200"
+                      onClick={() => handleTagClick(tag)}
                     >
                       {tag}
                     </Badge>
@@ -251,21 +282,68 @@ const NewsDetailPage = () => {
 
         {/* Sidebar */}
         <div className="w-full md:w-1/3">
+          {/* Search */}
+          <div className="bg-white rounded-xl shadow-md p-6 mb-8">
+            <h3 className="text-lg font-bold mb-4">Tìm kiếm tin tức</h3>
+            <div className="relative">
+              <form onSubmit={handleSearch}>
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm tin tức..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full bg-white border border-gray-200 rounded-full py-2 pl-4 pr-20 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  />
+                  {searchTerm && (
+                    <button 
+                      type="button" 
+                      onClick={clearSearch}
+                      className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                      ×
+                    </button>
+                  )}
+                  <Button type="submit" className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 bg-blue-600 rounded-full">
+                    <Search className="h-4 w-4" />
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+
           {/* Popular Tags */}
           <div className="bg-white rounded-xl shadow-md p-6 mb-8">
             <h3 className="text-lg font-bold mb-4">Chủ đề phổ biến</h3>
             <div className="flex flex-wrap gap-2">
-              <Badge className="bg-blue-600 hover:bg-blue-700">
+              <Badge 
+                className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                onClick={() => handleTagClick("Giao thông thông minh")}
+              >
                 Giao thông thông minh
               </Badge>
-              <Badge className="bg-blue-600 hover:bg-blue-700">AI</Badge>
-              <Badge className="bg-blue-600 hover:bg-blue-700">
+              <Badge 
+                className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                onClick={() => handleTagClick("AI")}
+              >
+                AI
+              </Badge>
+              <Badge 
+                className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                onClick={() => handleTagClick("Camera giám sát")}
+              >
                 Camera giám sát
               </Badge>
-              <Badge className="bg-blue-600 hover:bg-blue-700">
+              <Badge 
+                className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                onClick={() => handleTagClick("Đô thị thông minh")}
+              >
                 Đô thị thông minh
               </Badge>
-              <Badge className="bg-blue-600 hover:bg-blue-700">
+              <Badge 
+                className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                onClick={() => handleTagClick("Phân tích dữ liệu")}
+              >
                 Phân tích dữ liệu
               </Badge>
             </div>
