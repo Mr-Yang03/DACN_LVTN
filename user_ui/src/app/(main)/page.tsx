@@ -169,7 +169,7 @@ const Page: React.FC = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">Camera hoạt động</p>
-                <h3 className="text-2xl font-bold mt-1">{`${activeCameras.length}/${cameras.length}`}</h3>
+                <h3 className="text-2xl font-bold mt-1">{`${cameras.length-inactiveCameras.length}/${cameras.length}`}</h3>
                 <p className="text-xs text-gray-600 mt-1">{`${inactiveCameras.length} camera đang bảo trì`}</p>
               </div>
               <div className="p-2 bg-gray-100 rounded-full">

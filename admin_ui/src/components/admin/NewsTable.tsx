@@ -13,7 +13,9 @@ import {
   Search,
   X,
   Loader2,
-  Star
+  Star,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { isWithinInterval } from 'date-fns';
 import { DateRange } from 'react-day-picker';
@@ -61,6 +63,10 @@ export function NewsTable() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const [featuredFilter, setFeaturedFilter] = useState<boolean | null>(null);
+  
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // Load data on component mount
   useEffect(() => {
@@ -86,6 +92,11 @@ export function NewsTable() {
 
     fetchNews();
   }, [toast]);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, dateRange, statusFilter, featuredFilter]);
 
   const handleSort = (column: string) => {
     if (sortColumn === column) {
@@ -189,25 +200,56 @@ export function NewsTable() {
   const parsePublishDateTime = (dateString?: string, timeString?: string) => {
     if (!dateString) return null;
     
-    const parts = dateString.split('/');
-    if (parts.length !== 3) return null;
-    
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10) - 1; // month is 0-based in JS Date
-    const year = parseInt(parts[2], 10);
-    
-    const date = new Date(year, month, day);
-    
-    // If there's a time, add it to the date
-    if (timeString) {
-      const timeParts = timeString.split(':');
-      if (timeParts.length === 2) {
-        date.setHours(parseInt(timeParts[0], 10));
-        date.setMinutes(parseInt(timeParts[1], 10));
+    try {
+      // Handle both dd/MM/yyyy and yyyy-MM-dd formats
+      let day, month, year;
+      
+      if (dateString.includes('/')) {
+        const parts = dateString.split('/');
+        if (parts.length !== 3) return null;
+        
+        day = parseInt(parts[0], 10);
+        month = parseInt(parts[1], 10) - 1; // month is 0-based in JS Date
+        year = parseInt(parts[2], 10);
+      } else if (dateString.includes('-')) {
+        const parts = dateString.split('-');
+        if (parts.length !== 3) return null;
+        
+        year = parseInt(parts[0], 10);
+        month = parseInt(parts[1], 10) - 1; // month is 0-based in JS Date
+        day = parseInt(parts[2], 10);
+      } else {
+        return null;
       }
+      
+      // Validate date parts
+      if (isNaN(day) || isNaN(month) || isNaN(year)) {
+        console.warn("Invalid date components:", {day, month, year});
+        return null;
+      }
+      
+      const date = new Date(year, month, day);
+      
+      // Verify date is valid
+      if (isNaN(date.getTime())) {
+        console.warn("Invalid date created:", date);
+        return null;
+      }
+      
+      // If there's a time, add it to the date
+      if (timeString) {
+        const timeParts = timeString.split(':');
+        if (timeParts.length === 2) {
+          date.setHours(parseInt(timeParts[0], 10));
+          date.setMinutes(parseInt(timeParts[1], 10));
+        }
+      }
+      
+      return date;
+    } catch (error) {
+      console.error("Error parsing date:", error);
+      return null;
     }
-    
-    return date;
   };
 
   // Filter based on search term and date range
@@ -312,6 +354,15 @@ export function NewsTable() {
         return 'bg-blue-500 hover:bg-blue-600';
     }
   };
+
+  // Calculate total pages
+  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
+
+  // Get current page data
+  const currentData = sortedData.slice(
+    (currentPage - 1) * itemsPerPage,
+    (currentPage - 1) * itemsPerPage + itemsPerPage
+  );
 
   return (
     <div className="space-y-4">
@@ -539,7 +590,7 @@ export function NewsTable() {
                   <ContentSpinner />
                 </TableCell>
               </TableRow>
-            ) : sortedData.length === 0 ? (
+            ) : currentData.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={8} className="h-24 text-center">
                   {searchTerm || dateRange ? 
@@ -548,7 +599,7 @@ export function NewsTable() {
                 </TableCell>
               </TableRow>
             ) : (
-              sortedData.map((news) => (
+              currentData.map((news) => (
                 <TableRow key={news._id}>
                   <TableCell className="text-center">{news._id}</TableCell>
                   <TableCell className="font-medium">{news.title}</TableCell>
@@ -557,7 +608,9 @@ export function NewsTable() {
                   </TableCell>
                   <TableCell className='text-center'>{news.author}</TableCell>
                   <TableCell className='text-center'>
-                    {news.publishTime} {news.publishDate && `- ${news.publishDate}`}
+                    {news.publishTime && news.publishTime} 
+                    {news.publishTime && news.publishDate && ' - '} 
+                    {news.publishDate && news.publishDate}
                   </TableCell>
                   <TableCell className='text-center'>
                     {news.status === 'published' ? (
@@ -669,6 +722,63 @@ export function NewsTable() {
             )}
           </TableBody>
         </Table>
+      </div>
+
+      {/* Pagination controls */}
+      <div className="flex flex-col md:flex-row items-center justify-between py-4">
+        {/* Items per page selector */}
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">Hiển thị</span>
+          <Button
+            variant={itemsPerPage === 10 ? "default" : "outline"}
+            size="sm"
+            onClick={() => setItemsPerPage(10)}
+          >
+            10
+          </Button>
+          <Button
+            variant={itemsPerPage === 25 ? "default" : "outline"}
+            size="sm"
+            onClick={() => setItemsPerPage(25)}
+          >
+            25
+          </Button>
+          <Button
+            variant={itemsPerPage === 50 ? "default" : "outline"}
+            size="sm"
+            onClick={() => setItemsPerPage(50)}
+          >
+            50
+          </Button>
+          <span className="text-sm text-muted-foreground">
+            {`/ trang (${filteredData.length} bài viết tìm thấy)`}
+          </span>
+        </div>
+
+        {/* Pagination buttons */}
+        <div className="flex items-center gap-2 mt-2 md:mt-0">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Trước
+          </Button>
+          <span className="text-sm text-muted-foreground">
+            {`Trang ${currentPage} / ${totalPages}`}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            Tiếp theo
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );
