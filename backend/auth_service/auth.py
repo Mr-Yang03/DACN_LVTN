@@ -106,3 +106,31 @@ async def check_login(login_info: LoginInfo) -> dict:
             })
     
     return user_data
+
+@auth_router.put("/update/{username}") 
+async def update_user_info(username, user_info: UserInfo) -> dict:
+    account = accounts_collection.find_one({"username": username})
+    
+    if not account:
+        raise HTTPException(status_code=404, detail="Tài khoản không tồn tại")
+    
+    # Cập nhật thông tin người dùng
+    users_collection.update_one(
+        {"account_id": account["_id"]},
+        {"$set": {
+            "full_name": user_info.full_name,
+            "date_of_birth": user_info.date_of_birth,
+            "phone_number": user_info.phone_number,
+            "license_number": user_info.license_number
+        }}
+    )
+
+    updated_user = {
+        "account_id": str(account["_id"]),
+        "full_name": user_info.full_name,
+        "date_of_birth": user_info.date_of_birth,
+        "phone_number": user_info.phone_number,
+        "license_number": user_info.license_number
+    }
+    
+    return {"status": "success", "message": "Thông tin đã được cập nhật", "data": updated_user}

@@ -83,6 +83,22 @@ async def register(request: Request):
         raise HTTPException(status_code=400, detail="Register failed")
     return {"message": "Register success!"}
 
+@app.put("/users/update")
+async def update_user(request: Request):
+    body = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.put(
+            f"{USER_SERVICE_URL}/update/{body.get('username')}",
+            json={
+                "full_name": body.get("full_name"),
+                "date_of_birth": body.get("date_of_birth"),
+                "phone_number": body.get("phone_number"),
+                "license_number": body.get("license_number"),
+            },
+        )
+    if response.status_code != 200:
+        raise HTTPException(status_code=400, detail="Update failed")
+    return response.json()
 
 @app.get("/")
 async def root():
@@ -336,15 +352,15 @@ async def get_feedback_by_id(feedback_id: str):
 
     return response.json()
 
-@app.get("/feedback/processed")
-async def get_processed_feedback():
-    async with httpx.AsyncClient() as client:
-        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/processed")
+# @app.get("/feedback/processed")
+# async def get_processed_feedback():
+#     async with httpx.AsyncClient() as client:
+#         response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/processed")
 
-    if response.status_code != 200:
-        raise HTTPException(status_code=500, detail="Failed to fetch processed feedback data")
+#     if response.status_code != 200:
+#         raise HTTPException(status_code=500, detail="Failed to fetch processed feedback data")
 
-    return response.json()
+#     return response.json()
 
 @app.post("/feedback/item")
 async def create_feedback(request: Request):

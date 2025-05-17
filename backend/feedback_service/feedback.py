@@ -72,20 +72,20 @@ async def get_all_items():
     
     return items
 
-# API hiển thị những phản ánh đã xử lý
-@feedback_router.get("/feedback/processed", response_model=List[dict])
-async def get_processed_items():
-    """
-    Lấy danh sách phản ánh đã được xử lý (status = "Đã xử lý")
-    """
-    items = []
-    cursor = items_collection.find({"status": "Đã xử lý"})
+# # API hiển thị những phản ánh đã xử lý
+# @feedback_router.get("/feedback/processed", response_model=List[dict])
+# async def get_processed_items():
+#     """
+#     Lấy danh sách phản ánh đã được xử lý (status = "Đã xử lý")
+#     """
+#     items = []
+#     cursor = items_collection.find({"status": "Đã xử lý"})
     
-    for document in cursor:
-        document["_id"] = str(document["_id"])
-        items.append(document)
+#     for document in cursor:
+#         document["_id"] = str(document["_id"])
+#         items.append(document)
     
-    return items
+#     return items
 
 @feedback_router.get("/feedback/items/{item_id}")
 async def get_item_by_id(item_id: str):

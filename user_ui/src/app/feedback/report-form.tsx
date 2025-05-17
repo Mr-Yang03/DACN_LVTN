@@ -51,7 +51,7 @@ const getAuthToken = () => {
   return '';
 };
 
-export function ReportForm({ userFullName }: { userFullName: any }) {
+export function ReportForm({ username, userFullName }: { username: any, userFullName: any }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -77,64 +77,64 @@ export function ReportForm({ userFullName }: { userFullName: any }) {
   async function onSubmit(values: FeedbackFormValues) {
     setIsSubmitting(true);
 
-    // // Array to store uploaded file URLs
-    // let uploadedFileUrls: string[] = [];
+    // Array to store uploaded file URLs
+    let uploadedFileUrls: string[] = [];
 
-    // // Process files if present
-    // if (values.attachments && values.attachments.length > 0) {
-    //   const filesToUpload: File[] = [];
+    // Process files if present
+    if (values.attachments && values.attachments.length > 0) {
+      const filesToUpload: File[] = [];
 
-    //   // Process each file
-    //   for (const file of values.attachments) {
-    //     if (file instanceof File) {
-    //       // Case 1: Already a File object
-    //       filesToUpload.push(file);
-    //     } else if (typeof file === 'string') {
-    //       // Case 2: It's a data URL (Base64)
-    //       if (file.startsWith('data:')) {
-    //         try {
-    //           // Extract MIME type and data from Base64
-    //           const arr = file.split(',');
-    //           const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
-    //           const bstr = atob(arr[1]);
-    //           let n = bstr.length;
-    //           const u8arr = new Uint8Array(n);
+      // Process each file
+      for (const file of values.attachments) {
+        if (file instanceof File) {
+          // Case 1: Already a File object
+          filesToUpload.push(file);
+        } else if (typeof file === 'string') {
+          // Case 2: It's a data URL (Base64)
+          if (file.startsWith('data:')) {
+            try {
+              // Extract MIME type and data from Base64
+              const arr = file.split(',');
+              const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
+              const bstr = atob(arr[1]);
+              let n = bstr.length;
+              const u8arr = new Uint8Array(n);
               
-    //           while (n--) {
-    //             u8arr[n] = bstr.charCodeAt(n);
-    //           }
+              while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+              }
               
-    //           // Create File from Base64 data
-    //           const fileObj = new File(
-    //             [u8arr], 
-    //             `feedback-file-${Date.now()}.${mime.split('/')[1] || 'jpg'}`, 
-    //             { type: mime }
-    //           );
+              // Create File from Base64 data
+              const fileObj = new File(
+                [u8arr], 
+                `feedback-file-${Date.now()}.${mime.split('/')[1] || 'jpg'}`, 
+                { type: mime }
+              );
               
-    //           filesToUpload.push(fileObj);
-    //         } catch (error) {
-    //           console.error("Error converting Base64 to File:", error);
-    //         }
-    //       } else if (file.startsWith('https://storage.googleapis.com')) {
-    //         // Case 3: Already a Google Cloud URL
-    //         uploadedFileUrls.push(file);
-    //       }
-    //     }
-    //   }
+              filesToUpload.push(fileObj);
+            } catch (error) {
+              console.error("Error converting Base64 to File:", error);
+            }
+          } else if (file.startsWith('https://storage.googleapis.com')) {
+            // Case 3: Already a Google Cloud URL
+            uploadedFileUrls.push(file);
+          }
+        }
+      }
 
-    //   console.log("Files to upload:", filesToUpload);
+      console.log("Files to upload:", filesToUpload);
 
-    //   // Upload all files in a single request if there are any to upload
-    //   if (filesToUpload.length > 0) {
-    //     const uploadResult = await uploadFeedbackFiles(filesToUpload);
+      // Upload all files in a single request if there are any to upload
+      if (filesToUpload.length > 0) {
+        const uploadResult = await uploadFeedbackFiles(filesToUpload);
         
-    //     // Extract URLs from the response
-    //     if (uploadResult && uploadResult.uploaded_files) {
-    //       const newUrls = uploadResult.uploaded_files.map((item: any) => item.public_url);
-    //       uploadedFileUrls = [...uploadedFileUrls, ...newUrls];
-    //     }
-    //   }
-    // }
+        // Extract URLs from the response
+        if (uploadResult && uploadResult.uploaded_files) {
+          const newUrls = uploadResult.uploaded_files.map((item: any) => item.public_url);
+          uploadedFileUrls = [...uploadedFileUrls, ...newUrls];
+        }
+      }
+    }
 
     // const feedbackData = {
     //   title: `Phản ánh về ${values.issueType === 'traffic_jam' ? 'tắc đường' : 
@@ -241,6 +241,7 @@ export function ReportForm({ userFullName }: { userFullName: any }) {
         description: values.description,
         images: values.attachments,
         author: userFullName, 
+        author_username: username,
         phone_number: values.phone,
         email: values.email,
         date: format(values.date, "dd-MM-yyyy"),

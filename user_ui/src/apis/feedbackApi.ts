@@ -13,7 +13,7 @@ export interface FeedbackArticle {
     time?: string;
     description?: string;
     images?: string[];
-    status?: string;
+    author_username?: string;
 }
 
 export const getFeedback = async (id: string) => {
@@ -26,10 +26,10 @@ export const getFeedbackList = async () => {
     return response.data;
 }
 
-export const getUserFeedbackList = async () => {
-    const response = await api.get("/feedback/processed");
-    return response.data;
-}
+// export const getUserFeedbackList = async () => {
+//     const response = await api.get("/feedback/processed");
+//     return response.data;
+// }
 
 export const sendFeedback = async (feedbackData: FeedbackArticle) => {
     const response = await api.post("/feedback/item", feedbackData);
@@ -46,11 +46,6 @@ export const uploadFeedbackFiles = async (files: File[]) => {
     formData.append("files", file);
   });
 
-  // Kiểm tra thực sự formData có dữ liệu
-  for (const [key, value] of formData.entries()) {
-    console.log(key, value);
-  }
-  
   // Using multipart/form-data for file uploads
   const response = await api.post("/feedback/upload", formData);
   

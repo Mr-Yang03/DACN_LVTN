@@ -28,3 +28,20 @@ export const register = async (
   });
   return response.data;
 };
+
+export const updateUserInfo = async (
+  username: string,
+  full_name: string,
+  date_of_birth: string,
+  phone_number: string,
+  license_number: string
+) => {
+  const response = await api.put("/users/update", {
+    username,
+    full_name,
+    date_of_birth,
+    phone_number,
+    license_number
+  });
+  return response.data;
+}

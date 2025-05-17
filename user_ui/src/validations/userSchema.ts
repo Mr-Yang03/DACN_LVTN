@@ -25,3 +25,11 @@ export const registerSchema = z
     path: ["confirmPassword"],
     message: "Mật khẩu không khớp",
   });
+
+export const updateUserSchema = z
+  .object({
+    full_name: z.string().min(1, "Họ và tên không được để trống"),
+    phone_number: z.string().min(10, "Số điện thoại không hợp lệ"),
+    date_of_birth: z.string().min(1, "Ngày sinh không được để trống"),
+    license_number: z.string().optional(),
+  })

@@ -28,7 +28,7 @@ import {
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Card} from "@/components/ui/card"
-import { getUserFeedbackList } from "@/apis/feedbackApi";
+import { getFeedbackList } from "@/apis/feedbackApi";
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from "@/context/auth-context";
 
@@ -54,7 +54,7 @@ export default function ReportPage() {
       try {
         setIsLoading(true);
         setError(null);
-        const feedbackData = await getUserFeedbackList();
+        const feedbackData = await getFeedbackList();
         setFeedbackItems(feedbackData);
       } catch (err) {
         console.error('Failed to fetch feedbacks:', err);
@@ -126,7 +126,10 @@ export default function ReportPage() {
               </DialogHeader>
               <div className="flex w-full my-4 items-center justify-center">
                 <div className="px-4">
-                    <ReportForm userFullName={userData().full_name}/>
+                    <ReportForm 
+                      username={userData().username}
+                      userFullName={userData().full_name}
+                    />
                 </div>
               </div>
             </DialogContent>
@@ -252,7 +255,7 @@ export default function ReportPage() {
                   </div>
                   <div className="p-4 md:col-span-2">
                     <div className="flex flex-wrap gap-2 mb-2">
-                      <Badge
+                      {/* <Badge
                         className={`${
                           item.status === "Đã xử lý"
                             ? "bg-green-600"
@@ -262,7 +265,7 @@ export default function ReportPage() {
                         } rounded-full`}
                       >
                         {item.status}
-                      </Badge>
+                      </Badge> */}
                       <Badge className="bg-blue-600 rounded-full">{item.type}</Badge>
                       <Badge
                         className={`${
