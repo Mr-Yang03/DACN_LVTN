@@ -5,6 +5,11 @@ export const login = async (username: string, password: string) => {
   return response.data;
 };
 
+export const checkUsername = async (username: string) => {
+  const response = await api.get(`/users/check_username/${username}`);
+  return response.data;
+};
+
 export const register = async (
   username: string,
   password: string,

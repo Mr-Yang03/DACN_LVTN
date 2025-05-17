@@ -53,6 +53,16 @@ async def login(request: Request):
     )
     return {"access_token": access_token, "token_type": "bearer", "user": user_data}
 
+@app.get("/users/check_username/{username}")
+async def check_username(username: str):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"{USER_SERVICE_URL}/check-username/{username}",
+            params={"username": username}
+        )
+    if response.status_code != 200:
+        raise HTTPException(status_code=400, detail="Failed to check username")
+    return response.json()
 
 @app.post("/users/register")
 async def register(request: Request):

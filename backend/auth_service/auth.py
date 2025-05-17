@@ -35,6 +35,14 @@ class RegisterInfo(BaseModel):
     phone_number: str
     license_number: str | None = None
 
+@auth_router.get("/check-username/{username}")
+async def check_username_exists(username: str) -> dict:
+    """
+    Kiểm tra xem username đã tồn tại trong hệ thống hay chưa
+    """
+    existing_user = accounts_collection.find_one({"username": username})
+    return {"exists": existing_user is not None}
+
 @auth_router.post("/register")
 async def register_user(register_info: RegisterInfo) -> dict:
     if accounts_collection.find_one({"username": register_info.username}):

@@ -17,10 +17,9 @@ export default function NewsAdminPage() {
           </div>
         </div>
       </div>
-        <div className="px-6">
-
-      <FeedbackTable />
-        </div>
+      <div className="px-6">
+        <FeedbackTable />
+      </div>
     </>
   );
 }

@@ -370,12 +370,12 @@ export default function FeedbackTable() {
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </TableHead>
-                            <TableHead className="text-black text-center w-1/10">
+                            {/* <TableHead className="text-black text-center w-1/10">
                                 <Button variant="ghost" onClick={() => handleSort('status')}>
                                 Trạng thái
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
-                            </TableHead>
+                            </TableHead> */}
                             <TableHead className="text-center text-black">Thao tác</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -407,7 +407,7 @@ export default function FeedbackTable() {
                                     <TableCell className='text-center'>
                                         <Badge className={getSeverityColor(feedback.severity || 'default')}>{feedback.severity}</Badge>
                                     </TableCell>
-                                    <TableCell className='text-center'>
+                                    {/* <TableCell className='text-center'>
                                         {feedback.status === 'Đã xử lý' ? (
                                             <Badge
                                                 variant="outline"
@@ -425,7 +425,7 @@ export default function FeedbackTable() {
                                                 Đang chờ duyệt
                                             </Badge>
                                         )}
-                                    </TableCell>
+                                    </TableCell> */}
                                     
                                     <TableCell className="text-center">
                                         <DropdownMenu>
