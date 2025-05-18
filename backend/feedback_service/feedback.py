@@ -349,12 +349,8 @@ async def upload_feedback_files(files: List[UploadFile] = File(...)):
             file_extension = file.filename.split(".")[-1] if "." in file.filename else ""
             unique_filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{uuid.uuid4().hex}.{file_extension}"
             
-            # Log the file info for debugging
-            print(f"Uploading file: {file.filename}, Size: {file.size}, Content-Type: {file.content_type}")
-            
             # Read file content
             content = await file.read()
-            print(f"File content read, size: {len(content)} bytes")
             
             try:
                 # Get bucket
@@ -372,7 +368,6 @@ async def upload_feedback_files(files: List[UploadFile] = File(...)):
                 
                 # Get the correct content type or default to a safe option
                 content_type = file.content_type or "application/octet-stream"
-                print(f"Using content type: {content_type}")
                 
                 # Set content type 
                 blob.content_type = content_type

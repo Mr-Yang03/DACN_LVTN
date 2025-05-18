@@ -129,6 +129,7 @@ export default function ReportPage() {
                     <ReportForm 
                       username={userData().username}
                       userFullName={userData().full_name}
+                      onSubmitSuccess={() => setShowFeedbackForm(false)}
                     />
                 </div>
               </div>

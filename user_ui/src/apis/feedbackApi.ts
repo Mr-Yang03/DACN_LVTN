@@ -38,16 +38,25 @@ export const sendFeedback = async (feedbackData: FeedbackArticle) => {
 
 // Upload multiple images/videos for feedback
 export const uploadFeedbackFiles = async (files: File[]) => {
-  const formData = new FormData();
-  
-  // Append all files with the same field name "files"
-  // This matches the expected format in the gateway API
-  files.forEach((file) => {
-    formData.append("files", file);
-  });
+  try {
+    const formData = new FormData();
+    
+    // Append all files with the same field name "attachments"
+    files.forEach((file) => {
+      formData.append("attachments", file);
+    });
 
-  // Using multipart/form-data for file uploads
-  const response = await api.post("/feedback/upload", formData);
-  
-  return response.data;
+    // Using multipart/form-data for file uploads with explicit content type header
+    const response = await api.post("/feedback/upload", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      timeout: 30000, // Increased timeout for larger uploads
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error("Error uploading feedback files:", error);
+    throw error; // Re-throw to allow handling in the UI component
+  }
 };

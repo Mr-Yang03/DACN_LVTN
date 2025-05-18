@@ -51,7 +51,15 @@ const getAuthToken = () => {
   return '';
 };
 
-export function ReportForm({ username, userFullName }: { username: any, userFullName: any }) {
+export function ReportForm({ 
+  username, 
+  userFullName, 
+  onSubmitSuccess 
+}: { 
+  username: any, 
+  userFullName: any, 
+  onSubmitSuccess?: () => void 
+}) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -76,6 +84,7 @@ export function ReportForm({ username, userFullName }: { username: any, userFull
 
   async function onSubmit(values: FeedbackFormValues) {
     setIsSubmitting(true);
+    console.log("Form values on submit:", values);
 
     // Array to store uploaded file URLs
     let uploadedFileUrls: string[] = [];
@@ -248,7 +257,7 @@ export function ReportForm({ username, userFullName }: { username: any, userFull
         time: values.time,
       };
 
-      const response = await sendFeedback(feedbackData)
+      const response = await sendFeedback(feedbackData);      
       if (response) {
         setIsSuccess(true);
         toast?.({
@@ -256,7 +265,13 @@ export function ReportForm({ username, userFullName }: { username: any, userFull
           description: "Cảm ơn bạn đã phản ánh về tình trạng giao thông.",
           variant: "default"
         });
-        router.push("/feedback");
+        
+        // Call the onSubmitSuccess callback if provided
+        if (onSubmitSuccess) {
+          onSubmitSuccess();
+        }
+        
+        // router.push("/feedback");
       }
     
     } catch (error) {
