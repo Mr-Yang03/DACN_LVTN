@@ -25,7 +25,7 @@ import {
   Search,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { RichTextContent } from "@/components/admin/RichTextContent";
+import { RichTextContent } from "@/components/sections/RichTextContent";
 
 const NewsDetailPage = () => {
   const params = useParams();
