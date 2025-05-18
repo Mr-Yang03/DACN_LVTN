@@ -12,6 +12,7 @@ interface Camera {
     type: "Point";
     coordinates: [number, number];
   };
+  Status: string;
 }
 
 interface CameraLayerProps {
@@ -26,11 +27,11 @@ const CameraLayer: React.FC<CameraLayerProps> = ({ cameras, showCamera }) => {
   const [snapshotUrl, setSnapshotUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!selectedCamera || !selectedCamera.SnapshotUrl) return;
+    if (!selectedCamera) return;
     setSnapshotUrl(`http://camera.thongtingiaothong.vn/api/snapshot/${selectedCamera.Id}?t=${Date.now()}`);
     const interval = setInterval(() => {
       setSnapshotUrl(`http://camera.thongtingiaothong.vn/api/snapshot/${selectedCamera.Id}?t=${Date.now()}`);
-    }, 15000);
+    }, 3000);
     return () => clearInterval(interval);
   }, [selectedCamera]);
 
@@ -58,6 +59,7 @@ const CameraLayer: React.FC<CameraLayerProps> = ({ cameras, showCamera }) => {
                 src={snapshotUrl || "/placeholder.png"}
                 alt={selectedCamera?.DisplayName || "Camera"}
                 fill
+                sizes="(max-width: 768px) 100vw, 80vw"
                 className="object-contain rounded-lg mt-4"
               />
             </div>
@@ -75,8 +77,11 @@ const CameraLayer: React.FC<CameraLayerProps> = ({ cameras, showCamera }) => {
             lat: camera.Location.coordinates[1],
             lng: camera.Location.coordinates[0],
           }}
-          icon={{
+          icon={camera.Status === "active" ? {
             url: "/image/cctv_camera_active.png",
+            scaledSize: new window.google.maps.Size(30, 30),
+          } : {
+            url: "/image/cctv_camera_inactive.png",
             scaledSize: new window.google.maps.Size(30, 30),
           }}
           title={camera.DisplayName}

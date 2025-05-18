@@ -12,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-background">
-      <div className="min-h-screen flex flex-col">
+    <div className="h-screen bg-background">
+      <div className="h-full flex flex-col overflow-y-hidden">
         <SiteHeader />
 
         <main className="flex-1 bg-white">{children}</main>

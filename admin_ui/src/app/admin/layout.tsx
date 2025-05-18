@@ -2,8 +2,10 @@
 
 import type { ReactNode } from "react";
 import { Sidebar } from "@/components/admin/Sidebar";
+import withAuth from "@/HOC/with-auth";
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+const AdminLayout = ({ children }: { children: ReactNode }) => {
+
   return (
     <div className="max-w-screen flex flex-col bg-gray-100 h-full lg:flex-row lg:overflow-hidden">
       <div className="">
@@ -19,3 +21,5 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     </div>
   );
 }
+
+export default withAuth(AdminLayout);

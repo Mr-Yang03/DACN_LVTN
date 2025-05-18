@@ -10,6 +10,7 @@ auth_router = APIRouter()
 db = get_database()
 accounts_collection = db["accounts"]
 users_collection = db["users"]
+admins_collection = db["admins"]
 
 class LoginInfo(BaseModel):
     username: str
@@ -34,6 +35,14 @@ class RegisterInfo(BaseModel):
     date_of_birth: str
     phone_number: str
     license_number: str | None = None
+    
+class AdminRegisterInfo(BaseModel):
+    username: str
+    password: str
+    full_name: str
+    date_of_birth: str
+    phone_number: str
+    citizen_id: str
 
 @auth_router.get("/check-username/{username}")
 async def check_username_exists(username: str) -> dict:
@@ -107,6 +116,38 @@ async def check_login(login_info: LoginInfo) -> dict:
     
     return user_data
 
+@auth_router.post("/admin/login")
+async def admin_login(login_info: LoginInfo) -> dict:
+    account = accounts_collection.find_one({"username": login_info.username})
+
+    if not account or not pwd_context.verify(login_info.password, account["password"]):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    
+    if account["status"] != "active":
+        raise HTTPException(status_code=401, detail="Tài khoản đã bị khóa")
+    
+    # Xác minh đây là tài khoản admin
+    if account["account_type"] != "admin":
+        raise HTTPException(status_code=403, detail="Không có quyền truy cập. Chỉ admin mới được phép đăng nhập.")
+    
+    # Lấy thông tin admin
+    admin_data = {
+        "username": account["username"],
+        "account_type": account["account_type"],
+        "status": account["status"]
+    }
+    
+    admin = admins_collection.find_one({"account_id": account["_id"]})
+    if admin:
+        admin_data.update({
+            "full_name": admin["full_name"],
+            "date_of_birth": admin["date_of_birth"],
+            "phone_number": admin["phone_number"],
+            "citizen_id": admin.get("citizen_id")
+        })
+    
+    return admin_data
+
 @auth_router.put("/update/{username}") 
 async def update_user_info(username, user_info: UserInfo) -> dict:
     account = accounts_collection.find_one({"username": username})
@@ -134,3 +175,38 @@ async def update_user_info(username, user_info: UserInfo) -> dict:
     }
     
     return {"status": "success", "message": "Thông tin đã được cập nhật", "data": updated_user}
+
+@auth_router.post("/admin/register")
+async def register_admin(register_info: AdminRegisterInfo) -> dict:
+    if accounts_collection.find_one({"username": register_info.username}):
+        raise HTTPException(status_code=400, detail="Username đã tồn tại")
+
+    hashed_pw = pwd_context.hash(register_info.password)
+    
+    # Tạo tài khoản admin mới
+    new_account = {
+        "username": register_info.username,
+        "password": hashed_pw,
+        "account_type": "admin",
+        "status": "active"
+    }
+    
+    account_result = accounts_collection.insert_one(new_account)
+    account_id = account_result.inserted_id
+    
+    # Tạo thông tin admin liên kết với tài khoản
+    new_admin = {
+        "full_name": register_info.full_name,
+        "date_of_birth": register_info.date_of_birth,
+        "phone_number": register_info.phone_number,
+        "citizen_id": register_info.citizen_id,
+        "account_id": account_id
+    }
+    
+    admins_collection.insert_one(new_admin)
+    
+    return {
+        "username": register_info.username,
+        "status": "active",
+        "account_type": "admin"
+    }

@@ -84,28 +84,28 @@ export function SiteHeader() {
             Trang chủ
           </Link>
           <Link
-            href="/"
+            href="/ggmap"
             className="text-white hover:text-gray-400 py-2 px-4 block"
           >
             Bản đồ
           </Link>
           <Link
-            href="/"
+            href="/news"
             className="text-white hover:text-gray-400 py-2 px-4 block"
           >
             Tin tức
           </Link>
           <Link
-            href="/"
+            href="/feedback"
             className="text-white hover:text-gray-400 py-2 px-4 block"
           >
             Phản ánh
           </Link>
           <Link
-            href="/"
+            href="/chatbot"
             className="text-white hover:text-gray-400 py-2 px-4 block"
           >
-            Thống kê
+            Chatbot
           </Link>
           {isAuthenticated ? (
             <Link

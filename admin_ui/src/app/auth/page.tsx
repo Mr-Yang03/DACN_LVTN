@@ -25,7 +25,7 @@ export default function AuthPage() {
   useEffect(() => {
     console.log("isAuthenticated", isAuthenticated);
     if (isAuthenticated) {
-      router.back();
+      router.push('/admin');
     }
   }, [isAuthenticated]);
 

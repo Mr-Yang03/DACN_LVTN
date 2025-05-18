@@ -25,7 +25,7 @@ import { PasswordInput } from "@/components/ui/PasswordInput";
 import { useToggle } from "@/hooks/useToggle";
 import { useAuth } from "@/context/auth-context";
 import { loginSchema } from "@/validations/userSchema";
-import { login } from "@/apis/userApi";
+import { login } from "@/apis/authApi";
 import { toast } from "react-toastify";
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -104,16 +104,17 @@ export default function LoginForm({
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <FormLabel className="text-slate-700 font-medium">
                       Mật khẩu
                     </FormLabel>
-                    <Link
+                    {/* <Link
                       href="#"
-                      className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                      className="text-sm text-blue-600 hover:text-blue-700 hover:underline focus:outline-none"
+                      tabIndex={-1}
                     >
                       Quên mật khẩu?
-                    </Link>
+                    </Link> */}
                   </div>
                   <FormControl>
                     <PasswordInput

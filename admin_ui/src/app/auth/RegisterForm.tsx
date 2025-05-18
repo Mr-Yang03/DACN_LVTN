@@ -24,7 +24,7 @@ import { PasswordInput } from "@/components/ui/PasswordInput";
 import { useToggle } from "@/hooks/useToggle";
 import Link from "next/link";
 import { registerSchema } from "@/validations/userSchema";
-import { register } from "@/apis/userApi";
+import { register } from "@/apis/authApi";
 import { toast } from "react-toastify";
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
@@ -41,7 +41,7 @@ export default function RegisterForm({
       full_name: "",
       phone_number: "",
       date_of_birth: "",
-      license_number: "",
+      citizen_id: "",
       password: "",
       confirmPassword: "",
       acceptTerms: true,
@@ -59,7 +59,7 @@ export default function RegisterForm({
         values.full_name,
         values.date_of_birth,
         values.phone_number,
-        values.license_number || "" // Sử dụng chuỗi rỗng nếu license_number không được cung cấp
+        values.citizen_id || "" // Sử dụng chuỗi rỗng nếu license_number không được cung cấp
       );
 
       toast.success("Đăng ký thành công!");
@@ -142,10 +142,10 @@ export default function RegisterForm({
             {/* Số giấy phép */}
             <FormField
               control={form.control}
-              name="license_number"
+              name="citizen_id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Số giấy phép lái xe (không bắt buộc)</FormLabel>
+                  <FormLabel>Số chứng minh nhân dân (không bắt buộc)</FormLabel>
                   <FormControl>
                     <Input placeholder="123456789" {...field} />
                   </FormControl>

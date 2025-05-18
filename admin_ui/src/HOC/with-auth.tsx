@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAuth } from '@/context/auth-context';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 //-----------------------------------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ const withAuth = <P extends object>(
 
     useEffect(() => {
       if (!isAuthenticated) {
-        router.replace('/login');
+        router.replace('/auth');
       }
     }, [isAuthenticated, router]);
 

@@ -529,6 +529,47 @@ async def proxy_delete_user(user_id: str):
         raise HTTPException(status_code=response.status_code, detail="Failed to delete user")
     return {"status": "success", "message": "User deleted successfully"}
 
+@app.post("/admin/login")
+async def admin_login(request: Request):
+    body = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            f"{USER_SERVICE_URL}/admin/login",
+            json={"username": body.get("username"), "password": body.get("password")},
+        )
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    user_data = response.json()
+    access_token = create_access_token(
+        data={
+            "sub": user_data["username"],
+            "account_type": user_data["account_type"]
+        }, 
+        expires_delta=timedelta(minutes=60)
+    )
+    return {"access_token": access_token, "token_type": "bearer", "user": user_data}
+
+@app.post("/admin/register")
+async def admin_register(request: Request):
+    body = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            f"{USER_SERVICE_URL}/admin/register",
+            json={
+                "username": body.get("username"),
+                "password": body.get("password"),
+                "full_name": body.get("full_name"),
+                "date_of_birth": body.get("date_of_birth"),
+                "phone_number": body.get("phone_number"),
+                "citizen_id": body.get("citizen_id"),
+            },
+        )
+    if response.status_code != 200:
+        raise HTTPException(status_code=400, detail="Register failed")
+    return {"message": "Admin registration successful!"}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=9000)
