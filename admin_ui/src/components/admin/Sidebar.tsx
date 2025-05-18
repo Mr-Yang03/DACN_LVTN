@@ -140,7 +140,7 @@ export function Sidebar() {
             </div>
           ) : (
             <div className={`${isCollapsed ? "flex justify-center" : ""}`}>
-              <Link href="/admin/auth">
+              <Link href="/auth">
                 <button className="w-full bg-blue-600 text-white px-3 py-2 rounded-md hover:bg-blue-700 transition text-sm">
                   {isCollapsed ? "Login" : "Đăng nhập"}
                 </button>
@@ -239,7 +239,7 @@ export function Sidebar() {
                 </div>
               </div>
             ) : (
-              <Link href="/admin/auth">
+              <Link href="/auth">
                 <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition w-full">
                   Đăng nhập
                 </button>

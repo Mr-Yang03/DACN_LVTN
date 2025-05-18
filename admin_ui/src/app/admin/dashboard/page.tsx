@@ -219,7 +219,7 @@ export default function AdminDashboard() {
     .reduce((sum, [, count]) => sum + count, 0);
 
   return (
-    <div className="bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 min-h-screen">
+    <div className="bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 h-full">
       <div className="container py-8 mx-auto px-4">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-2 bg-white dark:bg-slate-950 p-6 rounded-lg shadow-md border border-slate-200 dark:border-slate-800">
@@ -309,9 +309,9 @@ export default function AdminDashboard() {
 
           <Tabs defaultValue="overview" className="space-y-6">
             <TabsList className="grid w-full grid-cols-3 p-1 bg-slate-100 dark:bg-slate-800/50 rounded-lg">
-              <TabsTrigger value="overview" className="rounded-md text-sm font-medium py-2.5">Tổng quan</TabsTrigger>
-              <TabsTrigger value="services" className="rounded-md text-sm font-medium py-2.5">Phân tích Services</TabsTrigger>
-              <TabsTrigger value="endpoints" className="rounded-md text-sm font-medium py-2.5">Endpoints phổ biến</TabsTrigger>
+               <TabsTrigger value="overview" className="rounded-md text-xs sm:text-sm font-medium py-2 sm:py-2.5">Tổng quan</TabsTrigger>
+              <TabsTrigger value="services" className="rounded-md text-xs sm:text-sm font-medium py-2 sm:py-2.5">Phân tích Services</TabsTrigger>
+              <TabsTrigger value="endpoints" className="rounded-md text-xs sm:text-sm font-medium py-2 sm:py-2.5">Endpoints phổ biến</TabsTrigger>
             </TabsList>
           
             <TabsContent value="overview" className="space-y-6 mt-6 max-w-full">

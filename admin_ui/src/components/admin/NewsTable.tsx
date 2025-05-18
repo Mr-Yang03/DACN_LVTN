@@ -66,7 +66,7 @@ export function NewsTable() {
   
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   // Load data on component mount
   useEffect(() => {
@@ -366,11 +366,11 @@ export function NewsTable() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
         <div className="w-full flex flex-wrap gap-2 mt-2">
           <div className="flex flex-wrap items-center gap-2 grow">
             {/* Date Range Filter */}
-            <div className="w-[200px]">
+            <div className="w-full xs:w-auto min-w-[160px] max-w-[200px]">
               <DateRangePicker 
                 dateRange={dateRange}
                 onDateRangeChange={setDateRange}
@@ -378,22 +378,24 @@ export function NewsTable() {
             </div>
             
             {/* Status filter */}
-            <div className="w-[200px]">
+            <div className="w-full xs:w-auto min-w-[160px] max-w-[200px] ">
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start rounded-full  text-gray-500",
+                      "w-full justify-start rounded-full text-gray-500 text-xs sm:text-sm",
                       statusFilter && "text-primary border-primary"
                     )}
                   >
-                    <CheckCircle className="mr-2 h-4 w-4" />
-                    {statusFilter === 'published' 
-                      ? "Đã đăng" 
-                      : statusFilter === 'draft' 
-                        ? "Bản nháp" 
-                        : "Chọn trạng thái"}
+                    <CheckCircle className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                    <span className="truncate">
+                      {statusFilter === 'published' 
+                        ? "Đã đăng" 
+                        : statusFilter === 'draft' 
+                          ? "Bản nháp" 
+                          : "Chọn trạng thái"}
+                    </span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-2">
@@ -433,22 +435,24 @@ export function NewsTable() {
             </div>
 
             {/* Featured filter */}
-            <div className="w-[200px]">
+            <div className="w-full xs:w-auto min-w-[160px] max-w-[200px]">
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start rounded-full  text-gray-600",
+                      "w-full justify-start rounded-full text-gray-600 text-xs sm:text-sm",
                       featuredFilter !== null && "text-primary border-primary"
                     )}
                   >
-                    <Star className="mr-2 h-4 w-4" />
-                    {featuredFilter === true 
-                      ? "Nổi bật" 
-                      : featuredFilter === false 
-                        ? "Không nổi bật" 
-                        : "Chọn nổi bật"}
+                    <Star className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                    <span className="truncate">
+                      {featuredFilter === true 
+                        ? "Nổi bật" 
+                        : featuredFilter === false 
+                          ? "Không nổi bật" 
+                          : "Chọn nổi bật"}
+                    </span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-2">
@@ -499,21 +503,22 @@ export function NewsTable() {
                     setDateRange(undefined);
                     setSearchTerm('');
                   }}
-                  className="h-10 rounded-full"
+                  className="h-10 rounded-full text-xs sm:text-sm"
                 >
-                  <X className="mr-2 h-4 w-4" />
-                  Xóa tất cả bộ lọc
+                  <X className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden xs:inline">Xóa tất cả bộ lọc</span>
+                  <span className="xs:hidden">Xóa</span>
                 </Button>
               </div>
             )}
           </div>
           
-          <div className="flex items-center gap-2 ml-auto">
-            {/* Search input - moved to the right */}
-            <div className="w-[300px] relative">
+          <div className="flex items-center gap-2 w-full sm:w-auto sm:ml-auto mt-2 sm:mt-0">
+            {/* Search input - responsive width */}
+            <div className="w-full sm:w-[250px] md:w-[300px] relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Tìm kiếm bài viết theo id, tiêu đề, tác giả"
+                placeholder="Tìm kiếm bài viết..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-8 rounded-full"
@@ -534,20 +539,20 @@ export function NewsTable() {
         </div>
       </div>
 
-      <div className="rounded-md border bg-white">
+      <div className="rounded-md border bg-white overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-black text-center w-[60px]">
-                <Button variant="ghost" onClick={() => handleSort('id')}>
+              <TableHead className="text-black text-center w-[50px] md:w-[60px]">
+                <Button variant="ghost" onClick={() => handleSort('id')} className="text-xs sm:text-sm">
                   ID
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                  <ArrowUpDown className="ml-1 sm:ml-2 h-3 w-3 sm:h-4 sm:w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="w-[400px] text-black">
-                <Button variant="ghost" onClick={() => handleSort('title')} className="flex items-center justify-center w-full">
+              <TableHead className="w-[380px] sm:w-[250px] md:w-[300px] lg:w-[400px] text-black">
+                <Button variant="ghost" onClick={() => handleSort('title')} className="flex items-center justify-center w-full text-xs sm:text-sm">
                   Tiêu đề
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                  <ArrowUpDown className="ml-1 sm:ml-2 h-3 w-3 sm:h-4 sm:w-4" />
                 </Button>
               </TableHead>
               <TableHead className="text-black text-center">
@@ -580,7 +585,7 @@ export function NewsTable() {
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="w-[200px] text-center text-black ">Thao tác</TableHead>
+              <TableHead className="w-[150px] text-center text-black ">Thao tác</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -601,7 +606,7 @@ export function NewsTable() {
             ) : (
               currentData.map((news) => (
                 <TableRow key={news._id}>
-                  <TableCell className="text-center">{news._id}</TableCell>
+                  <TableCell className="text-center whitespace-normal break-words max-w-[120px]">{news._id}</TableCell>
                   <TableCell className="font-medium">{news.title}</TableCell>
                   <TableCell className="text-center">
                     <Badge className={getCategoryColor(news.category || 'default')}>{news.category || 'Chung'}</Badge>
@@ -730,11 +735,11 @@ export function NewsTable() {
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground">Hiển thị</span>
           <Button
-            variant={itemsPerPage === 10 ? "default" : "outline"}
+            variant={itemsPerPage === 5 ? "default" : "outline"}
             size="sm"
-            onClick={() => setItemsPerPage(10)}
+            onClick={() => setItemsPerPage(5)}
           >
-            10
+            5
           </Button>
           <Button
             variant={itemsPerPage === 25 ? "default" : "outline"}

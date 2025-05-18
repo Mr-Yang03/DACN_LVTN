@@ -67,7 +67,7 @@ export function AdminHeader() {
               );
             })()
           ) : (
-            <Link href="/admin//auth">
+            <Link href="/auth">
               <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition">
                 Đăng nhập
               </button>
@@ -127,7 +127,7 @@ export function AdminHeader() {
               Đăng xuất
             </button>
           ) : (
-            <Link href="/admin//auth" className="block py-2 hover:text-gray-400">
+            <Link href="/auth" className="block py-2 hover:text-gray-400">
               Đăng nhập
             </Link>
           )}

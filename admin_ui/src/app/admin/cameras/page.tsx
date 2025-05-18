@@ -165,8 +165,12 @@ const AdminCamerasPage: React.FC = () => {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold tracking-tight">Quản lý Camera</h1>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white dark:bg-slate-950 p-4 sm:p-6 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800 mb-6">
+        <div className="text-center md:text-left">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-black dark:text-white">
+              Quản lý Camera
+            </h1>
+        </div>
         <Button
           onClick={() => {
             setEditingCamera(null);

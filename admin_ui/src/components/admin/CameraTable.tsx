@@ -69,7 +69,7 @@ const CameraTable: React.FC<CameraTableProps> = ({ cameras, onEditCamera, onDele
   return (
     <Card>
       <CardHeader className="space-y-2">
-        <CardTitle>Danh sách Camera</CardTitle>
+        {/* <CardTitle>Danh sách Camera</CardTitle> */}
         <div className="flex flex-col md:flex-row gap-2">
           <Input
             placeholder="Tìm theo tên hiển thị..."

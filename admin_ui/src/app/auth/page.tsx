@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import LoginForm from "@/app/admin/auth/LoginForm";
-import RegisterForm from "@/app/admin/auth/RegisterForm";
+import LoginForm from "@/app/auth/LoginForm";
+import RegisterForm from "@/app/auth/RegisterForm";
 import { Car, Building2, Bus, Truck, Bike, Plane } from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
