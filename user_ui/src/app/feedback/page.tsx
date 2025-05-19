@@ -31,8 +31,7 @@ import { Card} from "@/components/ui/card"
 import { getFeedbackList, getFilteredFeedbackList } from "@/apis/feedbackApi";
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from "@/context/auth-context";
-import { format } from "date-fns";
-
+import { useRouter } from "next/navigation";
 export default function ReportPage() {
   const [severityFilter, setSeverityFilter] = useState("Tất cả mức độ")
   const [issueFilter, setIssueFilter] = useState("Tất cả vấn đề")
@@ -47,6 +46,7 @@ export default function ReportPage() {
   const { toast } = useToast();
   const { isAuthenticated, setToken } = useAuth();
   const [displayedFeedbackItems, setDisplayedFeedbackItems] = useState<any[]>([]);
+  const router = useRouter();
 
   const itemsPerPage = 3 // Số lượng phản ánh hiển thị trên mỗi trang
 
@@ -313,7 +313,11 @@ export default function ReportPage() {
 
                     <div className="flex justify-between items-center">
                       <div className="text-sm text-gray-800">Người gửi: {item.author}</div>
-                      <Button variant="outline" className="border-blue-600 text-blue-500 hover:bg-blue-600 hover:text-white rounded-full">
+                      <Button 
+                        variant="outline" 
+                        className="border-blue-600 text-blue-500 hover:bg-blue-600 hover:text-white rounded-full"
+                        onClick={() => router.push(`/feedback/${item._id}`)}
+                      >
                         Xem chi tiết
                       </Button>
                     </div>

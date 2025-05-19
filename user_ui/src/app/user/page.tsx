@@ -12,6 +12,7 @@ import { useAuth } from "@/context/auth-context";
 import { updateUserInfo, uploadAvatar, updateAvatar } from "@/apis/userApi"
 import { toast } from "@/components/ui/use-toast";
 import { useToast } from '@/hooks/use-toast';
+import FeedbackTable from "@/components/ui/FeedbackTable";
 
 interface UserInfo {
   account_id: string;
@@ -354,11 +355,15 @@ export default function ProfilePage() {
                   )}
                 </Button>
               </div>
+
+              <Separator />
+
+              {/* List feedback of this user */}
+              <h3 className="text-xl font-semibold mb-6">Danh sách phản ánh đã gửi</h3>
+              <FeedbackTable username={userData().username}/>
             </div>
           </main>
         </div>
-
-        // List feedback of this user
       )}
     </>
   )
