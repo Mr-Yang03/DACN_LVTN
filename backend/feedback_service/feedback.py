@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query, Header, HTTPException, Depends, Request, s
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import httpx
-from typing import Optional, List
+from typing import Optional, List, Dict
 from pydantic import BaseModel
 from datetime import datetime
 from bson import ObjectId
@@ -37,6 +37,7 @@ class FeedbackCreate(BaseModel):
 feedback_router = APIRouter()
 
 db = get_database()
+db["Items"].create_index("author_username")
 items_collection = db["Items"]  
 
 # Hàm kiểm tra xác thực
@@ -362,3 +363,51 @@ async def upload_feedback_files(files: List[UploadFile] = File(...)):
             status_code=500,
             content={"detail": f"Failed to upload files: {str(e)}"}
         )
+
+# @feedback_router.post("/feedback/count-by")
+# async def count_feedback_by_usernames(data: List[Dict[str, str]] = Body(...)):
+#     if not data or not all("username" in item and "account_id" in item for item in data):
+#         raise HTTPException(status_code=400, detail="Thiếu username hoặc account_id")
+
+#     username_to_account_id = {item["username"]: item["account_id"] for item in data}
+#     pipeline = [
+#         {"$match": {"author_username": {"$in": list(username_to_account_id.keys())}}},
+#         {"$group": {"_id": "$author_username", "count": {"$sum": 1}}}
+#     ]
+
+#     result = db["Items"].aggregate(pipeline)
+#     count_by_account_id = {account_id: 0 for account_id in username_to_account_id.values()}
+
+#     for doc in result:
+#         username = doc["_id"]
+#         account_id = username_to_account_id.get(username)
+#         if account_id:
+#             count_by_account_id[account_id] = doc["count"]
+
+#     return JSONResponse(content=count_by_account_id)
+@feedback_router.post("/feedback/count-by")
+async def count_feedback_by_usernames(data: List[Dict[str, str]] = Body(...)):
+    """
+    Đếm số phản ánh theo account_id, ánh xạ từ author_username.
+    """
+    if not data:
+        raise HTTPException(status_code=400, detail="Thiếu dữ liệu")
+
+    # Ánh xạ username → account_id
+    username_to_account_id = {item["username"]: item["account_id"] for item in data if "username" in item and "account_id" in item}
+    usernames = list(username_to_account_id.keys())
+
+    # Index author_username đã tạo → truy vấn nhanh
+    pipeline = [
+        {"$match": {"author_username": {"$in": usernames}}},
+        {"$group": {"_id": "$author_username", "count": {"$sum": 1}}}
+    ]
+
+    # Đếm số phản ánh theo username rồi ánh xạ lại account_id
+    result = db["Items"].aggregate(pipeline)
+    counts = {username_to_account_id[doc["_id"]]: doc["count"] for doc in result if doc["_id"] in username_to_account_id}
+
+    # Đảm bảo trả về đủ các account_id, kể cả khi count = 0
+    full_result = {account_id: counts.get(account_id, 0) for account_id in username_to_account_id.values()}
+
+    return JSONResponse(content=full_result)

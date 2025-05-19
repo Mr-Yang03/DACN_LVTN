@@ -7,6 +7,8 @@ from datetime import timedelta
 import httpx
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
+from typing import List, Dict ##
+
 
 app = FastAPI()
 
@@ -125,7 +127,7 @@ async def upload_avatar(request: Request):
 
     return response.json()
 
-@app.put("account/update_avt")
+@app.put("/account/update_avt")
 async def update_avatar(request: Request):
     body = await request.json()
     async with httpx.AsyncClient() as client:
@@ -471,6 +473,34 @@ async def upload_feedback_image(request: Request):
 
     return response.json()
 
+# count feedback
+# @app.post("/feedback/count-by")
+
+# async def proxy_feedback_count(payload: List[Dict[str, str]]):
+#     try:
+#         async with httpx.AsyncClient() as client:
+#             response = await client.post(f"{FEEDBACK_SERVICE_URL}/feedback/count-by", json=payload)
+
+#         if response.status_code != 200:
+#             raise HTTPException(status_code=response.status_code, detail="Service error")
+
+#         return response.json()
+#     except Exception as e:
+#         print("Gateway error forwarding to feedback:", e)
+#         raise HTTPException(status_code=500, detail="Gateway error")
+
+@app.post("/feedback/count-by")
+async def proxy_feedback_count(payload: List[Dict[str, str]]):
+
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            f"{FEEDBACK_SERVICE_URL}/feedback/count-by",
+            json=payload
+        )
+    return response.json()
+
+
+
 # Agent Service Routes (Chatbot)
 @app.post("/chatbot/")
 async def chat_with_agent(prompt: str = Form(...)):
@@ -593,6 +623,19 @@ async def proxy_delete_user(user_id: str):
     if response.status_code != 200:
         raise HTTPException(status_code=response.status_code, detail="Failed to delete user")
     return {"status": "success", "message": "User deleted successfully"}
+## change pass
+@app.put("/userboard/ub/reset-password/{account_id}")
+async def proxy_reset_password(account_id: str, request: Request):
+    new_password = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.put(
+            f"{USERBOARD_SERVICE_URL}/userboard/ub/reset-password/{account_id}",
+            json=new_password
+        )
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail="Failed to reset password")
+    return {"status": "success", "message": "Password reset successfully"}
+
 
 @app.post("/admin/login")
 async def admin_login(request: Request):

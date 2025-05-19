@@ -1,9 +1,10 @@
+
 export interface User {
   _id: string;
   full_name: string;
-  date_of_birth?: string;  // ISO format
+  date_of_birth?: string;
   phone_number?: string;
   license_number?: string;
-  // email?: string;
-  // role?: string;
+  account_id: string;
+  username: string;
 }

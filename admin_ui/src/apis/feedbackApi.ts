@@ -35,3 +35,27 @@ export const sendFeedback = async (feedbackData: FeedbackArticle) => {
     const response = await api.post("/feedback/item", feedbackData);
     return response.data;
 }
+
+// count feedback by userr
+
+/**
+ * Đếm số lượng phản ánh theo danh sách người dùng.
+ * @param users Danh sách gồm username và account_id
+ * @returns object dạng { account_id: số lượng phản ánh }
+ */
+
+export const countFeedbackByUsers = (data: { username: string; account_id: string }[]) => {
+  return api.post("/feedback/count-by", data);
+};
+// export const countFeedbackByUsers = async (data: any) => {
+//   console.log("📤 Gửi feedback count request:", data);
+
+//   try {
+//     const res = await api.post("/feedback/count-by", data);
+//     console.log("✅ Nhận phản hồi:", res.data);
+//     return res;
+//   } catch (err: any) {
+//     console.error("❌ Lỗi gọi API count:", err?.response?.status, err?.response?.data);
+//     throw err;
+//   }
+// };
