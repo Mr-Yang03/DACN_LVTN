@@ -223,7 +223,7 @@ export function ReportForm({
                 <FormItem>
                   <FormLabel>Họ tên</FormLabel>
                   <FormControl>
-                    <Input placeholder={userFullName} {...field} readOnly />
+                    <Input placeholder={userFullName} {...field}/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -236,7 +236,7 @@ export function ReportForm({
                 <FormItem>
                   <FormLabel>Số điện thoại</FormLabel>
                   <FormControl>
-                    <Input placeholder={phoneNumber} {...field} readOnly/>
+                    <Input placeholder={phoneNumber} {...field}/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
