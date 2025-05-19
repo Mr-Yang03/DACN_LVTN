@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Pause, Play, RefreshCw, Maximize2, Camera } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,24 +25,47 @@ export function VideoFeed({
   onPlayPause,
   onRefreshSnapshot,
   onFullScreenToggle,
-}: VideoFeedProps) {
-  const feedContainerRef = useRef<HTMLDivElement>(null);
+}: VideoFeedProps) {  const feedContainerRef = useRef<HTMLDivElement>(null);
+  const [currentFrameIndex, setCurrentFrameIndex] = useState(0);
+  const [totalFrames] = useState(1331); // Total number of frames in the directory
+
+  // Effect to update the frame index when playing
+  useEffect(() => {
+    let frameInterval: NodeJS.Timeout | null = null;
+    
+    if (isTestMode && isPlaying) {
+      frameInterval = setInterval(() => {
+        setCurrentFrameIndex((prevIndex) => 
+          prevIndex >= totalFrames - 1 ? 0 : prevIndex + 1
+        );
+      }, 100);
+    }
+    
+    return () => {
+      if (frameInterval) clearInterval(frameInterval);
+    };
+  }, [isTestMode, isPlaying, totalFrames]);
 
   return (
     <Card className="h-full overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
-      <div className="relative" ref={feedContainerRef}>
-        <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
+      <div className="relative" ref={feedContainerRef}>        <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
           {isTestMode ? (
-            <iframe
-              width="946"
-              height="514"
-              src="https://www.youtube.com/embed/cCrahzMyTko"
-              title="Speed estimation"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
+            <div className="relative w-full h-full flex items-center justify-center">
+              <Image
+                src={`/frame/frame_${currentFrameIndex}.jpg`}
+                alt={`Test mode frame ${currentFrameIndex}`}
+                className="w-full h-full object-contain"
+                width={1280}
+                height={720}
+                priority
+                onError={(e) => {
+                  console.error("Error loading frame", currentFrameIndex);
+                }}
+              />
+              {/* <div className="absolute bottom-4 right-4 px-2 py-1 bg-black/60 text-white text-xs rounded">
+                Frame: {currentFrameIndex} / {totalFrames - 1}
+              </div> */}
+            </div>
           ) : snapshotUrl && selectedCamera.id ? (
             <Image
               src={snapshotUrl}
@@ -102,7 +125,7 @@ export function VideoFeed({
             className="p-2 hover:bg-white/20 rounded-full transition-colors"
             onClick={onFullScreenToggle}
           >
-            <Maximize2 size={16} />
+            {/* <Maximize2 size={16} /> */}
           </button>
         </div>
       </div>

@@ -1,11 +1,17 @@
-import { Activity, BarChart3, Car, TrendingUp, AlertTriangle } from "lucide-react";
+import {
+  Activity,
+  BarChart3,
+  Car,
+  TrendingUp,
+  AlertTriangle,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnalyticsData, VehicleTypeData } from "./types";
-import { 
-  getCongestionColorClass, 
-  getShortCongestionText, 
-  extractCongestionLevel
+import {
+  getCongestionColorClass,
+  getShortCongestionText,
+  extractCongestionLevel,
 } from "./utils";
 
 interface AnalyticsDashboardProps {
@@ -13,6 +19,7 @@ interface AnalyticsDashboardProps {
   vehicleTypeData: VehicleTypeData;
   selectedCameraId: string;
   formattedTime: string;
+  isTestMode: boolean;
 }
 
 export function AnalyticsDashboard({
@@ -20,7 +27,17 @@ export function AnalyticsDashboard({
   vehicleTypeData,
   selectedCameraId,
   formattedTime,
+  isTestMode,
 }: AnalyticsDashboardProps) {
+  if (isTestMode) {
+    analyticsData = {
+      avgSpeed: 21,
+      congestionLevel: "Mức C: Lưu thông ổn định",
+      congestionPercent: 0,
+      incidents: 0,
+      totalVehicles: 53,
+    };
+  }
   return (
     <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
       <CardHeader className="pb-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
@@ -52,8 +69,8 @@ export function AnalyticsDashboard({
           </TabsList>
 
           <TabsContent value="tongquan">
-            <OverviewTab 
-              analyticsData={analyticsData} 
+            <OverviewTab
+              analyticsData={analyticsData}
               selectedCameraId={selectedCameraId}
             />
           </TabsContent>
@@ -62,9 +79,9 @@ export function AnalyticsDashboard({
             value="phuongtien"
             className="animate-in fade-in-50 duration-300"
           >
-            <VehicleTypesTab 
-              vehicleTypeData={vehicleTypeData} 
-              totalVehicles={analyticsData.totalVehicles} 
+            <VehicleTypesTab
+              vehicleTypeData={vehicleTypeData}
+              totalVehicles={analyticsData.totalVehicles}
             />
           </TabsContent>
         </Tabs>
@@ -73,10 +90,10 @@ export function AnalyticsDashboard({
   );
 }
 
-function OverviewTab({ 
-  analyticsData, 
-  selectedCameraId 
-}: { 
+function OverviewTab({
+  analyticsData,
+  selectedCameraId,
+}: {
   analyticsData: AnalyticsData;
   selectedCameraId: string;
 }) {
@@ -189,10 +206,10 @@ function OverviewTab({
   );
 }
 
-function VehicleTypesTab({ 
+function VehicleTypesTab({
   vehicleTypeData,
-  totalVehicles
-}: { 
+  totalVehicles,
+}: {
   vehicleTypeData: VehicleTypeData;
   totalVehicles: number;
 }) {
@@ -201,38 +218,40 @@ function VehicleTypesTab({
       <div className="flex items-center justify-between border-b pb-2 dark:border-slate-700">
         <div className="flex items-center gap-2">
           <Car className="h-4 w-4 text-blue-600" />
-          <span className="font-medium text-sm">
-            Phân loại phương tiện
-          </span>
+          <span className="font-medium text-sm">Phân loại phương tiện</span>
         </div>
         <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full dark:bg-blue-900/30 dark:text-blue-300">
-          Tổng: {totalVehicles}
+          Tổng:{" "}
+          {vehicleTypeData.vehicleTypes.motorcycle.count +
+            vehicleTypeData.vehicleTypes.car.count +
+            vehicleTypeData.vehicleTypes.truck.count +
+            vehicleTypeData.vehicleTypes.bus.count}
         </span>
       </div>
 
       <div className="space-y-3">
-        <VehicleTypeRow 
+        <VehicleTypeRow
           type="Xe máy"
           count={vehicleTypeData.vehicleTypes.motorcycle.count}
           percentage={vehicleTypeData.vehicleTypes.motorcycle.percentage}
           colorClass="bg-blue-500"
         />
 
-        <VehicleTypeRow 
+        <VehicleTypeRow
           type="Ô tô"
           count={vehicleTypeData.vehicleTypes.car.count}
           percentage={vehicleTypeData.vehicleTypes.car.percentage}
           colorClass="bg-green-500"
         />
 
-        <VehicleTypeRow 
+        <VehicleTypeRow
           type="Xe tải"
           count={vehicleTypeData.vehicleTypes.truck.count}
           percentage={vehicleTypeData.vehicleTypes.truck.percentage}
           colorClass="bg-amber-500"
         />
 
-        <VehicleTypeRow 
+        <VehicleTypeRow
           type="Xe buýt"
           count={vehicleTypeData.vehicleTypes.bus.count}
           percentage={vehicleTypeData.vehicleTypes.bus.percentage}
@@ -243,12 +262,12 @@ function VehicleTypesTab({
   );
 }
 
-function VehicleTypeRow({ 
-  type, 
-  count, 
-  percentage, 
-  colorClass 
-}: { 
+function VehicleTypeRow({
+  type,
+  count,
+  percentage,
+  colorClass,
+}: {
   type: string;
   count: number;
   percentage: number;
@@ -269,9 +288,7 @@ function VehicleTypeRow({
       </div>
       <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
         {count}{" "}
-        <span className="text-slate-500 font-normal">
-          ({percentage}%)
-        </span>
+        <span className="text-slate-500 font-normal">({percentage}%)</span>
       </span>
     </div>
   );

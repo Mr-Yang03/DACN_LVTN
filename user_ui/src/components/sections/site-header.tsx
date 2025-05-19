@@ -45,7 +45,7 @@ export function SiteHeader() {
                 localStorage.getItem("user_data") || "{}"
               );
               return (
-                <Link href={`/user/${userData._id}`} className="flex flex-row items-center">
+                <Link href={`/user`} className="flex flex-row items-center">
                   <Image
                     src={"/image/default_avatar.png"}
                     alt="User Avatar"
