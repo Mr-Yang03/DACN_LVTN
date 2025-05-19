@@ -23,10 +23,9 @@ export function TrafficCharts({
   speedData, 
   timeRange, 
   onTimeRangeChange 
-}: TrafficChartsProps) {
-  // Create chart options
+}: TrafficChartsProps) {  // Create chart options
   const vehicleOptions = createVehicleChartOptions(speedData);
-  const speedOptions = createSpeedChartOptions(vehicleOptions);
+  const speedOptions = createSpeedChartOptions(vehicleOptions, speedData);
   
   // Create series data
   const vehicleSeries = createVehicleSeries(speedData.vehicleCounts);

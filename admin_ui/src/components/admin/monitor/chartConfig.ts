@@ -71,8 +71,9 @@ export const createVehicleChartOptions = (speedData: SpeedData): ApexOptions => 
     },
     yaxis: {
       min: 0,
-      max: 60,
-      tickAmount: 4,
+      // Tính max dựa vào giá trị thực tế của dữ liệu số lượng xe
+      max: Math.max(...speedData.vehicleCounts) * 1.2 || 200, // Thêm 20% cho khoảng không gian hoặc mặc định là 200
+      tickAmount: 5,
       labels: {
         style: {
           colors: ["#718096"],
@@ -117,9 +118,25 @@ export const createVehicleChartOptions = (speedData: SpeedData): ApexOptions => 
   };
 };
 
-export const createSpeedChartOptions = (baseOptions: ApexOptions): ApexOptions => {
+export const createSpeedChartOptions = (baseOptions: ApexOptions, speedData: SpeedData): ApexOptions => {
   return {
     ...baseOptions,
+    yaxis: {
+      min: 0,
+      max: 60, // Giữ cố định giới hạn tốc độ ở 60km/h
+      tickAmount: 4,
+      labels: {
+        style: {
+          colors: ["#718096"],
+          fontSize: "11px",
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 500,
+        },
+        formatter: function (value: number) {
+          return value.toFixed(0);
+        },
+      },
+    },
     fill: {
       type: "gradient",
       gradient: {
