@@ -387,17 +387,17 @@ async def get_all_feedback():
 @app.get("/feedback/{feedback_id}")
 async def get_feedback_by_id(feedback_id: str):
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/{feedback_id}")
+        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/item/{feedback_id}")
 
     if response.status_code != 200:
         raise HTTPException(status_code=404, detail="Feedback not found")
 
     return response.json()
 
-@app.get("/feedback/item/{item_id}")
-async def get_feedback_item_by_id(item_id: str):
+@app.get("/feedback/user/{username}")
+async def get_feedback_by_username(username: str):
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/items/{item_id}")
+        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/{username}")
 
     if response.status_code != 200:
         raise HTTPException(status_code=404, detail="Feedback item not found")
@@ -470,6 +470,16 @@ async def upload_feedback_image(request: Request):
 
     if response.status_code != 200:
         raise HTTPException(status_code=500, detail="Failed to upload attachments")
+
+    return response.json()
+
+@app.delete("/feedback/{feedback_id}")
+async def delete_feedback(feedback_id: str):
+    async with httpx.AsyncClient() as client:
+        response = await client.delete(f"{FEEDBACK_SERVICE_URL}/feedback/{feedback_id}")
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=404, detail="Feedback not found or failed to delete")
 
     return response.json()
 

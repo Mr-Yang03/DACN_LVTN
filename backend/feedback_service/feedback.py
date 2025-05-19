@@ -208,6 +208,46 @@ async def get_item_by_id(item_id: str):
     
     return {"status": "error", "message": "Item không tồn tại"}
 
+@feedback_router.get("/feedback/{username}")
+async def get_items_by_username(username: str):
+    """
+    Lấy danh sách phản ánh của một người dùng theo username
+    """
+    items = []
+    cursor = items_collection.find({"author_username": username})
+    
+    for document in cursor:
+        raw_date = document.get("date", "")
+        raw_time = document.get("time", "00:00")  # mặc định nếu không có giờ
+
+        # Kết hợp ngày + giờ để parse thành datetime
+        combined_str = f"{raw_date} {raw_time}"
+        datetime_formats = ["%d/%m/%Y %H:%M", "%d-%m-%Y %H:%M"]
+        parsed_datetime = None
+        for fmt in datetime_formats:
+            try:
+                parsed_datetime = datetime.strptime(combined_str, fmt)
+                break
+            except ValueError:
+                continue
+
+        # Bỏ qua nếu không parse được
+        if parsed_datetime is None:
+            continue
+
+        document["_id"] = str(document["_id"])
+        document["datetime"] = parsed_datetime
+        items.append(document)
+
+    # Sắp xếp theo datetime giảm dần
+    items.sort(key=lambda x: x["datetime"], reverse=True)
+
+    # Xóa trường datetime trước khi trả về
+    for doc in items:
+        del doc["datetime"]
+    
+    return {"status": "success", "data": items, "total": len(items)}
+
 @feedback_router.post("/feedback/items")
 async def create_feedback(feedback: dict = Body(...)):
     """
@@ -230,64 +270,6 @@ async def create_feedback(feedback: dict = Body(...)):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-# @feedback_router.get("/items/search")
-# async def search_items(q: str = Query(None, description="Từ khóa tìm kiếm trong tiêu đề hoặc địa điểm")):
-#     """
-#     Tìm kiếm phản ánh theo tiêu đề hoặc địa điểm
-#     """
-#     if not q:
-#         # Nếu không có từ khóa tìm kiếm, trả về tất cả items
-#         return await get_all_items()
-    
-#     # Tạo truy vấn tìm kiếm với $regex để tìm kiếm không phân biệt hoa thường
-#     query = {
-#         "$or": [
-#             {"title": {"$regex": q, "$options": "i"}},
-#             {"location": {"$regex": q, "$options": "i"}}
-#         ]
-#     }
-    
-#     items = []
-#     cursor = items_collection.find(query)
-    
-#     for document in cursor:
-#         document["_id"] = str(document["_id"])
-#         items.append(document)
-    
-#     return {"status": "success", "data": items, "total": len(items), "search_term": q}
-
-# # API xóa phản ánh ở trạng thái "Đang xử lý" --> thêm trạng thái isDelete???
-# @feedback_router.delete("/items/{item_id}")
-# async def delete_feedback(item_id: str, admin=Depends(check_admin)):
-#     """
-#     Xóa phản ánh ở trạng thái "Đang xử lý"
-#     Nếu muốn xóa phản ánh ở trạng thái "Đã xử lý" thì cần hủy duyệt trước
-#     Chỉ admin mới có quyền thực hiện
-#     """
-#     try:
-#         # Kiểm tra phản ánh có tồn tại không
-#         item = items_collection.find_one({"_id": ObjectId(item_id)})
-#         if not item:
-#             return {"status": "error", "message": "Phản ánh không tồn tại"}
-        
-#         # Kiểm tra trạng thái
-#         if item.get("status") != "Đang xử lý":
-#             return {
-#                 "status": "error", 
-#                 "message": "Chỉ có thể xóa phản ánh ở trạng thái 'Đang xử lý'. Vui lòng hủy duyệt trước khi xóa."
-#             }
-        
-#         # Thực hiện xóa
-#         result = items_collection.delete_one({"_id": ObjectId(item_id)})
-        
-#         if result.deleted_count:
-#             return {"status": "success", "message": "Đã xóa phản ánh thành công"}
-        
-#         return {"status": "error", "message": "Không thể xóa phản ánh"}
-    
-#     except Exception as e:
-#         return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
 @feedback_router.post("/feedback/upload")
 async def upload_feedback_files(files: List[UploadFile] = File(...)):
@@ -363,6 +345,22 @@ async def upload_feedback_files(files: List[UploadFile] = File(...)):
             status_code=500,
             content={"detail": f"Failed to upload files: {str(e)}"}
         )
+    
+@feedback_router.delete("/feedback/{item_id}")
+async def delete_feedback(item_id: str):
+    """
+    Xóa phản ánh theo ID
+    """
+    try:
+        result = items_collection.delete_one({"_id": ObjectId(item_id)})
+        
+        if result.deleted_count == 1:
+            return {"status": "success", "message": "Feedback đã được xóa thành công"}
+        else:
+            return {"status": "error", "message": "Không tìm thấy phản ánh với ID đã cho"}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # @feedback_router.post("/feedback/count-by")
 # async def count_feedback_by_usernames(data: List[Dict[str, str]] = Body(...)):

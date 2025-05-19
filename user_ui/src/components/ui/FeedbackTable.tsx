@@ -21,12 +21,6 @@ import {
     Star,
     Filter
 } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -37,10 +31,10 @@ import {
   PaginationDemo
 } from "@/components/sections/pagination-demo"
 import { useToast } from '@/hooks/use-toast';
-import { getFeedbackList } from "@/apis/feedbackApi";
+import { deleteFeedback, getFeedbackByUsername } from "@/apis/feedbackApi";
 import { useRouter } from 'next/navigation';
 
-export default function FeedbackTable() {
+export default function FeedbackTable( username: { username: string } ) {
     const [sortColumn, setSortColumn] = useState<string | null>(null);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
     const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +50,7 @@ export default function FeedbackTable() {
     const { toast } = useToast();
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const itemsPerPage = 5 // Số lượng phản ánh hiển thị trên mỗi trang
 
@@ -66,8 +61,8 @@ export default function FeedbackTable() {
             try {
                 setIsLoading(true);
                 setError(null);
-                const feedbackData = await getFeedbackList();
-                setData(feedbackData);
+                const feedbackData = await getFeedbackByUsername(username.username);
+                setData(feedbackData.data);
             } catch (err) {
                 console.error('Failed to fetch news:', err);
                 setError('Không thể tải dữ liệu tin tức. Vui lòng thử lại sau.');
@@ -225,6 +220,26 @@ export default function FeedbackTable() {
         window.scrollTo({ top: document.getElementById("feedback-list")?.offsetTop || 0, behavior: "smooth" })
     }
 
+    const handleDelete = async (id: string) => {
+        try {
+            await deleteFeedback(id);
+            setData(data.filter((item) => item._id !== id));
+            toast({
+                title: 'Đã xóa bài viết',
+                description: 'Bài viết đã được xóa thành công',
+            });
+        } catch (err) {
+            console.error('Failed to delete news:', err);
+            toast({
+                variant: 'destructive',
+                title: 'Lỗi',
+                description: 'Không thể xóa bài viết. Vui lòng thử lại sau.',
+            });
+        } finally {
+            setDeleteId(null);
+        }
+    };
+
     return (
         <>
             {/* Search bar */}
@@ -328,9 +343,6 @@ export default function FeedbackTable() {
                     </div>
                 </div>
             </div>
-            <br />
-            <hr className="border-gray-300"/>
-            <br />
 
             {/* Feedback list */}
             <div className="rounded-md border bg-white">
@@ -352,12 +364,6 @@ export default function FeedbackTable() {
                             <TableHead className="text-black text-center w-1/10">
                                 <Button variant="ghost" onClick={() => handleSort('type')}>
                                 Loại vấn đề
-                                <ArrowUpDown className="ml-2 h-4 w-4" />
-                                </Button>
-                            </TableHead>
-                            <TableHead className="text-black text-center w-1/10">
-                                <Button variant="ghost" onClick={() => handleSort('author')}>
-                                Người gửi
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </TableHead>
@@ -397,7 +403,6 @@ export default function FeedbackTable() {
                                     <TableCell className="text-center">{index + 1 + (currentFeedbackPage - 1) * itemsPerPage}</TableCell>
                                     <TableCell className="font-medium">{feedback.location}</TableCell>
                                     <TableCell className="text-center">{feedback.type}</TableCell>
-                                    <TableCell className='text-center'>{feedback.author + " - " + feedback.author_username}</TableCell>
                                     <TableCell className='text-center'>
                                         {feedback.time} {feedback.date && `- ${feedback.date}`}
                                     </TableCell>
@@ -415,10 +420,44 @@ export default function FeedbackTable() {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
                                                 <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
-                                                <DropdownMenuItem onClick={() => router.push(`/admin/feedback/view/${feedback._id}`)}>
+                                                <DropdownMenuItem onClick={() => router.push(`/feedback/${feedback._id}`)}>
                                                     <Edit className="mr-2 h-4 w-4" />
                                                     Xem chi tiết
                                                 </DropdownMenuItem>
+                                                <AlertDialog open={deleteId === feedback._id} onOpenChange={(isOpen: boolean) => !isOpen && setDeleteId(null)}>
+                                                    <AlertDialogTrigger asChild>
+                                                        <DropdownMenuItem
+                                                            className="text-red-600 focus:text-red-600"
+                                                            onClick={(e: React.MouseEvent) => {
+                                                                e.preventDefault();
+                                                                // Kiểm tra news._id tồn tại trước khi set state
+                                                                if (feedback._id) {
+                                                                    setDeleteId(feedback._id);
+                                                                }
+                                                            }}
+                                                        >
+                                                            <Trash className="mr-2 h-4 w-4" />
+                                                            Xóa
+                                                        </DropdownMenuItem>
+                                                    </AlertDialogTrigger>
+                                                    <AlertDialogContent>
+                                                        <AlertDialogHeader>
+                                                            <AlertDialogTitle>Bạn có chắc chắn muốn xóa?</AlertDialogTitle>
+                                                            <AlertDialogDescription>
+                                                                Hành động này không thể hoàn tác. Bài viết sẽ bị xóa vĩnh viễn khỏi hệ thống.
+                                                            </AlertDialogDescription>
+                                                        </AlertDialogHeader>
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel>Hủy</AlertDialogCancel>
+                                                            <AlertDialogAction
+                                                                className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                                                                onClick={() => feedback._id && handleDelete(feedback._id)}
+                                                            >
+                                                                Xóa
+                                                            </AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                     </TableCell>
