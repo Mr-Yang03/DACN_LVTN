@@ -174,6 +174,41 @@ async def admin_login(login_info: LoginInfo) -> dict:
     
     return admin_data
 
+@auth_router.post("/admin/register")
+async def register_admin(register_info: AdminRegisterInfo) -> dict:
+    if accounts_collection.find_one({"username": register_info.username}):
+        raise HTTPException(status_code=400, detail="Username đã tồn tại")
+
+    hashed_pw = pwd_context.hash(register_info.password)
+    
+    # Tạo tài khoản admin mới
+    new_account = {
+        "username": register_info.username,
+        "password": hashed_pw,
+        "account_type": "admin",
+        "status": "active"
+    }
+    
+    account_result = accounts_collection.insert_one(new_account)
+    account_id = account_result.inserted_id
+    
+    # Tạo thông tin admin liên kết với tài khoản
+    new_admin = {
+        "full_name": register_info.full_name,
+        "date_of_birth": register_info.date_of_birth,
+        "phone_number": register_info.phone_number,
+        "citizen_id": register_info.citizen_id,
+        "account_id": account_id
+    }
+    
+    admins_collection.insert_one(new_admin)
+    
+    return {
+        "username": register_info.username,
+        "status": "active",
+        "account_type": "admin"
+    }
+
 @auth_router.put("/update") 
 async def update_user_info(
     account_id: str = Query(...),

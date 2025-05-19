@@ -76,33 +76,6 @@ export default function ReportPage() {
     fetchFeedbackList();
   }, [toast]);
 
-  const handleFilterFeedback = async() => {
-    // Lọc phản ánh theo các tiêu chí đã chọn
-    const filter = {
-      severity: severityFilter,
-      type: issueFilter,
-      start_date: startDate ? format(startDate, "dd-MM-yyyy") : "",
-      end_date: endDate ? format(endDate, "dd-MM-yyyy") : "",
-    }
-    
-    // Gọi API để lấy danh sách phản ánh đã lọc
-    const filteredFeedbacks = await getFilteredFeedbackList(filter);
-    if (filteredFeedbacks) {
-      setDisplayedFeedbackItems(filteredFeedbacks.data);
-      setCurrentFeedbackPage(1);
-      toast({
-        title: 'Thành công',
-        description: 'Đã lọc phản ánh thành công.',
-      });
-    } else {
-      toast({
-        variant: 'destructive',
-        title: 'Lỗi',
-        description: 'Không thể lọc phản ánh. Vui lòng thử lại sau.',
-      });
-    }
-  }
-
   const searchedFeedbacks = displayedFeedbackItems.filter(feedback =>
     feedback.title.toLowerCase().includes(search.toLowerCase()) ||
     feedback.description.toLowerCase().includes(search.toLowerCase()) || 
@@ -158,8 +131,6 @@ export default function ReportPage() {
     setToken(null);
     window.location.href = "/auth";
   }
-
-  console.log("Feedback items:", severityFilter);
 
   return (
     <>
@@ -286,15 +257,6 @@ export default function ReportPage() {
                   />
                 </div>
               </div>
-
-              <div className="relative flex-1">
-                <Button 
-                  className="w-full absolute bottom-0 left-0 bg-black rounded-full hover:bg-gray-800 mt-2"
-                  onClick={handleFilterFeedback}
-                >
-                  Lọc phản ánh
-                </Button>
-              </div>
             </div>
           </div>
           <br />
@@ -315,17 +277,6 @@ export default function ReportPage() {
                   </div>
                   <div className="p-4 md:col-span-2">
                     <div className="flex flex-wrap gap-2 mb-2">
-                      {/* <Badge
-                        className={`${
-                          item.status === "Đã xử lý"
-                            ? "bg-green-600"
-                            : item.status === "Đang xử lý"
-                              ? "bg-amber-600"
-                              : "bg-red-600"
-                        } rounded-full`}
-                      >
-                        {item.status}
-                      </Badge> */}
                       <Badge className="bg-blue-600 rounded-full">{item.type}</Badge>
                       <Badge
                         className={`${
