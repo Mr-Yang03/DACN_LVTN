@@ -16,6 +16,13 @@ export interface FeedbackArticle {
     author_username?: string;
 }
 
+export interface FeedbackFilter {
+    severity?: string;
+    type?: string;
+    start_date?: string;
+    end_date?: string;
+}
+
 export const getFeedback = async (id: string) => {
     const response = await api.get(`/feedback/items/${id}`);
     return response.data;
@@ -26,10 +33,17 @@ export const getFeedbackList = async () => {
     return response.data;
 }
 
-// export const getUserFeedbackList = async () => {
-//     const response = await api.get("/feedback/processed");
-//     return response.data;
-// }
+export const getFilteredFeedbackList = async (filter: FeedbackFilter) => {
+    const response = await api.get("/feedback/filter", {
+        params: {
+            severity: filter.severity,
+            type: filter.type,
+            start_date: filter.start_date,
+            end_date: filter.end_date
+        }
+    });
+    return response.data;
+}
 
 export const sendFeedback = async (feedbackData: FeedbackArticle) => {
     const response = await api.post("/feedback/item", feedbackData);

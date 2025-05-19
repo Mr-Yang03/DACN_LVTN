@@ -51,13 +51,22 @@ const getAuthToken = () => {
   return '';
 };
 
+const getCurrentTime = () => {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+};
+
 export function ReportForm({ 
   username, 
   userFullName, 
+  phoneNumber,
   onSubmitSuccess 
 }: { 
   username: any, 
   userFullName: any, 
+  phoneNumber: any,
   onSubmitSuccess?: () => void 
 }) {
   const router = useRouter();
@@ -69,13 +78,13 @@ export function ReportForm({
     defaultValues: {
       fullName: `${userFullName}`,
       email: "",
-      phone: "",
+      phone: `${phoneNumber}`,
       location: {
         lat: 0,
         lng: 0,
       },
       date: new Date(),
-      time: "",
+      time: getCurrentTime(),
       issueType: "",
       severity: "low",
       description: "",
@@ -145,92 +154,7 @@ export function ReportForm({
       }
     }
 
-    // const feedbackData = {
-    //   title: `Phản ánh về ${values.issueType === 'traffic_jam' ? 'tắc đường' : 
-    //           values.issueType === 'accident' ? 'tai nạn' : 
-    //           values.issueType === 'construction' ? 'công trình đang thi công' :
-    //           values.issueType === 'road_damage' ? 'hư hỏng đường' :
-    //           values.issueType === 'traffic_light' ? 'đèn tín hiệu hỏng' :
-    //           values.issueType === 'flooding' ? 'ngập nước' : 'vấn đề khác'}`,
-    //   location: `${values.location.lat}, ${values.location.lng}`, // Convert location object to string format
-    //   type: values.issueType === 'traffic_jam' ? 'Ùn tắc giao thông' : 
-    //         values.issueType === 'accident' ? 'Tai nạn' : 
-    //         values.issueType === 'construction' ? 'Công trình đang thi công' :
-    //         values.issueType === 'road_damage' ? 'Hư hỏng đường' :
-    //         values.issueType === 'traffic_light' ? 'Đèn tín hiệu hỏng' :
-    //         values.issueType === 'flooding' ? 'Ngập nước' : 'Khác',
-    //   severity: values.severity === 'low' ? 'Nhẹ' : 
-    //             values.severity === 'medium' ? 'Trung bình' : 'Nghiêm trọng',
-    //   description: values.description,
-    //   images: uploadedFileUrls,
-    //   author: userFullName, 
-    //   phone_number: values.phone,
-    //   email: values.email,
-    //   status: "Đang xử lý",
-    //   date: format(values.date, "dd-MM-yyyy"),
-    //   time: values.time,
-    // };
-    // console.log("Feedback Data:", feedbackData);
-
     try {
-      // // Array to store uploaded file URLs
-      // let uploadedFileUrls: string[] = [];
-
-      // // Process files if present
-      // if (values.attachments && values.attachments.length > 0) {
-      //   const filesToUpload: File[] = [];
-
-      //   // Process each file
-      //   for (const file of values.attachments) {
-      //     if (file instanceof File) {
-      //       // Case 1: Already a File object
-      //       filesToUpload.push(file);
-      //     } else if (typeof file === 'string') {
-      //       // Case 2: It's a data URL (Base64)
-      //       if (file.startsWith('data:')) {
-      //         try {
-      //           // Extract MIME type and data from Base64
-      //           const arr = file.split(',');
-      //           const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
-      //           const bstr = atob(arr[1]);
-      //           let n = bstr.length;
-      //           const u8arr = new Uint8Array(n);
-                
-      //           while (n--) {
-      //             u8arr[n] = bstr.charCodeAt(n);
-      //           }
-                
-      //           // Create File from Base64 data
-      //           const fileObj = new File(
-      //             [u8arr], 
-      //             `feedback-file-${Date.now()}.${mime.split('/')[1] || 'jpg'}`, 
-      //             { type: mime }
-      //           );
-                
-      //           filesToUpload.push(fileObj);
-      //         } catch (error) {
-      //           console.error("Error converting Base64 to File:", error);
-      //         }
-      //       } else if (file.startsWith('https://storage.googleapis.com')) {
-      //         // Case 3: Already a Google Cloud URL
-      //         uploadedFileUrls.push(file);
-      //       }
-      //     }
-      //   }
-
-      //   // Upload all files in a single request if there are any to upload
-      //   if (filesToUpload.length > 0) {
-      //     const uploadResult = await uploadFeedbackFiles(filesToUpload);
-          
-      //     // Extract URLs from the response
-      //     if (uploadResult && uploadResult.uploaded_files) {
-      //       const newUrls = uploadResult.uploaded_files.map((item: any) => item.public_url);
-      //       uploadedFileUrls = [...uploadedFileUrls, ...newUrls];
-      //     }
-      //   }
-      // }
-
-      // Format data to match API expectations
       const feedbackData = {
         title: `Phản ánh về ${values.issueType === 'traffic_jam' ? 'tắc đường' : 
                 values.issueType === 'accident' ? 'tai nạn' : 
@@ -248,10 +172,10 @@ export function ReportForm({
         severity: values.severity === 'low' ? 'Nhẹ' : 
                   values.severity === 'medium' ? 'Trung bình' : 'Nghiêm trọng',
         description: values.description,
-        images: values.attachments,
+        images: uploadedFileUrls,
         author: userFullName, 
         author_username: username,
-        phone_number: values.phone,
+        phone_number: phoneNumber,
         email: values.email,
         date: format(values.date, "dd-MM-yyyy"),
         time: values.time,
@@ -312,7 +236,7 @@ export function ReportForm({
                 <FormItem>
                   <FormLabel>Số điện thoại</FormLabel>
                   <FormControl>
-                    <Input placeholder="0912345678" {...field} />
+                    <Input placeholder={phoneNumber} {...field} readOnly/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

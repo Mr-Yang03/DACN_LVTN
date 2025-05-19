@@ -1,9 +1,20 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query, Body, UploadFile, File
 from pydantic import BaseModel
 from connection import get_database
 from passlib.context import CryptContext
 from bson import ObjectId
+from fastapi.responses import JSONResponse
+import uuid
+import os
+from datetime import datetime
+from google.cloud import storage
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "key/ggmap-456203-58579108ac37.json"
+
+storage_client = storage.Client()
+BUCKET_NAME = "bucket_ggmap-456203"  # Same bucket as used in news-feedback_service
 
 auth_router = APIRouter()
 
@@ -35,6 +46,15 @@ class RegisterInfo(BaseModel):
     phone_number: str
     license_number: str | None = None
 
+def objectid_to_str(obj):
+    if isinstance(obj, ObjectId):
+        return str(obj)
+    if isinstance(obj, dict):
+        return {k: objectid_to_str(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [objectid_to_str(v) for v in obj]
+    return obj
+
 @auth_router.get("/check-username/{username}")
 async def check_username_exists(username: str) -> dict:
     """
@@ -55,7 +75,8 @@ async def register_user(register_info: RegisterInfo) -> dict:
         "username": register_info.username,
         "password": hashed_pw,
         "account_type": "user",
-        "status": "active"
+        "status": "active",
+        "avatar": ""
     }
     
     account_result = accounts_collection.insert_one(new_account)
@@ -90,9 +111,11 @@ async def check_login(login_info: LoginInfo) -> dict:
     
     # Lấy thêm thông tin người dùng nếu là tài khoản user
     user_data = {
+        "_id": account["_id"],
         "username": account["username"],
         "account_type": account["account_type"],
-        "status": account["status"]
+        "status": account["status"], 
+        "avatar": account["avatar"]
     }
     
     if account["account_type"] == "user":
@@ -104,12 +127,18 @@ async def check_login(login_info: LoginInfo) -> dict:
                 "phone_number": user["phone_number"],
                 "license_number": user["license_number"]
             })
+
+    # Chuyển đổi ObjectId thành chuỗi
+    user_data = objectid_to_str(user_data)
     
     return user_data
 
-@auth_router.put("/update/{username}") 
-async def update_user_info(username, user_info: UserInfo) -> dict:
-    account = accounts_collection.find_one({"username": username})
+@auth_router.put("/update") 
+async def update_user_info(
+    account_id: str = Query(...),
+    user_info: UserInfo = Body(...)
+) -> dict:
+    account = accounts_collection.find_one({"_id": ObjectId(account_id)})
     
     if not account:
         raise HTTPException(status_code=404, detail="Tài khoản không tồn tại")
@@ -134,3 +163,102 @@ async def update_user_info(username, user_info: UserInfo) -> dict:
     }
     
     return {"status": "success", "message": "Thông tin đã được cập nhật", "data": updated_user}
+
+@auth_router.post("/avatar/upload")
+async def upload_avatar(file: UploadFile = File(...)):
+    """
+    Upload an image for a news article to Google Cloud Storage.
+    """
+    try:
+        # Generate a unique filename
+        file_extension = file.filename.split(".")[-1] if "." in file.filename else ""
+        unique_filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{uuid.uuid4().hex}.{file_extension}"
+        
+        # Log the file info for debugging
+        print(f"Uploading file: {file.filename}, Size: {file.size}, Content-Type: {file.content_type}")
+        
+        # Check if credentials file exists and is accessible
+        creds_path = "key/ggmap-456203-58579108ac37.json"
+        if not os.path.exists(creds_path):
+            return JSONResponse(
+                status_code=500,
+                content={"detail": f"Credentials file not found: {creds_path}"}
+            )
+            
+        print(f"Credentials file found at: {creds_path}")
+        
+        # Read file content
+        content = await file.read()
+        print(f"File content read, size: {len(content)} bytes")
+        
+        try:
+            # Try to initialize storage client
+            print("Initializing storage client...")
+            bucket = storage_client.bucket(BUCKET_NAME)
+            
+            # Check if bucket exists
+            if not bucket.exists():
+                return JSONResponse(
+                    status_code=500,
+                    content={"detail": f"Bucket {BUCKET_NAME} does not exist or is not accessible"}
+                )
+                
+            print(f"Bucket {BUCKET_NAME} found")
+            
+            # Upload to Google Cloud Storage
+            blob = bucket.blob(f"news_images/{unique_filename}")
+            
+            # Get the correct content type or default to a safe option
+            content_type = file.content_type or "application/octet-stream"
+            print(f"Using content type: {content_type}")
+            
+            # Set content type 
+            blob.content_type = content_type
+            
+            # Upload the file explicitly specifying the same content_type
+            print("Uploading file to Cloud Storage...")
+            blob.upload_from_string(
+                content,
+                content_type=content_type  # Explicitly pass the same content_type here
+            )
+            print("File uploaded successfully")
+            
+            # Generate a public URL - use predefined URL pattern instead of ACLs
+            # This assumes the bucket has uniform bucket-level access enabled and is publicly accessible
+            public_url = f"https://storage.googleapis.com/{BUCKET_NAME}/news_images/{unique_filename}"
+            print(f"Public URL: {public_url}")
+            
+            return {
+                "file_url": public_url,
+                "public_url": public_url  # For compatibility with frontend
+            }
+        except Exception as storage_error:
+            print(f"Storage error: {str(storage_error)}")
+            return JSONResponse(
+                status_code=500,
+                content={"detail": f"Storage error: {str(storage_error)}"}
+            )
+            
+    except Exception as e:
+        print(f"Failed to upload image: {str(e)}")
+        return JSONResponse(
+            status_code=500,
+            content={"detail": f"Failed to upload image: {str(e)}"}
+        )
+    
+@auth_router.put("/avatar/update") 
+async def update_avatar(
+    account_id: str = Query(...),
+    fileUrl: str = Body(...),
+) -> dict:
+    # Validate the URL
+    if not fileUrl.startswith("https://storage.googleapis.com/"):
+        raise HTTPException(status_code=400, detail="Invalid file URL")
+    
+    # Update the avatar URL in the account
+    accounts_collection.update_one(
+        {"_id": ObjectId(account_id)},
+        {"$set": {"avatar": fileUrl}}
+    )
+    
+    return {"status": "success", "message": "Avatar đã được cập nhật", "data": {"avatar": fileUrl}}

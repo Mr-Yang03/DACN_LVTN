@@ -57,7 +57,89 @@ async def check_authentication(authorization: Optional[str] = Header(None)):
         return {"user_id": "user123", "username": "nguyenvana"}
     return None
 
-@feedback_router.get("/feedback/items")
+@feedback_router.get("/feedback/filter")
+async def filter_items(
+    severity: Optional[str] = Query(None, description="Mức độ nghiêm trọng"),
+    type: Optional[str] = Query(None, description="Loại vấn đề"),
+    start_date: Optional[str] = Query(None, description="Ngày bắt đầu (DD/MM/YYYY)"),
+    end_date: Optional[str] = Query(None, description="Ngày kết thúc (DD/MM/YYYY)")
+):
+    """
+    Lọc phản ánh theo mức độ nghiêm trọng, loại vấn đề, và khoảng thời gian
+    """
+    # Xây dựng query filter
+    filter_query = {}
+    
+    # Thêm điều kiện lọc theo mức độ nghiêm trọng nếu có
+    if severity and severity != "Tất cả mức độ":
+        filter_query["severity"] = severity
+    
+    # Thêm điều kiện lọc theo loại vấn đề nếu có
+    if type and type != "Tất cả vấn đề":
+        filter_query["type"] = type
+    
+    # Bước 1: Truy vấn trước (chưa lọc ngày)
+    cursor = items_collection.find(filter_query)
+
+    items = []
+    if (start_date and end_date and start_date != "" and end_date != ""):
+        try:
+            # Bước 2: Chuyển start_date, end_date thành datetime
+            start_dt = datetime.strptime(start_date, "%d/%m/%Y") if start_date else None
+            end_dt = datetime.strptime(end_date, "%d/%m/%Y") if end_date else None
+        except ValueError:
+            return {
+                "status": "error",
+                "message": "Định dạng ngày không hợp lệ. Định dạng đúng: DD/MM/YYYY"
+            }
+
+        for doc in cursor:
+            raw_date = doc.get("date", "")
+
+            # Chuyển đổi ngày từ chuỗi thành datetime
+            date_formats = ["%d/%m/%Y", "%d-%m-%Y"]
+            parsed_date = None
+            for fmt in date_formats:
+                try:
+                    parsed_date = datetime.strptime(raw_date, fmt)
+                    break
+                except ValueError:
+                    continue
+
+            # Nếu không parse được -> bỏ qua document
+            if parsed_date is None:
+                continue
+
+            # Bước 3: Lọc theo khoảng thời gian
+            if start_dt and parsed_date < start_dt:
+                continue
+            if end_dt and parsed_date > end_dt:
+                continue
+
+            # Chuyển _id về chuỗi
+            doc["_id"] = str(doc["_id"])
+            # Chuyển date về format chuẩn
+            doc["date"] = parsed_date.strftime("%d/%m/%Y")
+            items.append(doc)
+        
+    for document in cursor:
+        document["_id"] = str(document["_id"])
+        items.append(document)
+    
+    # Trả về kết quả với thông tin về các bộ lọc đã áp dụng
+    return {
+        "status": "success",
+        "data": items,
+        "total": len(items),
+        "filters": {
+            "severity": severity,
+            "type": type,
+            "start_date": start_date,
+            "end_date": end_date
+        }
+    }
+
+@feedback_router.get("/feedback/all")
 async def get_all_items():
     """
     Lấy tất cả các items từ collection Items trong database Feedback
@@ -66,9 +148,34 @@ async def get_all_items():
     cursor = items_collection.find({})
     
     for document in cursor:
-        # Chuyển ObjectId thành string để có thể serialize thành JSON
+        raw_date = document.get("date", "")
+        raw_time = document.get("time", "00:00")  # mặc định nếu không có giờ
+
+        # Kết hợp ngày + giờ để parse thành datetime
+        combined_str = f"{raw_date} {raw_time}"
+        datetime_formats = ["%d/%m/%Y %H:%M", "%d-%m-%Y %H:%M"]
+        parsed_datetime = None
+        for fmt in datetime_formats:
+            try:
+                parsed_datetime = datetime.strptime(combined_str, fmt)
+                break
+            except ValueError:
+                continue
+
+        # Bỏ qua nếu không parse được
+        if parsed_datetime is None:
+            continue
+
         document["_id"] = str(document["_id"])
+        document["datetime"] = parsed_datetime
         items.append(document)
+
+    # Sắp xếp theo datetime giảm dần
+    items.sort(key=lambda x: x["datetime"], reverse=True)
+
+    # Xóa trường datetime trước khi trả về
+    for doc in items:
+        del doc["datetime"]
     
     return items
 
@@ -87,13 +194,11 @@ async def get_all_items():
     
 #     return items
 
-@feedback_router.get("/feedback/items/{item_id}")
+@feedback_router.get("/feedback/item/{item_id}")
 async def get_item_by_id(item_id: str):
     """
     Lấy item theo ID
-    """
-    from bson import ObjectId
-    
+    """    
     item = items_collection.find_one({"_id": ObjectId(item_id)})
     
     if item:
@@ -150,159 +255,6 @@ async def create_feedback(feedback: dict = Body(...)):
 #         items.append(document)
     
 #     return {"status": "success", "data": items, "total": len(items), "search_term": q}
-
-@feedback_router.get("/feedback/items/filter")
-async def filter_items(
-    severity: Optional[str] = Query(None, description="Mức độ nghiêm trọng"),
-    type: Optional[str] = Query(None, description="Loại vấn đề"),
-    start_date: Optional[str] = Query(None, description="Ngày bắt đầu (DD/MM/YYYY)"),
-    end_date: Optional[str] = Query(None, description="Ngày kết thúc (DD/MM/YYYY)")
-):
-    """
-    Lọc phản ánh theo mức độ nghiêm trọng, loại vấn đề, và khoảng thời gian
-    """
-    # Xây dựng query filter
-    filter_query = {}
-    
-    # Thêm điều kiện lọc theo mức độ nghiêm trọng nếu có
-    if severity and severity != "Tất cả mức độ":
-        filter_query["severity"] = severity
-    
-    # Thêm điều kiện lọc theo loại vấn đề nếu có
-    if type and type != "Tất cả vấn đề":
-        filter_query["type"] = type
-    
-    # Xử lý lọc theo ngày
-    if start_date or end_date:
-        date_filter = {}
-        
-        if start_date:
-            # Chuyển đổi định dạng ngày nếu cần
-            # MongoDB có thể lưu ngày dưới dạng chuỗi DD/MM/YYYY
-            date_filter["$gte"] = start_date
-            
-        if end_date:
-            date_filter["$lte"] = end_date
-            
-        if date_filter:
-            filter_query["date"] = date_filter
-    
-    # Thực hiện truy vấn với các điều kiện lọc
-    items = []
-    cursor = items_collection.find(filter_query)
-    
-    for document in cursor:
-        document["_id"] = str(document["_id"])
-        items.append(document)
-    
-    # Trả về kết quả với thông tin về các bộ lọc đã áp dụng
-    return {
-        "status": "success",
-        "data": items,
-        "total": len(items),
-        "filters": {
-            "severity": severity,
-            "type": type,
-            "start_date": start_date,
-            "end_date": end_date
-        }
-    }
-
-# Để hỗ trợ cho giao diện, thêm API lấy danh sách các giá trị có thể có
-@feedback_router.get("/feedback/items/metadata")
-async def get_metadata():
-    """
-    Lấy dữ liệu metadata cho các bộ lọc: danh sách mức độ nghiêm trọng và loại vấn đề
-    """
-    # Lấy danh sách distinct các giá trị severity
-    severity_levels = items_collection.distinct("severity")
-    
-    # Lấy danh sách distinct các giá trị type
-    issue_types = items_collection.distinct("type")
-    
-    return {
-        "status": "success",
-        "data": {
-            "severity_levels": severity_levels,
-            "issue_types": issue_types
-        }
-    }
-
-# Kiểm tra quyền admin
-async def check_admin(user = Depends(check_authentication)):
-    if not user:
-        raise HTTPException(status_code=401, detail="Bạn cần đăng nhập để thực hiện thao tác này")
-    
-    # Kiểm tra vai trò admin (thay đổi logic này dựa trên hệ thống của bạn)
-    if user.get("role") != "admin":
-        raise HTTPException(status_code=403, detail="Bạn không có quyền thực hiện thao tác này")
-    
-    return user
-
-# API duyệt phản ánh (chuyển từ "Đang xử lý" sang "Đã xử lý")
-@feedback_router.patch("/feedback/items/{item_id}/approve")
-async def approve_feedback(item_id: str, admin=Depends(check_admin)):
-    """
-    Duyệt phản ánh (chuyển từ "Đang xử lý" sang "Đã xử lý")
-    Chỉ admin mới có quyền thực hiện
-    """
-    try:
-        # Kiểm tra phản ánh có tồn tại không
-        item = items_collection.find_one({"_id": ObjectId(item_id)})
-        if not item:
-            return {"status": "error", "message": "Phản ánh không tồn tại"}
-        
-        # Kiểm tra trạng thái hiện tại
-        if item.get("status") == "Đã xử lý":
-            return {"status": "error", "message": "Phản ánh đã được duyệt trước đó"}
-        
-        # Cập nhật trạng thái
-        result = items_collection.update_one(
-            {"_id": ObjectId(item_id)},
-            {"$set": {"status": "Đã xử lý", "approved_by": admin.get("username"), "approved_at": datetime.now().strftime("%d/%m/%Y %H:%M")}}
-        )
-        
-        if result.modified_count:
-            return {"status": "success", "message": "Đã duyệt phản ánh thành công"}
-        
-        return {"status": "error", "message": "Không thể duyệt phản ánh"}
-    
-    except Exception as e:
-        return {"status": "error", "message": f"Lỗi: {str(e)}"}
-
-# API hủy duyệt phản ánh (chuyển từ "Đã xử lý" sang "Đang xử lý")
-@feedback_router.patch("/feedback/items/{item_id}/unapprove")
-async def unapprove_feedback(item_id: str, admin=Depends(check_admin)):
-    """
-    Hủy duyệt phản ánh (chuyển từ "Đã xử lý" sang "Đang xử lý")
-    Chỉ admin mới có quyền thực hiện
-    """
-    try:
-        # Kiểm tra phản ánh có tồn tại không
-        item = items_collection.find_one({"_id": ObjectId(item_id)})
-        if not item:
-            return {"status": "error", "message": "Phản ánh không tồn tại"}
-        
-        # Kiểm tra trạng thái hiện tại
-        if item.get("status") != "Đã xử lý":
-            return {"status": "error", "message": "Phản ánh chưa được duyệt, không thể hủy duyệt"}
-        
-        # Cập nhật trạng thái về "Đang xử lý"
-        result = items_collection.update_one(
-            {"_id": ObjectId(item_id)},
-            {
-                "$set": {"status": "Đang xử lý"},
-                "$unset": {"approved_by": "", "approved_at": ""}
-            }
-        )
-        
-        if result.modified_count:
-            return {"status": "success", "message": "Đã hủy duyệt phản ánh thành công"}
-        
-        return {"status": "error", "message": "Không thể hủy duyệt phản ánh"}
-    
-    except Exception as e:
-        return {"status": "error", "message": f"Lỗi: {str(e)}"}
 
 # # API xóa phản ánh ở trạng thái "Đang xử lý" --> thêm trạng thái isDelete???
 # @feedback_router.delete("/items/{item_id}")

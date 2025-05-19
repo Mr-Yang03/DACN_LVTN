@@ -77,6 +77,7 @@ async def register(request: Request):
                 "date_of_birth": body.get("date_of_birth"),
                 "phone_number": body.get("phone_number"),
                 "license_number": body.get("license_number"),
+                "avatar": ""
             },
         )
     if response.status_code != 200:
@@ -88,12 +89,51 @@ async def update_user(request: Request):
     body = await request.json()
     async with httpx.AsyncClient() as client:
         response = await client.put(
-            f"{USER_SERVICE_URL}/update/{body.get('username')}",
+            f"{USER_SERVICE_URL}/update",
+            params={"account_id": body.get("account_id")},
             json={
                 "full_name": body.get("full_name"),
                 "date_of_birth": body.get("date_of_birth"),
                 "phone_number": body.get("phone_number"),
                 "license_number": body.get("license_number"),
+            },
+        )
+    if response.status_code != 200:
+        raise HTTPException(status_code=400, detail="Update failed")
+    return response.json()
+
+@app.post("/avatar/upload")
+async def upload_avatar(request: Request):
+    form_data = await request.form()
+    file = form_data.get("file")
+    
+    if not file:
+        raise HTTPException(status_code=400, detail="No file provided")
+    
+    # Đọc nội dung của file
+    content = await file.read()
+    
+    async with httpx.AsyncClient() as client:
+        files = {"file": (file.filename, content, file.content_type)}
+        response = await client.post(
+            f"{USER_SERVICE_URL}/avatar/upload",
+            files=files
+        )
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to upload image")
+
+    return response.json()
+
+@app.put("account/update_avt")
+async def update_avatar(request: Request):
+    body = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.put(
+            f"{USER_SERVICE_URL}/avatar/update",
+            params={"account_id": body.get("account_id")},
+            json={
+                "fileUrl": body.get("avatar"),
             },
         )
     if response.status_code != 200:
@@ -335,7 +375,7 @@ async def upload_news_image(request: Request):
 @app.get("/feedback/all_items")
 async def get_all_feedback():
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/items")
+        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/all")
 
     if response.status_code != 200:
         raise HTTPException(status_code=500, detail="Failed to fetch feedback data")
@@ -352,15 +392,40 @@ async def get_feedback_by_id(feedback_id: str):
 
     return response.json()
 
-# @app.get("/feedback/processed")
-# async def get_processed_feedback():
-#     async with httpx.AsyncClient() as client:
-#         response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/processed")
+@app.get("/feedback/item/{item_id}")
+async def get_feedback_item_by_id(item_id: str):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/items/{item_id}")
 
-#     if response.status_code != 200:
-#         raise HTTPException(status_code=500, detail="Failed to fetch processed feedback data")
+    if response.status_code != 200:
+        raise HTTPException(status_code=404, detail="Feedback item not found")
 
-#     return response.json()
+    return response.json()
+
+@app.get("/feedback/filter")
+async def filter_feedback(
+    severity: Optional[str] = Query(None),
+    type: Optional[str] = Query(None),
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+):
+    params = {}
+    if severity:
+        params["severity"] = severity
+    if type:
+        params["type"] = type
+    if start_date:
+        params["start_date"] = start_date
+    if end_date:
+        params["end_date"] = end_date
+
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/filter", params=params)
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to filter feedback")
+
+    return response.json()
 
 @app.post("/feedback/item")
 async def create_feedback(request: Request):

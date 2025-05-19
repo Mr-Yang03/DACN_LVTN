@@ -30,18 +30,41 @@ export const register = async (
 };
 
 export const updateUserInfo = async (
-  username: string,
+  account_id: string,
   full_name: string,
   date_of_birth: string,
   phone_number: string,
   license_number: string
 ) => {
   const response = await api.put("/users/update", {
-    username,
+    account_id,
     full_name,
     date_of_birth,
     phone_number,
     license_number
+  });
+  return response.data;
+}
+
+// Upload an image for avatar
+export const uploadAvatar = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  
+  // Using multipart/form-data for file uploads
+  const response = await api.post("/avatar/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  
+  return response.data;
+};
+
+export const updateAvatar = async (account_id: string, avatar: string) => {
+  const response = await api.put("/account/update_avt", {
+    account_id,
+    avatar
   });
   return response.data;
 }

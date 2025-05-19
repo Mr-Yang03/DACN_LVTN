@@ -28,14 +28,16 @@ import {
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Card} from "@/components/ui/card"
-import { getFeedbackList } from "@/apis/feedbackApi";
+import { getFeedbackList, getFilteredFeedbackList } from "@/apis/feedbackApi";
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from "@/context/auth-context";
+import { format } from "date-fns";
 
 export default function ReportPage() {
-  const [severityFilter, setSeverityFilter] = useState("allSeverity")
-  const [issueFilter, setIssueFilter] = useState("allIssueType")
-  const [currentDate, setCurrentDate] = useState("");
+  const [severityFilter, setSeverityFilter] = useState("Tất cả mức độ")
+  const [issueFilter, setIssueFilter] = useState("Tất cả vấn đề")
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [showFeedbackForm, setShowFeedbackForm] = useState(false)
   const [currentFeedbackPage, setCurrentFeedbackPage] = useState(1)
   const [search, setSearch] = useState<string>("");
@@ -44,7 +46,8 @@ export default function ReportPage() {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const { isAuthenticated, setToken } = useAuth();
-  
+  const [displayedFeedbackItems, setDisplayedFeedbackItems] = useState<any[]>([]);
+
   const itemsPerPage = 3 // Số lượng phản ánh hiển thị trên mỗi trang
 
   // Load data on component mount
@@ -56,6 +59,7 @@ export default function ReportPage() {
         setError(null);
         const feedbackData = await getFeedbackList();
         setFeedbackItems(feedbackData);
+        setDisplayedFeedbackItems(feedbackData);
       } catch (err) {
         console.error('Failed to fetch feedbacks:', err);
         setError('Không thể tải dữ liệu phản ánh. Vui lòng thử lại sau.');
@@ -70,16 +74,65 @@ export default function ReportPage() {
     };
 
     fetchFeedbackList();
-    const now = new Date();
-    setCurrentDate(now.toISOString().split("T")[0]); // YYYY-MM-DD
   }, [toast]);
 
-  const filteredFeedbacks = feedbackItems.filter(feedback =>
+  const handleFilterFeedback = async() => {
+    // Lọc phản ánh theo các tiêu chí đã chọn
+    const filter = {
+      severity: severityFilter,
+      type: issueFilter,
+      start_date: startDate ? format(startDate, "dd-MM-yyyy") : "",
+      end_date: endDate ? format(endDate, "dd-MM-yyyy") : "",
+    }
+    
+    // Gọi API để lấy danh sách phản ánh đã lọc
+    const filteredFeedbacks = await getFilteredFeedbackList(filter);
+    if (filteredFeedbacks) {
+      setDisplayedFeedbackItems(filteredFeedbacks.data);
+      setCurrentFeedbackPage(1);
+      toast({
+        title: 'Thành công',
+        description: 'Đã lọc phản ánh thành công.',
+      });
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Lỗi',
+        description: 'Không thể lọc phản ánh. Vui lòng thử lại sau.',
+      });
+    }
+  }
+
+  const searchedFeedbacks = displayedFeedbackItems.filter(feedback =>
     feedback.title.toLowerCase().includes(search.toLowerCase()) ||
     feedback.description.toLowerCase().includes(search.toLowerCase()) || 
     feedback.location.toLowerCase().includes(search.toLowerCase()) ||
     feedback.author.toLowerCase().includes(search.toLowerCase())
   );
+
+  const filteredFeedbacks = searchedFeedbacks.filter((feedback) => {
+    const matchSeverity =
+      severityFilter === "Tất cả mức độ" || feedback.severity === severityFilter;
+
+    const matchIssue =
+      issueFilter === "Tất cả vấn đề" || feedback.type === issueFilter;
+
+    let matchDate = true;
+    if (startDate || endDate) {
+      const rawDate = feedback.date || "";  // vd: "14-05-2025" hoặc "14/05/2025"
+      const rawTime = feedback.time || "00:00";
+
+      // Normalize date string (dd-mm-yyyy or dd/mm/yyyy -> yyyy-mm-dd)
+      const normalizedDateStr = rawDate.replace(/\//g, "-");
+      const [day, month, year] = normalizedDateStr.split("-");
+      const itemDatetime = new Date(`${year}-${month}-${day}T${rawTime}`);
+
+      if (startDate && itemDatetime < new Date(startDate)) matchDate = false;
+      if (endDate && itemDatetime > new Date(endDate)) matchDate = false;
+    }
+
+    return matchSeverity && matchIssue && matchDate;
+  });
 
   // Tính toán phản ánh hiển thị trên trang hiện tại
   const indexOfLastItem = currentFeedbackPage * itemsPerPage
@@ -106,6 +159,8 @@ export default function ReportPage() {
     window.location.href = "/auth";
   }
 
+  console.log("Feedback items:", severityFilter);
+
   return (
     <>
       {isAuthenticated ? (
@@ -129,6 +184,7 @@ export default function ReportPage() {
                     <ReportForm 
                       username={userData().username}
                       userFullName={userData().full_name}
+                      phoneNumber={userData().phone_number}
                       onSubmitSuccess={() => setShowFeedbackForm(false)}
                     />
                 </div>
@@ -166,16 +222,16 @@ export default function ReportPage() {
                 <div
                   className="mt-2"
                 >
-                  <Select value={severityFilter} onValueChange={setSeverityFilter}>
+                  <Select value={severityFilter} defaultValue="Tất cả mức độ" onValueChange={setSeverityFilter}>
                     <SelectTrigger className="bg-white border-gray-200 text-black w-full rounded-full">
                       <Filter className="h-4 w-4 mr-2" />
                       <SelectValue placeholder="Lọc theo mức độ" />
                     </SelectTrigger>
                     <SelectContent className="bg-white border-gray-200 text-black">
-                      <SelectItem value="allSeverity">Tất cả mức độ</SelectItem>
-                      <SelectItem value="slight">Nhẹ</SelectItem>
-                      <SelectItem value="medium">Trung bình</SelectItem>
-                      <SelectItem value="serious">Nghiêm trọng</SelectItem>
+                      <SelectItem value="Tất cả mức độ">Tất cả mức độ</SelectItem>
+                      <SelectItem value="Nhẹ">Nhẹ</SelectItem>
+                      <SelectItem value="Trung bình">Trung bình</SelectItem>
+                      <SelectItem value="Nghiêm trọng">Nghiêm trọng</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -186,20 +242,20 @@ export default function ReportPage() {
                 <div
                   className="mt-2"
                 >
-                  <Select value={issueFilter} onValueChange={setIssueFilter}>
+                  <Select value={issueFilter} defaultValue="Tất cả vấn đề" onValueChange={setIssueFilter}>
                     <SelectTrigger className="bg-white border-gray-200 text-black w-full rounded-full">
                       <Filter className="h-4 w-4 mr-2 " />
                       <SelectValue placeholder="Lọc theo vấn đề" />
                     </SelectTrigger>
                     <SelectContent className="bg-white border-gray-200 text-black">
-                      <SelectItem value="allIssueType">Tất cả vấn đề</SelectItem>
-                      <SelectItem value="trafic-jam">Tắc đường</SelectItem>
-                      <SelectItem value="accident">Tai nạn giao thông</SelectItem>
-                      <SelectItem value="construction">Công trình đang thi công</SelectItem>
-                      <SelectItem value="bad-road">Hư hỏng đường</SelectItem>
-                      <SelectItem value="bad-traffic-light">Đèn tín hiệu hỏng</SelectItem>
-                      <SelectItem value="flood">Ngập nước</SelectItem>
-                      <SelectItem value="other">Khác</SelectItem>
+                      <SelectItem value="Tất cả vấn đề">Tất cả vấn đề</SelectItem>
+                      <SelectItem value="Tắc đường">Tắc đường</SelectItem>
+                      <SelectItem value="Tai nạn giao thông">Tai nạn giao thông</SelectItem>
+                      <SelectItem value="Công trình đang thi công">Công trình đang thi công</SelectItem>
+                      <SelectItem value="Hư hỏng đường">Hư hỏng đường</SelectItem>
+                      <SelectItem value="Đèn tín hiệu hỏng">Đèn tín hiệu hỏng</SelectItem>
+                      <SelectItem value="Ngập nước">Ngập nước</SelectItem>
+                      <SelectItem value="Khác">Khác</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -213,7 +269,7 @@ export default function ReportPage() {
                     type="date"
                     className="w-full bg-white border-gray-200 text-black rounded-full"
                     defaultValue=""
-                    onChange={(e) => setCurrentDate(e.target.value)}
+                    onChange={(e) => setStartDate(e.target.value)}
                   />
                 </div>
               </div>
@@ -226,13 +282,16 @@ export default function ReportPage() {
                     type="date"
                     className="w-full bg-white border-gray-200 text-black rounded-full"
                     defaultValue=""
-                    onChange={(e) => setCurrentDate(e.target.value)}
+                    onChange={(e) => setEndDate(e.target.value)}
                   />
                 </div>
               </div>
 
               <div className="relative flex-1">
-                <Button className="w-full absolute bottom-0 left-0 bg-black rounded-full hover:bg-gray-800 mt-2">
+                <Button 
+                  className="w-full absolute bottom-0 left-0 bg-black rounded-full hover:bg-gray-800 mt-2"
+                  onClick={handleFilterFeedback}
+                >
                   Lọc phản ánh
                 </Button>
               </div>

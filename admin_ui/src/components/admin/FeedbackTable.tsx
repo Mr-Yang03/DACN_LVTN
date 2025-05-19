@@ -397,7 +397,7 @@ export default function FeedbackTable() {
                         ) : (
                             currentFeedbackItems.map((feedback, index) => (
                                 <TableRow key={feedback._id}>
-                                    <TableCell className="text-center">{index + 1}</TableCell>
+                                    <TableCell className="text-center">{index + 1 + (currentFeedbackPage - 1) * itemsPerPage}</TableCell>
                                     <TableCell className="font-medium">{feedback.location}</TableCell>
                                     <TableCell className="text-center">{feedback.type}</TableCell>
                                     <TableCell className='text-center'>{feedback.author}</TableCell>
