@@ -14,3 +14,6 @@ class UserCreate(UserBase):
 
 class UserUpdate(UserBase):
     pass
+
+class PasswordResetRequest(BaseModel):
+    new_password: str

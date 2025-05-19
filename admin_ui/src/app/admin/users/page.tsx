@@ -20,7 +20,7 @@ export default function UserboardPage() {
           </p>
         </div>
       </div>
-      <UserTable onEditUser={setSelectedUser} />
+      <UserTable />
     </div>
   );
 }

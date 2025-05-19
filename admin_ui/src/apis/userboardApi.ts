@@ -24,3 +24,8 @@ export const updateUser = (id: string, user: {
 }) => api.put(`${PREFIX}/${id}`, user);
 
 export const deleteUser = (id: string) => api.delete(`${PREFIX}/${id}`);
+
+export const resetPassword = (accountId: string, new_password: string) =>
+  api.put(`/userboard/ub/reset-password/${accountId}`, {
+    new_password,
+  });
