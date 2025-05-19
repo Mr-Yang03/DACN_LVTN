@@ -143,6 +143,7 @@ async def get_vehicle_types(
 ):
     """
     API thử nghiệm - Lấy dữ liệu phân loại phương tiện (xe máy, ô tô, xe tải, xe buýt)
+    với phân phối thay đổi theo giờ trong ngày và có yếu tố ngẫu nhiên
     """
     try:
         # Tìm camera trong database để lấy vị trí
@@ -160,21 +161,109 @@ async def get_vehicle_types(
         
         time_diff = (end_dt - start_dt).total_seconds() / 3600  # Số giờ
         
-        # Tạo dữ liệu mẫu dựa trên khoảng thời gian
-        total_vehicles = int(100 * time_diff)  # Giả sử có 100 xe mỗi giờ
+        # Lấy giờ trong ngày để điều chỉnh phân phối theo giờ
+        start_hour = start_dt.hour
+        end_hour = end_dt.hour if end_dt.day == start_dt.day else (end_dt.hour + 24)
         
-        # Phân bổ theo loại phương tiện (% thực tế sẽ dựa trên phân tích video)
-        motorcycle_count = int(total_vehicles * 0.72)  # 72% xe máy
-        car_count = int(total_vehicles * 0.22)  # 22% ô tô
-        truck_count = int(total_vehicles * 0.05)  # 5% xe tải
-        bus_count = int(total_vehicles * 0.01)  # 1% xe buýt
+        # Xác định các mốc giờ đặc biệt trong ngày
+        morning_rush_start, morning_rush_end = 7, 9       # Giờ cao điểm buổi sáng
+        evening_rush_start, evening_rush_end = 16, 19     # Giờ cao điểm buổi chiều
+        night_start, night_end = 20, 6                   # Giờ đêm khuya
+        
+        # Tổng số phương tiện thay đổi tùy theo giờ trong ngày (xe/giờ)
+        # và có thêm yếu tố ngẫu nhiên
+        vehicles_per_hour = []
+        for hour in range(start_hour, end_hour + 1):
+            hour_of_day = hour % 24
+            
+            # Điều chỉnh tùy theo giờ trong ngày
+            if (morning_rush_start <= hour_of_day < morning_rush_end):  # Giờ cao điểm sáng
+                base_count = 1800 + random.randint(-200, 200)  # 180 ± 20 xe/giờ
+            elif (evening_rush_start <= hour_of_day < evening_rush_end):  # Giờ cao điểm chiều
+                base_count = 2000 + random.randint(-250, 250)  # 200 ± 25 xe/giờ
+            elif ((night_start <= hour_of_day) or (hour_of_day < night_end)):  # Giờ đêm khuya
+                base_count = 500 + random.randint(-100, 150)   # 50 ± 10-15 xe/giờ
+            else:  # Giờ thường trong ngày
+                base_count = 1000 + random.randint(-150, 150)  # 100 ± 15 xe/giờ
+                
+            vehicles_per_hour.append(base_count)
+        
+        # Tính tổng số phương tiện dựa trên khoảng thời gian
+        # Xử lý trường hợp giờ lẻ (không phải giờ tròn)
+        total_vehicles = 0
+        for i, count in enumerate(vehicles_per_hour):
+            if i == 0:  # Giờ đầu
+                fraction = 1 - (start_dt.minute / 60)
+                total_vehicles += count * fraction
+            elif i == len(vehicles_per_hour) - 1:  # Giờ cuối
+                fraction = end_dt.minute / 60
+                total_vehicles += count * fraction
+            else:  # Giờ giữa
+                total_vehicles += count
+                
+        total_vehicles = int(total_vehicles)
+        
+        # Phân phối loại phương tiện thay đổi theo giờ
+        # Các tỷ lệ phần trăm phải tổng là 1 (100%)
+        motorcycle_percent = 0
+        car_percent = 0
+        truck_percent = 0
+        bus_percent = 0
+        
+        # Tính tỷ lệ trung bình dựa trên từng giờ
+        for hour in range(start_hour, end_hour + 1):
+            hour_of_day = hour % 24
+            
+            if (morning_rush_start <= hour_of_day < morning_rush_end):  # Giờ cao điểm sáng
+                # Nhiều xe máy và ô tô trong giờ cao điểm sáng
+                motorcycle_percent += 0.75 + random.uniform(-0.05, 0.05)  # 75% ± 5%
+                car_percent += 0.20 + random.uniform(-0.03, 0.03)        # 20% ± 3%
+                truck_percent += 0.03 + random.uniform(-0.01, 0.01)      # 3% ± 1%
+                bus_percent += 0.02 + random.uniform(-0.005, 0.005)      # 2% ± 0.5%
+            elif (evening_rush_start <= hour_of_day < evening_rush_end):  # Giờ cao điểm chiều
+                # Tương tự giờ cao điểm sáng
+                motorcycle_percent += 0.73 + random.uniform(-0.05, 0.05)  # 73% ± 5%
+                car_percent += 0.22 + random.uniform(-0.03, 0.03)        # 22% ± 3%
+                truck_percent += 0.03 + random.uniform(-0.01, 0.01)      # 3% ± 1%
+                bus_percent += 0.02 + random.uniform(-0.005, 0.005)      # 2% ± 0.5%
+            elif ((night_start <= hour_of_day) or (hour_of_day < night_end)):  # Giờ đêm khuya
+                # Ít xe máy, nhiều xe tải vào ban đêm
+                motorcycle_percent += 0.40 + random.uniform(-0.05, 0.05)  # 40% ± 5%
+                car_percent += 0.30 + random.uniform(-0.03, 0.03)        # 30% ± 3%
+                truck_percent += 0.25 + random.uniform(-0.03, 0.03)      # 25% ± 3%
+                bus_percent += 0.05 + random.uniform(-0.01, 0.01)        # 5% ± 1%
+            else:  # Giờ thường trong ngày
+                # Phân bổ cân đối hơn
+                motorcycle_percent += 0.65 + random.uniform(-0.05, 0.05)  # 65% ± 5%
+                car_percent += 0.25 + random.uniform(-0.03, 0.03)        # 25% ± 3%
+                truck_percent += 0.07 + random.uniform(-0.02, 0.02)      # 7% ± 2%
+                bus_percent += 0.03 + random.uniform(-0.01, 0.01)        # 3% ± 1%
+        
+        # Chia trung bình cho số giờ để tính tỷ lệ phần trăm
+        num_hours = end_hour - start_hour + 1
+        motorcycle_percent /= num_hours
+        car_percent /= num_hours
+        truck_percent /= num_hours
+        bus_percent /= num_hours
+        
+        # Chuẩn hóa để tổng = 1 (100%)
+        total_percent = motorcycle_percent + car_percent + truck_percent + bus_percent
+        motorcycle_percent /= total_percent
+        car_percent /= total_percent
+        truck_percent /= total_percent
+        bus_percent /= total_percent
+        
+        # Tính số lượng từng loại phương tiện
+        motorcycle_count = int(total_vehicles * motorcycle_percent)
+        car_count = int(total_vehicles * car_percent)
+        truck_count = int(total_vehicles * truck_percent)
+        bus_count = int(total_vehicles * bus_percent)
         
         # Điều chỉnh tổng số nếu có sai số làm tròn
         actual_total = motorcycle_count + car_count + truck_count + bus_count
         if actual_total != total_vehicles:
             motorcycle_count += (total_vehicles - actual_total)
-        
-        # Tạo dữ liệu phân tích phương tiện
+          # Tạo dữ liệu phân tích phương tiện
         vehicle_data = {
             "camera_id": camera_id,
             "timestamp": datetime.now().isoformat(),
@@ -200,9 +289,116 @@ async def get_vehicle_types(
                     "count": bus_count,
                     "percentage": round(bus_count / total_vehicles * 100, 1) if total_vehicles > 0 else 0
                 }
-            }
+            },
+            "hourlyData": []
         }
         
+        # Thêm dữ liệu phân bổ theo từng giờ để hiển thị chi tiết hơn
+        current_hour = start_dt
+        while current_hour <= end_dt:
+            hour_of_day = current_hour.hour
+            
+            # Xác định loại giờ (cao điểm sáng, cao điểm chiều, đêm khuya, giờ bình thường)
+            hour_type = ""
+            if morning_rush_start <= hour_of_day < morning_rush_end:
+                hour_type = "morning_rush"
+            elif evening_rush_start <= hour_of_day < evening_rush_end:
+                hour_type = "evening_rush"
+            elif (night_start <= hour_of_day) or (hour_of_day < night_end):
+                hour_type = "night"
+            else:
+                hour_type = "regular"
+            
+            # Tạo dữ liệu xe cho giờ này
+            hour_vehicles = 0
+            if hour_of_day == start_dt.hour and hour_of_day == end_dt.hour:
+                fraction = (end_dt.minute - start_dt.minute) / 60
+                hour_vehicles = int(vehicles_per_hour[0] * fraction) if len(vehicles_per_hour) > 0 else 0
+            elif hour_of_day == start_dt.hour:
+                fraction = (60 - start_dt.minute) / 60
+                hour_vehicles = int(vehicles_per_hour[0] * fraction) if len(vehicles_per_hour) > 0 else 0
+            elif hour_of_day == end_dt.hour:
+                fraction = end_dt.minute / 60
+                idx = hour_of_day - start_dt.hour
+                hour_vehicles = int(vehicles_per_hour[idx] * fraction) if idx < len(vehicles_per_hour) else 0
+            else:
+                idx = hour_of_day - start_dt.hour
+                hour_vehicles = vehicles_per_hour[idx] if idx < len(vehicles_per_hour) else 0
+                
+            # Tạo phân phối loại xe cho giờ này với ngẫu nhiên riêng
+            h_motorcycle_percent = 0
+            h_car_percent = 0
+            h_truck_percent = 0
+            h_bus_percent = 0
+            
+            if hour_type == "morning_rush":
+                h_motorcycle_percent = 0.75 + random.uniform(-0.05, 0.05)
+                h_car_percent = 0.20 + random.uniform(-0.03, 0.03)
+                h_truck_percent = 0.03 + random.uniform(-0.01, 0.01)
+                h_bus_percent = 0.02 + random.uniform(-0.005, 0.005)
+            elif hour_type == "evening_rush":
+                h_motorcycle_percent = 0.73 + random.uniform(-0.05, 0.05)
+                h_car_percent = 0.22 + random.uniform(-0.03, 0.03)
+                h_truck_percent = 0.03 + random.uniform(-0.01, 0.01)
+                h_bus_percent = 0.02 + random.uniform(-0.005, 0.005)
+            elif hour_type == "night":
+                h_motorcycle_percent = 0.40 + random.uniform(-0.05, 0.05)
+                h_car_percent = 0.30 + random.uniform(-0.03, 0.03)
+                h_truck_percent = 0.25 + random.uniform(-0.03, 0.03)
+                h_bus_percent = 0.05 + random.uniform(-0.01, 0.01)
+            else:
+                h_motorcycle_percent = 0.65 + random.uniform(-0.05, 0.05)
+                h_car_percent = 0.25 + random.uniform(-0.03, 0.03)
+                h_truck_percent = 0.07 + random.uniform(-0.02, 0.02)
+                h_bus_percent = 0.03 + random.uniform(-0.01, 0.01)
+            
+            # Chuẩn hóa tỉ lệ để tổng = 1 (100%)
+            total_h_percent = h_motorcycle_percent + h_car_percent + h_truck_percent + h_bus_percent
+            h_motorcycle_percent /= total_h_percent
+            h_car_percent /= total_h_percent
+            h_truck_percent /= total_h_percent
+            h_bus_percent /= total_h_percent
+            
+            # Tính số lượng từng loại xe trong giờ này
+            h_motorcycle = int(hour_vehicles * h_motorcycle_percent)
+            h_car = int(hour_vehicles * h_car_percent)
+            h_truck = int(hour_vehicles * h_truck_percent)
+            h_bus = int(hour_vehicles * h_bus_percent)
+            
+            # Điều chỉnh nếu có sai số
+            actual_h_total = h_motorcycle + h_car + h_truck + h_bus
+            if actual_h_total != hour_vehicles:
+                h_motorcycle += (hour_vehicles - actual_h_total)
+            
+            # Thêm dữ liệu giờ này vào mảng
+            hour_data = {
+                "hour": f"{hour_of_day:02d}:00",
+                "hourType": hour_type,
+                "totalVehicles": hour_vehicles,
+                "vehicleTypes": {
+                    "motorcycle": {
+                        "count": h_motorcycle,
+                        "percentage": round(h_motorcycle / hour_vehicles * 100, 1) if hour_vehicles > 0 else 0
+                    },
+                    "car": {
+                        "count": h_car,
+                        "percentage": round(h_car / hour_vehicles * 100, 1) if hour_vehicles > 0 else 0
+                    },
+                    "truck": {
+                        "count": h_truck,
+                        "percentage": round(h_truck / hour_vehicles * 100, 1) if hour_vehicles > 0 else 0
+                    },
+                    "bus": {
+                        "count": h_bus,
+                        "percentage": round(h_bus / hour_vehicles * 100, 1) if hour_vehicles > 0 else 0
+                    }
+                }
+            }
+            vehicle_data["hourlyData"].append(hour_data)
+            
+            # Tăng thời gian lên 1 giờ
+            current_hour = current_hour + timedelta(hours=1)
+            
         return vehicle_data
         
     except Exception as e:
