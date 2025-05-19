@@ -232,6 +232,7 @@ async def update_user_info(
 
     updated_user = {
         "account_id": str(account["_id"]),
+        "username": account["username"],
         "full_name": user_info.full_name,
         "date_of_birth": user_info.date_of_birth,
         "phone_number": user_info.phone_number,

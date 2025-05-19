@@ -385,7 +385,7 @@ async def get_all_feedback():
 @app.get("/feedback/{feedback_id}")
 async def get_feedback_by_id(feedback_id: str):
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/{feedback_id}")
+        response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/item/{feedback_id}")
 
     if response.status_code != 200:
         raise HTTPException(status_code=404, detail="Feedback not found")

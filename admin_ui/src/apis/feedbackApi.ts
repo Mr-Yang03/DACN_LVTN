@@ -14,20 +14,16 @@ export interface FeedbackArticle {
     description?: string;
     images?: string[];
     status?: string;
+    author_username?: string;
 }
 
 export const getFeedback = async (id: string) => {
-    const response = await api.get(`/feedback/items/${id}`);
+    const response = await api.get(`/feedback/${id}`);
     return response.data;
 }
 
 export const getFeedbackList = async () => {
     const response = await api.get("/feedback/all_items");
-    return response.data;
-}
-
-export const getUserFeedbackList = async () => {
-    const response = await api.get("/feedback/processed");
     return response.data;
 }
 

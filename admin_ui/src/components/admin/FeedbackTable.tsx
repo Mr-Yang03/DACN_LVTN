@@ -21,10 +21,12 @@ import {
     Star,
     Filter
 } from 'lucide-react';
-import { FeedbackArticle } from '@/apis/feedbackApi';
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { PlusCircle } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -36,22 +38,24 @@ import {
 } from "@/components/sections/pagination-demo"
 import { useToast } from '@/hooks/use-toast';
 import { getFeedbackList } from "@/apis/feedbackApi";
+import { useRouter } from 'next/navigation';
 
 export default function FeedbackTable() {
     const [sortColumn, setSortColumn] = useState<string | null>(null);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
     const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState<FeedbackArticle[]>([]);
-    const [currentDate, setCurrentDate] = useState("");
-    const [severityFilter, setSeverityFilter] = useState("allSeverity")
-    const [issueFilter, setIssueFilter] = useState("allIssueType")
+    const [data, setData] = useState<any[]>([]);
+    const [severityFilter, setSeverityFilter] = useState("Tất cả mức độ")
+    const [issueFilter, setIssueFilter] = useState("Tất cả vấn đề")
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     const [currentFeedbackPage, setCurrentFeedbackPage] = useState(1)
     const [search, setSearch] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState('');
-    const [statusFilter, setStatusFilter] = useState<string | null>(null);
     const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
     const { toast } = useToast();
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     const itemsPerPage = 5 // Số lượng phản ánh hiển thị trên mỗi trang
 
@@ -126,41 +130,40 @@ export default function FeedbackTable() {
         }
     };
 
-    // Filter based on search term and date range
-    const filteredData = data.filter((item) => {
-        // Text search filter
-        const matchesSearch = 
-            item.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            (item.author?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-            (item.description?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-            (item._id?.toLowerCase() || '').includes(searchTerm.toLowerCase()); // Thêm tìm kiếm theo ID
-        
-        // Date range filter
-        let matchesDateRange = true;
-        if (dateRange?.from) {
-            const publishDateTime = parsePublishDateTime(item.date, item.time);
-            if (publishDateTime) {
-            if (dateRange.to) {
-                // If we have a complete range, check if the date is within the range
-                matchesDateRange = isWithinInterval(publishDateTime, { 
-                    start: dateRange.from, 
-                    end: dateRange.to 
-                });
-            } else {
-                // If we only have a start date, check if the date is after or equal to it
-                matchesDateRange = publishDateTime >= dateRange.from;
-            }
-            }
+    console.log(data)
+
+    const searchedFeedbacks = data.filter(feedback =>
+        feedback.title.toLowerCase().includes(search.toLowerCase()) ||
+        feedback.description.toLowerCase().includes(search.toLowerCase()) || 
+        feedback.location.toLowerCase().includes(search.toLowerCase()) ||
+        feedback.author.toLowerCase().includes(search.toLowerCase()) ||
+        feedback.author_username.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const filteredFeedbacks = searchedFeedbacks.filter((feedback) => {
+        const matchSeverity = severityFilter === "Tất cả mức độ" || feedback.severity === severityFilter;
+
+        const matchIssue = issueFilter === "Tất cả vấn đề" || feedback.type === issueFilter;
+
+        let matchDate = true;
+        if (startDate || endDate) {
+            const rawDate = feedback.date || "";  // vd: "14-05-2025" hoặc "14/05/2025"
+            const rawTime = feedback.time || "00:00";
+
+            // Normalize date string (dd-mm-yyyy or dd/mm/yyyy -> yyyy-mm-dd)
+            const normalizedDateStr = rawDate.replace(/\//g, "-");
+            const [day, month, year] = normalizedDateStr.split("-");
+            const itemDatetime = new Date(`${year}-${month}-${day}T${rawTime}`);
+
+            if (startDate && itemDatetime < new Date(startDate)) matchDate = false;
+            if (endDate && itemDatetime > new Date(endDate)) matchDate = false;
         }
-        
-        // Status filter
-        const matchesStatus = statusFilter === null || item.status === statusFilter;
-        
-        return matchesSearch && matchesDateRange && matchesStatus;
+
+        return matchSeverity && matchIssue && matchDate;
     });
 
     // Sort data based on current sort settings
-    const sortedData = [...filteredData].sort((a, b) => {
+    const sortedData = [...filteredFeedbacks].sort((a, b) => {
         if (!sortColumn) return 0;
 
         let valueA, valueB;
@@ -188,7 +191,7 @@ export default function FeedbackTable() {
                 valueB = parsePublishDateTime(b.date, b.time)?.getTime() || 0;
                 break; 
             case 'severity':
-                const severityValues = { "serious": 3, "medium": 2, "slight": 1 };
+                const severityValues = { "Nghiêm trọng": 3, "Trung bình": 2, "Nhẹ": 1 };
                 valueA = severityValues[a.severity as keyof typeof severityValues] || 0;
                 valueB = severityValues[b.severity as keyof typeof severityValues] || 0;
                 break;
@@ -253,16 +256,16 @@ export default function FeedbackTable() {
                         <div
                             className="mt-2"
                         >
-                            <Select value={severityFilter} onValueChange={setSeverityFilter}>
+                            <Select value={severityFilter} defaultValue="Tất cả mức độ" onValueChange={setSeverityFilter}>
                                 <SelectTrigger className="bg-white border-gray-200 text-black w-full rounded-full">
                                     <Filter className="h-4 w-4 mr-2" />
                                     <SelectValue placeholder="Lọc theo mức độ" />
                                 </SelectTrigger>
                                 <SelectContent className="bg-white border-gray-200 text-black">
-                                    <SelectItem value="allSeverity">Tất cả mức độ</SelectItem>
-                                    <SelectItem value="slight">Nhẹ</SelectItem>
-                                    <SelectItem value="medium">Trung bình</SelectItem>
-                                    <SelectItem value="serious">Nghiêm trọng</SelectItem>
+                                    <SelectItem value="Tất cả mức độ">Tất cả mức độ</SelectItem>
+                                    <SelectItem value="Nhẹ">Nhẹ</SelectItem>
+                                    <SelectItem value="Trung bình">Trung bình</SelectItem>
+                                    <SelectItem value="Nghiêm trọng">Nghiêm trọng</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -273,20 +276,20 @@ export default function FeedbackTable() {
                         <div
                             className="mt-2"
                         >
-                            <Select value={issueFilter} onValueChange={setIssueFilter}>
+                            <Select value={issueFilter} defaultValue="Tất cả vấn đề" onValueChange={setIssueFilter}>
                                 <SelectTrigger className="bg-white border-gray-200 text-black w-full rounded-full">
                                     <Filter className="h-4 w-4 mr-2 " />
                                     <SelectValue placeholder="Lọc theo vấn đề" />
                                 </SelectTrigger>
                                 <SelectContent className="bg-white border-gray-200 text-black">
-                                    <SelectItem value="allIssueType">Tất cả vấn đề</SelectItem>
-                                    <SelectItem value="trafic-jam">Tắc đường</SelectItem>
-                                    <SelectItem value="accident">Tai nạn giao thông</SelectItem>
-                                    <SelectItem value="construction">Công trình đang thi công</SelectItem>
-                                    <SelectItem value="bad-road">Hư hỏng đường</SelectItem>
-                                    <SelectItem value="bad-traffic-light">Hư hỏng đèn giao thông</SelectItem>
-                                    <SelectItem value="flood">Ngập nước</SelectItem>
-                                    <SelectItem value="other">Khác</SelectItem>
+                                    <SelectItem value="Tất cả vấn đề">Tất cả vấn đề</SelectItem>
+                                    <SelectItem value="Tắc đường">Tắc đường</SelectItem>
+                                    <SelectItem value="Tai nạn giao thông">Tai nạn giao thông</SelectItem>
+                                    <SelectItem value="Công trình đang thi công">Công trình đang thi công</SelectItem>
+                                    <SelectItem value="Hư hỏng đường">Hư hỏng đường</SelectItem>
+                                    <SelectItem value="Đèn tín hiệu hỏng">Đèn tín hiệu hỏng</SelectItem>
+                                    <SelectItem value="Ngập nước">Ngập nước</SelectItem>
+                                    <SelectItem value="Khác">Khác</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -299,8 +302,8 @@ export default function FeedbackTable() {
                                 id="startDate"
                                 type="date"
                                 className="w-full bg-white border-gray-200 text-black rounded-full"
-                                defaultValue={currentDate}
-                                onChange={(e) => setCurrentDate(e.target.value)}
+                                defaultValue={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
                             />
                         </div>
                     </div>
@@ -312,8 +315,8 @@ export default function FeedbackTable() {
                                 id="endDate"
                                 type="date"
                                 className="w-full bg-white border-gray-200 text-black rounded-full"
-                                defaultValue={currentDate}
-                                onChange={(e) => setCurrentDate(e.target.value)}
+                                defaultValue={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
                             />
                         </div>
                     </div>
@@ -354,7 +357,7 @@ export default function FeedbackTable() {
                             </TableHead>
                             <TableHead className="text-black text-center w-1/10">
                                 <Button variant="ghost" onClick={() => handleSort('author')}>
-                                Tác giả
+                                Người gửi
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </TableHead>
@@ -370,12 +373,6 @@ export default function FeedbackTable() {
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </TableHead>
-                            {/* <TableHead className="text-black text-center w-1/10">
-                                <Button variant="ghost" onClick={() => handleSort('status')}>
-                                Trạng thái
-                                <ArrowUpDown className="ml-2 h-4 w-4" />
-                                </Button>
-                            </TableHead> */}
                             <TableHead className="text-center text-black">Thao tác</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -400,32 +397,13 @@ export default function FeedbackTable() {
                                     <TableCell className="text-center">{index + 1 + (currentFeedbackPage - 1) * itemsPerPage}</TableCell>
                                     <TableCell className="font-medium">{feedback.location}</TableCell>
                                     <TableCell className="text-center">{feedback.type}</TableCell>
-                                    <TableCell className='text-center'>{feedback.author}</TableCell>
+                                    <TableCell className='text-center'>{feedback.author + " - " + feedback.author_username}</TableCell>
                                     <TableCell className='text-center'>
                                         {feedback.time} {feedback.date && `- ${feedback.date}`}
                                     </TableCell>
                                     <TableCell className='text-center'>
                                         <Badge className={getSeverityColor(feedback.severity || 'default')}>{feedback.severity}</Badge>
                                     </TableCell>
-                                    {/* <TableCell className='text-center'>
-                                        {feedback.status === 'Đã xử lý' ? (
-                                            <Badge
-                                                variant="outline"
-                                                className="bg-green-50 text-green-700 border-green-200"
-                                            >
-                                                <CheckCircle className="mr-1 h-3 w-3" />
-                                                Đã duyệt
-                                            </Badge>
-                                        ) : (
-                                            <Badge
-                                                variant="outline"
-                                                className="bg-amber-50 text-amber-700 border-amber-200"
-                                            >
-                                                <XCircle className="mr-1 h-3 w-3" />
-                                                Đang chờ duyệt
-                                            </Badge>
-                                        )}
-                                    </TableCell> */}
                                     
                                     <TableCell className="text-center">
                                         <DropdownMenu>
@@ -437,7 +415,7 @@ export default function FeedbackTable() {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
                                                 <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
-                                                <DropdownMenuItem>
+                                                <DropdownMenuItem onClick={() => router.push(`/admin/feedback/view/${feedback._id}`)}>
                                                     <Edit className="mr-2 h-4 w-4" />
                                                     Xem chi tiết
                                                 </DropdownMenuItem>

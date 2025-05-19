@@ -15,6 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 
 interface UserInfo {
   account_id: string;
+  username: string;
   full_name: string;
   date_of_birth: string;
   phone_number: string;
@@ -69,6 +70,7 @@ export default function ProfilePage() {
   console.log(userData())
   const [user, setUser] = useState<UserInfo>({
     account_id: userData()._id,
+    username: userData().username,
     full_name: userData().full_name,
     date_of_birth: userData().date_of_birth,
     phone_number: userData().phone_number,
