@@ -98,7 +98,7 @@ export default function FeedbackDetail({ feedbackId }: { feedbackId: string }) {
                                         <p className="text-sm font-medium text-gray-500">Vị trí</p>
                                         {isCoordinate ? (
                                             <Link
-                                                href={googleMapsUrl}
+                                                href={googleMapsUrl ? googleMapsUrl : "#"}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="text-blue-600 hover:underline"
