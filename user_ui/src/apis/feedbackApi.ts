@@ -24,7 +24,7 @@ export interface FeedbackFilter {
 }
 
 export const getFeedback = async (id: string) => {
-    const response = await api.get(`/feedback/items/${id}`);
+    const response = await api.get(`/feedback/${id}`);
     return response.data;
 }
 
@@ -42,6 +42,11 @@ export const getFilteredFeedbackList = async (filter: FeedbackFilter) => {
             end_date: filter.end_date
         }
     });
+    return response.data;
+}
+
+export const getFeedbackByUsername = async (author_username: string) => {
+    const response = await api.get(`/feedback/user/${author_username}`);
     return response.data;
 }
 
@@ -74,3 +79,8 @@ export const uploadFeedbackFiles = async (files: File[]) => {
     throw error; // Re-throw to allow handling in the UI component
   }
 };
+
+export const deleteFeedback = async (id: string) => {
+    const response = await api.delete(`/feedback/${id}`);
+    return response.data;
+}
