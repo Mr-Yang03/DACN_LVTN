@@ -242,7 +242,7 @@ export default function ProfilePage() {
                       </AvatarFallback>
                     </Avatar>
                     <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Button 
+                      {/* <Button 
                         variant="ghost" 
                         size="sm" 
                         className="text-white"
@@ -250,7 +250,7 @@ export default function ProfilePage() {
                         disabled={isUploading}
                       >
                         {isUploading ? "Đang tải..." : "Thay đổi"}
-                      </Button>
+                      </Button> */}
                       <input
                         type="file"
                         ref={fileInputRef}

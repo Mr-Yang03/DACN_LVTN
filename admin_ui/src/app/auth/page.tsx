@@ -57,7 +57,7 @@ export default function AuthPage() {
   ];
 
   return (
-    <div className="h-full flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 p-4">
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-10 place-items-center relative">
         <div className="hidden lg:flex flex-col items-center justify-center space-y-8 p-8">
           <h1 className="text-3xl font-bold text-slate-800">

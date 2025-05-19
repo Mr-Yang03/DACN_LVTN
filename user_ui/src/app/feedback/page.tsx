@@ -186,9 +186,9 @@ export default function ReportPage() {
             className="flex flex-col gap-4 mx-6"
           >
             <div
-              className="flex flex-wrap gap-4"
+              className="flex flex-row flex-wrap gap-4 justify-between"
             >
-              <div className="w-1/5">
+              <div className="flex-1">
                 <Label htmlFor="severity">Mức độ nghiêm trọng</Label>
                 <div
                   className="mt-2"
@@ -208,7 +208,7 @@ export default function ReportPage() {
                 </div>
               </div>
               
-              <div className="w-1/5">
+              <div className="flex-1">
                 <Label htmlFor="issueType">Loại vấn đề</Label>
                 <div
                   className="mt-2"
@@ -232,7 +232,7 @@ export default function ReportPage() {
                 </div>
               </div>
 
-              <div className="w-1/5">
+              <div className="flex-1">
                 <div className="space-y-2">
                   <Label htmlFor="startDate">Ngày bắt đầu</Label>
                   <Input
@@ -245,7 +245,7 @@ export default function ReportPage() {
                 </div>
               </div>
 
-              <div className="w-1/5">
+              <div className="flex-1">
                 <div className="space-y-2">
                   <Label htmlFor="endDate">Ngày kết thúc</Label>
                   <Input
