@@ -89,7 +89,7 @@ export default function ChatbotPage() {
   };
 
   return (
-    <div className="h-full p-4 flex flex-col">
+    <div className="h-full p-4 flex flex-col justify-between">
       <div className="flex items-center space-x-2 mb-4">
         <Bot className="h-5 w-5 text-primary" />
         <h2 className="text-xl font-semibold">Trò chuyện với chatbot</h2>
@@ -97,7 +97,7 @@ export default function ChatbotPage() {
 
       <div className="flex-1">
         <div className="bg-white rounded-lg flex-1 flex flex-col overflow-hidden h-full">
-          <div className="lg:mx-auto lg:w-2/3 h-full flex flex-col">
+          <div className="lg:mx-auto lg:w-2/3 h-full flex flex-col justify-between">
             {/* Message area with fixed height and scrollable content */}
             <div
               className="flex-1 overflow-y-auto p-4"

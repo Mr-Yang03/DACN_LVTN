@@ -95,7 +95,7 @@ export default function ChatbotPage() {
         <h2 className="text-xl font-semibold">Trò chuyện với chatbot</h2>
       </div>
 
-      <div className="flex-1">
+      <div className="flex-1 h-full">
         <div className="bg-white rounded-lg flex-1 flex flex-col overflow-hidden h-full">
           <div className="lg:mx-auto lg:w-2/3 h-full flex flex-col">
             {/* Message area with fixed height and scrollable content */}

@@ -254,7 +254,7 @@ export function NewsEditor() {
 
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-center lg:justify-between items-center flex-wrap gap-y-4">
         <TabsList>
           <TabsTrigger value="edit" className="flex items-center gap-2">
             <Save className="h-4 w-4" />
@@ -576,27 +576,6 @@ export function NewsEditor() {
                         </FormItem>
                       )}
                     />
-
-                    {/* <FormField
-                      control={form.control}
-                      name="isDraft"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm mt-4">
-                          <div className="space-y-0.5">
-                            <FormLabel>Lưu nháp</FormLabel>
-                            <FormDescription>
-                              Lưu bài viết dưới dạng nháp (chưa đăng)
-                            </FormDescription>
-                          </div>
-                          <FormControl>
-                            <Switch
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    /> */}
                   </CardContent>
                 </Card>
               </div>

@@ -50,6 +50,7 @@ interface Camera {
     type: "Point";
     coordinates: [number, number];
   };
+  Status: string;
 }
 
 const libraries: ("places" | "drawing" | "geometry" | "visualization")[] = [

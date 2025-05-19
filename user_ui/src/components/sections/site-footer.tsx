@@ -16,10 +16,9 @@ export function SiteFooter() {
                 width={60}
                 height={60}
                 className=""
-              />
-              <div>
-                <p className="text-sm">ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH</p>
-                <p className="text-xl font-bold">TRƯỜNG ĐẠI HỌC BÁCH KHOA</p>
+              />              <div>
+                <p className="text-xs sm:text-sm md:text-sm">ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH</p>
+                <p className="text-base sm:text-lg md:text-xl font-bold">TRƯỜNG ĐẠI HỌC BÁCH KHOA</p>
               </div>
             </div>
 

@@ -21,6 +21,7 @@ auth_router = APIRouter()
 db = get_database()
 accounts_collection = db["accounts"]
 users_collection = db["users"]
+admins_collection = db["admins"]
 
 class LoginInfo(BaseModel):
     username: str
@@ -45,6 +46,14 @@ class RegisterInfo(BaseModel):
     date_of_birth: str
     phone_number: str
     license_number: str | None = None
+
+class AdminRegisterInfo(BaseModel):
+    username: str
+    password: str
+    full_name: str
+    date_of_birth: str
+    phone_number: str
+    citizen_id: str
 
 def objectid_to_str(obj):
     if isinstance(obj, ObjectId):
@@ -132,6 +141,38 @@ async def check_login(login_info: LoginInfo) -> dict:
     user_data = objectid_to_str(user_data)
     
     return user_data
+
+@auth_router.post("/admin/login")
+async def admin_login(login_info: LoginInfo) -> dict:
+    account = accounts_collection.find_one({"username": login_info.username})
+
+    if not account or not pwd_context.verify(login_info.password, account["password"]):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    
+    if account["status"] != "active":
+        raise HTTPException(status_code=401, detail="Tài khoản đã bị khóa")
+    
+    # Xác minh đây là tài khoản admin
+    if account["account_type"] != "admin":
+        raise HTTPException(status_code=403, detail="Không có quyền truy cập. Chỉ admin mới được phép đăng nhập.")
+    
+    # Lấy thông tin admin
+    admin_data = {
+        "username": account["username"],
+        "account_type": account["account_type"],
+        "status": account["status"]
+    }
+    
+    admin = admins_collection.find_one({"account_id": account["_id"]})
+    if admin:
+        admin_data.update({
+            "full_name": admin["full_name"],
+            "date_of_birth": admin["date_of_birth"],
+            "phone_number": admin["phone_number"],
+            "citizen_id": admin.get("citizen_id")
+        })
+    
+    return admin_data
 
 @auth_router.put("/update") 
 async def update_user_info(

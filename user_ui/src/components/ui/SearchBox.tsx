@@ -89,7 +89,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   };
 
   return (
-    <div className="absolute top-[20px] left-[20px] w-[350px]">
+    <div className="absolute top-[20px] left-[20px] w-[250px] md:w-[350px]">
       <div className="flex items-center bg-white p-3 rounded-full shadow-md">
         <Search className="text-gray-500 mr-2" size={20} />
         <input

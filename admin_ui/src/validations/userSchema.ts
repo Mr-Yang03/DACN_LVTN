@@ -12,7 +12,7 @@ export const registerSchema = z
     full_name: z.string().min(1, "Họ và tên không được để trống"),
     phone_number: z.string().min(10, "Số điện thoại không hợp lệ"),
     date_of_birth: z.string().min(1, "Ngày sinh không được để trống"),
-    license_number: z.string().optional(),
+    citizen_id: z.string().optional(),
     password: z.string().min(6, "Mật khẩu phải ít nhất 6 ký tự"),
     confirmPassword: z
       .string()
