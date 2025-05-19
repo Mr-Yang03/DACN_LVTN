@@ -111,26 +111,28 @@ const CameraTable: React.FC<CameraTableProps> = ({ cameras, onEditCamera, onDele
                     <TableCell className="text-center py-2 px-4 border-b text-center" style={{ width: "10%" }}>
                       {camera.CamStatus === "UP" ? <span className="text-green-600">✅</span> : <span className="text-red-600">❌</span>}
                     </TableCell>
-                    <TableCell className="text-center py-2 px-4 border-b text-center space-x-2" style={{ width: "30%" }}>
-                      <Button variant="outline" onClick={() => {
-                        setSelectedCamera(camera);
-                        setSnapshotUrl(`http://camera.thongtingiaothong.vn/api/snapshot/${camera._id}?t=${Date.now()}`);
-                      }}>
-                        <CameraIcon size={16} />
-                      </Button>
-                      <Button variant="outline" onClick={() => onEditCamera(camera)}>
-                        <Edit size={16} />
-                      </Button>
-                      <Button variant="outline" className="text-red-600" onClick={() => {
-                        if (confirm("Bạn có chắc muốn xoá camera này?")) {
-                          onDeleteCamera(camera._id);
-                        }
-                      }}>
-                        <Trash2 size={16} />
-                      </Button>
-                      <Button variant="outline" size="sm" onClick={() => onUpdatePosition(camera)}>
-                        <MapPin size={16} />
-                      </Button>
+                    <TableCell className="text-center py-2 px-4 border-b text-center space-x-2 " style={{ width: "30%" }}>
+                      <div className="flex flex-wrap justify-center gap-2">
+                        <Button variant="outline" onClick={() => {
+                          setSelectedCamera(camera);
+                          setSnapshotUrl(`http://camera.thongtingiaothong.vn/api/snapshot/${camera._id}?t=${Date.now()}`);
+                        }}>
+                          <CameraIcon size={16} />
+                        </Button>
+                        <Button variant="outline" onClick={() => onEditCamera(camera)}>
+                          <Edit size={16} />
+                        </Button>
+                        <Button variant="outline" className="text-red-600" onClick={() => {
+                          if (confirm("Bạn có chắc muốn xoá camera này?")) {
+                            onDeleteCamera(camera._id);
+                          }
+                        }}>
+                          <Trash2 size={16} />
+                        </Button>
+                        <Button variant="outline" onClick={() => onUpdatePosition(camera)}>
+                          <MapPin size={16} />
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))

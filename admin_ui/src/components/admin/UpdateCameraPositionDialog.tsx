@@ -37,7 +37,6 @@ export default function UpdateCameraPositionDialog({
   const [lng, setLng] = useState<number>(0);
   const [position, setPosition] = useState<google.maps.LatLngLiteral | null>(null);
 
-  // Đồng bộ vị trí khi mở dialog hoặc khi camera thay đổi
   useEffect(() => {
     if (camera?.Location?.coordinates?.length === 2) {
       const newLat = camera.Location.coordinates[1];
@@ -63,6 +62,26 @@ export default function UpdateCameraPositionDialog({
     }
   };
 
+  const handleGetCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const newLat = pos.coords.latitude;
+          const newLng = pos.coords.longitude;
+          setLat(newLat);
+          setLng(newLng);
+          setPosition({ lat: newLat, lng: newLng });
+        },
+        (error) => {
+          console.error("Lỗi định vị:", error);
+          alert("Không thể lấy vị trí hiện tại.");
+        }
+      );
+    } else {
+      alert("Trình duyệt không hỗ trợ định vị.");
+    }
+  };
+
   if (!isLoaded || !camera) return null;
 
   return (
@@ -72,7 +91,7 @@ export default function UpdateCameraPositionDialog({
           <DialogTitle>Cập nhật vị trí camera: {camera.Title}</DialogTitle>
         </DialogHeader>
 
-        <div className="flex gap-4 mt-2 mb-2">
+        <div className="flex flex-row gap-2 items-center mb-4">
           <Input
             type="number"
             value={lat}
@@ -80,7 +99,7 @@ export default function UpdateCameraPositionDialog({
             onChange={(e) => setLat(parseFloat(e.target.value))}
             onBlur={handleLatLngChange}
             placeholder="Latitude"
-            className="w-full"
+            className="w-full max-w-2/5"
           />
           <Input
             type="number"
@@ -89,8 +108,15 @@ export default function UpdateCameraPositionDialog({
             onChange={(e) => setLng(parseFloat(e.target.value))}
             onBlur={handleLatLngChange}
             placeholder="Longitude"
-            className="w-full"
+            className="w-full max-w-2/5"
           />
+          <Button
+            type="button"
+            onClick={handleGetCurrentLocation}
+            className="whitespace-nowrap max-w-1/5"
+          >
+            Lấy vị trí hiện tại
+          </Button>
         </div>
 
         <div className="w-full h-[480px]">
