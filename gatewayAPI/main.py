@@ -554,7 +554,7 @@ async def chat_with_agent(prompt: str = Form(...)):
     async with httpx.AsyncClient(timeout=60.0) as client:  # Set timeout to 60 seconds
         try:
             response = await client.post(
-                f"{ADMIN_AGENT_SERVICE_URL}/chatbot/",
+                f"{ADMIN_AGENT_SERVICE_URL}/chat/",
                 data={"prompt": prompt},
                 headers={"Content-Type": "application/x-www-form-urlencoded"}
             )
