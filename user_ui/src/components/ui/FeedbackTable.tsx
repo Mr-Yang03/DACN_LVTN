@@ -274,9 +274,9 @@ export default function FeedbackTable( username: { username: string } ) {
                 className="flex flex-col gap-4 mx-6"
             >
                 <div
-                    className="flex flex-wrap gap-4"
+                    className="flex flex-wrap gap-4 flex-row"
                 >
-                    <div className="w-1/5">
+                    <div className="flex-1">
                         <Label htmlFor="severity">Mức độ nghiêm trọng</Label>
                         <div
                             className="mt-2"
@@ -296,7 +296,7 @@ export default function FeedbackTable( username: { username: string } ) {
                         </div>
                     </div>
                     
-                    <div className="w-1/5">
+                    <div className="flex-1">
                         <Label htmlFor="type">Loại vấn đề</Label>
                         <div
                             className="mt-2"
@@ -320,7 +320,7 @@ export default function FeedbackTable( username: { username: string } ) {
                         </div>
                     </div>
         
-                    <div className="w-1/5">
+                    <div className="flex-1">
                         <div className="space-y-2">
                             <Label htmlFor="startDate">Ngày bắt đầu</Label>
                             <Input
@@ -333,7 +333,7 @@ export default function FeedbackTable( username: { username: string } ) {
                         </div>
                     </div>
         
-                    <div className="w-1/5">
+                    <div className="flex-1">
                         <div className="space-y-2">
                             <Label htmlFor="endDate">Ngày kết thúc</Label>
                             <Input
@@ -365,7 +365,7 @@ export default function FeedbackTable( username: { username: string } ) {
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </TableHead>
-                            <TableHead className="w-1/5 text-black">
+                            <TableHead className="flex-1 text-black">
                                 <Button variant="ghost" onClick={() => handleSort('location')} className="flex items-center justify-center w-full">
                                 Địa điểm
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
