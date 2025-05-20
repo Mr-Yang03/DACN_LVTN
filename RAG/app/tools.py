@@ -7,7 +7,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from langchain_huggingface import HuggingFaceEmbeddings
 from pymongo import MongoClient
-from langchain.vectorstores import MongoDBAtlasVectorSearch
+from langchain_community.vectorstores import MongoDBAtlasVectorSearch
 
 # Load API keys from .env
 load_dotenv()

@@ -1,9 +1,8 @@
-from fastapi import FastAPI, UploadFile, File, Form
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi import FastAPI, Form
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
-import uuid, os, shutil
-from langchain_chroma import Chroma
-from app.agent import add_pdf_to_vectorstore, query_llm, embedding, VECTOR_STORE_DIR, COLLECTION_NAME
+import os
+from app.agent import query_llm
 
 
 app = FastAPI()
