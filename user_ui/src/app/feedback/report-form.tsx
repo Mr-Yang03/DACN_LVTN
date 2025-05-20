@@ -248,7 +248,7 @@ export function ReportForm({
               name="email"
               render={({ field }) => (
                 <FormItem className="sm:col-span-2">
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Email (Không bắt buộc)</FormLabel>
                   <FormControl>
                     <Input placeholder="example@gmail.com" {...field} />
                   </FormControl>

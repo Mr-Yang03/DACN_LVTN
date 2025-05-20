@@ -47,8 +47,18 @@ export default function ReportPage() {
   const { isAuthenticated, setToken } = useAuth();
   const [displayedFeedbackItems, setDisplayedFeedbackItems] = useState<any[]>([]);
   const router = useRouter();
+  const [isLogin, setIsLogin] = useState(false);
 
   const itemsPerPage = 3 // Số lượng phản ánh hiển thị trên mỗi trang
+
+  useEffect(
+    () => {
+      if(isAuthenticated){
+        setIsLogin(true);
+      }
+      else setIsLogin(false)
+    }, [isAuthenticated]
+  )
 
   // Load data on component mount
   useEffect(() => {
@@ -134,7 +144,7 @@ export default function ReportPage() {
 
   return (
     <>
-      {isAuthenticated ? (
+      {isLogin ? (
         <>
           {/* Form phản ánh */}
           <Dialog open={showFeedbackForm} onOpenChange={setShowFeedbackForm}>
@@ -342,7 +352,7 @@ export default function ReportPage() {
       ) : (
         <>
           <div className="flex flex-col items-center justify-center h-screen">
-            <h1 className="text-3xl font-bold mb-4">Bạn cần đăng nhập để truy cập trang này</h1>
+            <h1 className="text-3xl font-bold mb-4 text-center">Bạn cần đăng nhập để truy cập trang này</h1>
             <p className="text-gray-600 mb-6">Vui lòng đăng nhập để tiếp tục.</p>
             <Button onClick={handleLogin} className="bg-black hover:bg-gray-800 rounded-full">
               Đăng nhập

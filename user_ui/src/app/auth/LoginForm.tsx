@@ -108,12 +108,12 @@ export default function LoginForm({
                     <FormLabel className="text-slate-700 font-medium">
                       Mật khẩu
                     </FormLabel>
-                    <Link
+                    {/* <Link
                       href="#"
                       className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
                     >
                       Quên mật khẩu?
-                    </Link>
+                    </Link> */}
                   </div>
                   <FormControl>
                     <PasswordInput

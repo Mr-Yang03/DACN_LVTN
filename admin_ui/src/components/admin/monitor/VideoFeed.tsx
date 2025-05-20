@@ -52,7 +52,7 @@ export function VideoFeed({
           {isTestMode ? (
             <div className="relative w-full h-full flex items-center justify-center">
               <Image
-                src={`https://storage.googleapis.com/bucket_ggmap-456203/frame/frame_${currentFrameIndex}.jpg`}
+                src={`/frame/frame_${currentFrameIndex}.jpg`}
                 alt={`Test mode frame ${currentFrameIndex}`}
                 className="w-full h-full object-contain"
                 width={1280}

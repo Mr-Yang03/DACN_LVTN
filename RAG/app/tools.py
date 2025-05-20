@@ -217,7 +217,7 @@ retrieve_news_tool = StructuredTool.from_function(
 
 vector_search_feedbacks = MongoDBAtlasVectorSearch(
     embedding=embedding_model,
-    collection=client2.get_database("Feeback").get_collection("items_embedding"),
+    collection=client2.get_database("Feedback").get_collection("items_embedding"),
     index_name="feedback_vector_index",
 )
 
