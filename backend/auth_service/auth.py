@@ -75,7 +75,7 @@ async def check_username_exists(username: str) -> dict:
 @auth_router.post("/register")
 async def register_user(register_info: RegisterInfo) -> dict:
     if accounts_collection.find_one({"username": register_info.username}):
-        raise HTTPException(status_code=400, detail="Username đã tồn tại")
+        raise HTTPException(status_code=400, detail="Tên đăng nhập đã tồn tại")
 
     hashed_pw = pwd_context.hash(register_info.password)
     

@@ -84,7 +84,11 @@ async def register(request: Request):
             },
         )
     if response.status_code != 200:
-        raise HTTPException(status_code=400, detail="Register failed")
+        try:
+            error_detail = response.json().get("detail", "An error occurred")
+            raise HTTPException(status_code=response.status_code, detail=error_detail)
+        except ValueError:  # In case the response is not valid JSON
+            raise HTTPException(status_code=response.status_code, detail=f"Error: {response.text}")
     return {"message": "Register success!"}
 
 @app.put("/users/update")
@@ -717,7 +721,11 @@ async def admin_register(request: Request):
             },
         )
     if response.status_code != 200:
-        raise HTTPException(status_code=400, detail="Register failed")
+        try:
+            error_detail = response.json().get("detail", "An error occurred")
+            raise HTTPException(status_code=response.status_code, detail=error_detail)
+        except ValueError:  # In case the response is not valid JSON
+            raise HTTPException(status_code=response.status_code, detail=f"Error: {response.text}")
     return {"message": "Admin registration successful!"}
 
 if __name__ == "__main__":
