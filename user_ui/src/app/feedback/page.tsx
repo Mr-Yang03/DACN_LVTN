@@ -50,37 +50,15 @@ export default function ReportPage() {
   const [isLogin, setIsLogin] = useState(false);
 
   const itemsPerPage = 3 // Số lượng phản ánh hiển thị trên mỗi trang
+
   useEffect(
     () => {
-      // Kiểm tra xác thực từ context và localStorage
-      const checkAuthentication = () => {
-        const hasToken = sessionStorage.getItem("token") || localStorage.getItem("token");
-        if (hasToken || isAuthenticated) {
-          setIsLogin(true);
-        } else {
-          setIsLogin(false);
-        }
-      };
-      
-      checkAuthentication();
-      // Kiểm tra lại xác thực mỗi khi component render hoặc trạng thái isAuthenticated thay đổi
+      if(isAuthenticated){
+        setIsLogin(true);
+      }
+      else setIsLogin(false)
     }, [isAuthenticated]
   )
-  // Kiểm tra trạng thái đăng nhập khi window có focus (quay lại tab)
-  useEffect(() => {
-    const checkAuthOnFocus = () => {
-      const storedToken = sessionStorage.getItem("token") || localStorage.getItem("token");
-      if (storedToken && !isAuthenticated) {
-        // Nếu có token trong storage nhưng context chưa cập nhật, làm mới trang
-        window.location.reload();
-      }
-    };
-
-    window.addEventListener("focus", checkAuthOnFocus);
-    return () => {
-      window.removeEventListener("focus", checkAuthOnFocus);
-    };
-  }, [isAuthenticated]);
 
   // Load data on component mount
   useEffect(() => {
@@ -158,9 +136,10 @@ export default function ReportPage() {
     );
     return userData
   };
+
   const handleLogin = () => {
     setToken(null);
-    router.push("/auth");
+    window.location.href = "/auth";
   }
 
   return (
