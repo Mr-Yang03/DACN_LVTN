@@ -27,10 +27,11 @@ USER_SERVICE_URL = f"http://{HOST_IP}:8001"
 TRAFFIC_SERVICE_URL = f"http://{HOST_IP}:8002"
 FEEDBACK_SERVICE_URL = f"http://{HOST_IP}:8003"
 NEWS_SERVICE_URL = f"http://{HOST_IP}:8004"
-AGENT_SERVICE_URL = f"http://{HOST_IP}:8005"  # Assuming Agent service runs on port 8005
+AGENT_SERVICE_URL = f"http://{HOST_IP}:8005"
 
 CAMERA_SERVICE_URL = f"http://{HOST_IP}:8009"
-USERBOARD_SERVICE_URL = f"http://{HOST_IP}:8010"  # hoặc URL tương ứng nếu khác
+USERBOARD_SERVICE_URL = f"http://{HOST_IP}:8010"
+ADMIN_AGENT_SERVICE_URL = f"http://{HOST_IP}:5000"
 
 
 @app.post("/users/login")
@@ -513,6 +514,42 @@ async def chat_with_agent(prompt: str = Form(...)):
         try:
             response = await client.post(
                 f"{AGENT_SERVICE_URL}/chatbot/",
+                data={"prompt": prompt},
+                headers={"Content-Type": "application/x-www-form-urlencoded"}
+            )
+            
+            if response.status_code != 200:
+                raise HTTPException(
+                    status_code=response.status_code, 
+                    detail="Failed to get response from chatbot service"
+                )
+                
+            return response.json()
+        except httpx.RequestError as e:
+            # Kiểm tra nếu lỗi là do timeout
+            if isinstance(e, httpx.TimeoutException):
+                raise HTTPException(
+                    status_code=504, 
+                    detail="Chatbot service request timed out. The operation took too long to complete."
+                )
+            else:
+                raise HTTPException(
+                    status_code=503, 
+                    detail="Chatbot service unavailable. Please try again later."
+                )
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"An unexpected error occurred: {str(e)}"
+            )
+        
+# Agent Service Routes (Chatbot)
+@app.post("/admin/chatbot/")
+async def chat_with_agent(prompt: str = Form(...)):
+    async with httpx.AsyncClient(timeout=60.0) as client:  # Set timeout to 60 seconds
+        try:
+            response = await client.post(
+                f"{ADMIN_AGENT_SERVICE_URL}/chat/",
                 data={"prompt": prompt},
                 headers={"Content-Type": "application/x-www-form-urlencoded"}
             )

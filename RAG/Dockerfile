@@ -1,4 +1,4 @@
-FROM rag-agent:latest
+FROM python:3.11-slim
 # FROM chromadb/chroma:latest
 
 WORKDIR /app

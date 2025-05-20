@@ -7,7 +7,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from langchain_huggingface import HuggingFaceEmbeddings
 from pymongo import MongoClient
-from langchain.vectorstores import MongoDBAtlasVectorSearch
+from langchain_community.vectorstores import MongoDBAtlasVectorSearch
 
 # Load API keys from .env
 load_dotenv()
@@ -180,7 +180,7 @@ def retrieve_cameras(query: str) -> str:
 
 
 retrieve_cameras_tool = StructuredTool.from_function(
-    name="retrieve_documents",
+    name="vector_search_camera",
     description="Retrieve information related to traffic camera.",
     func=retrieve_cameras,
     args_schema=RetrieveDocumentsInput,
@@ -193,7 +193,7 @@ retrieve_cameras_tool = StructuredTool.from_function(
 vector_search_news = MongoDBAtlasVectorSearch(
     embedding=embedding_model,
     collection=client2.get_database("News").get_collection("items_embedding"),
-    index_name="vector_index",
+    index_name="news_vector_index",
 )
 
 
@@ -205,7 +205,7 @@ def retrieve_news(query: str) -> str:
 
 
 retrieve_news_tool = StructuredTool.from_function(
-    name="retrieve_documents",
+    name="retrieve_news_tool",
     description="Retrieve information related to traffic news.",
     func=retrieve_news,
     args_schema=RetrieveDocumentsInput,
@@ -218,7 +218,7 @@ retrieve_news_tool = StructuredTool.from_function(
 vector_search_feedbacks = MongoDBAtlasVectorSearch(
     embedding=embedding_model,
     collection=client2.get_database("Feeback").get_collection("items_embedding"),
-    index_name="vector_index",
+    index_name="feedback_vector_index",
 )
 
 
@@ -230,7 +230,7 @@ def retrieve_feedbacks(query: str) -> str:
 
 
 retrieve_feedbacks_tool = StructuredTool.from_function(
-    name="retrieve_documents",
+    name="retrieve_feedbacks_tool",
     description="Retrieve information related to user's feedback and reflection about traffic.",
     func=retrieve_feedbacks,
     args_schema=RetrieveDocumentsInput,
