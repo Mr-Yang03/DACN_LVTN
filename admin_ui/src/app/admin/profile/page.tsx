@@ -63,13 +63,12 @@ export default function ProfilePage() {
 
   const adminData = () => {
     const adminData = JSON.parse(
-      localStorage.getItem("admin_data") || "{}"
+      localStorage.getItem("user_data") || "{}"
     );
     return adminData
   };
-  console.log(adminData())
   const [admin, setAdmin] = useState<AdminInfo>({
-    account_id: adminData().account_id,
+    account_id: adminData().account_id || adminData()._id,
     username: adminData().username,
     full_name: adminData().full_name,
     date_of_birth: adminData().date_of_birth,
@@ -105,7 +104,7 @@ export default function ProfilePage() {
       if (response && response.data) {
         setIsSuccess(true);
         setAdmin(response.data);
-        localStorage.setItem("admin_data", JSON.stringify(response.data));
+        localStorage.setItem("user_data", JSON.stringify(response.data));
         toast?.({
           title: "Cập nhật thông tin thành công",
           variant: "default"
@@ -210,7 +209,7 @@ export default function ProfilePage() {
       const response = await updateAvatar(adminData()._id, imageUrl);
       if (response && response.data) {
         setAdmin({ ...admin, avatar: imageUrl });
-        localStorage.setItem("admin_data", JSON.stringify({ ...adminData(), avatar: imageUrl }));
+        localStorage.setItem("user_data", JSON.stringify({ ...adminData(), avatar: imageUrl }));
         toast?.({
           title: "Cập nhật ảnh đại diện thành công",
           variant: "default"
