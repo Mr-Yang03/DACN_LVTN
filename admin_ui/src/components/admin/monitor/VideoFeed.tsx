@@ -52,12 +52,13 @@ export function VideoFeed({
           {isTestMode ? (
             <div className="relative w-full h-full flex items-center justify-center">
               <Image
-                src={`/frame/frame_${currentFrameIndex}.jpg`}
+                src={`/frame/frame_${currentFrameIndex}.jpg?t=${Date.now()}`}
                 alt={`Test mode frame ${currentFrameIndex}`}
                 className="w-full h-full object-contain"
                 width={1280}
                 height={720}
                 priority
+                unoptimized={true}
                 onError={(e) => {
                   console.error("Error loading frame", currentFrameIndex);
                 }}
