@@ -277,7 +277,7 @@ export default function FeedbackTable( username: { username: string } ) {
                     className="flex flex-wrap gap-4 flex-row"
                 >
                     <div className="flex-1">
-                        <Label htmlFor="severity">Mức độ nghiêm trọng</Label>
+                        <Label htmlFor="severity" className="truncate max-w-[120px] md:max-w-none">Mức độ nghiêm trọng</Label>
                         <div
                             className="mt-2"
                         >
@@ -383,7 +383,7 @@ export default function FeedbackTable( username: { username: string } ) {
                                 <ArrowUpDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </TableHead>
-                            <TableHead className="text-black text-center w-1/10">
+                            <TableHead className="text-black text-center w-1/10" >
                                 <Button variant="ghost" onClick={() => handleSort('severity')}>
                                 Mức độ nghiêm trọng
                                 <ArrowUpDown className="ml-2 h-4 w-4" />

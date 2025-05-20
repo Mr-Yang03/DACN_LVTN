@@ -63,7 +63,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const data = localStorage.getItem("admin_data");
+      const data = localStorage.getItem("user_data");
       if (data) {
         setAdmin(JSON.parse(data));
       }
@@ -100,7 +100,7 @@ export default function ProfilePage() {
       if (response && response.data) {
         setIsSuccess(true);
         setAdmin(response.data);
-        localStorage.setItem("admin_data", JSON.stringify(response.data));
+        localStorage.setItem("user_data", JSON.stringify(response.data));
         toast?.({
           title: "Cập nhật thông tin thành công",
           variant: "default"
@@ -214,7 +214,7 @@ export default function ProfilePage() {
       const response = await updateAvatar(admin.account_id, imageUrl);
       if (response && response.data) {
         setAdmin({ ...admin, avatar: imageUrl });
-        localStorage.setItem("admin_data", JSON.stringify({ ...admin, avatar: imageUrl }));
+        localStorage.setItem("user_data", JSON.stringify({ ...admin, avatar: imageUrl }));
         toast?.({
           title: "Cập nhật ảnh đại diện thành công",
           variant: "default"
