@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -39,7 +39,9 @@ import { useRouter } from "next/navigation";
 import { LocationPicker } from "@/app/feedback/location-picker";
 import { feedbackSchema } from "@/validations/feedbackSchema";
 import { toast } from "@/components/ui/use-toast";
-import { sendFeedback, uploadFeedbackFiles } from "@/apis/feedbackApi";
+import { updateFeedback, uploadFeedbackFiles, getFeedback } from "@/apis/feedbackApi";
+import { useToast } from "@/hooks/use-toast";
+import { parse } from "date-fns";
 
 type FeedbackFormValues = z.infer<typeof feedbackSchema>;
 
@@ -58,27 +60,42 @@ const getCurrentTime = () => {
   return `${hours}:${minutes}`;
 };
 
-export function ReportForm({ 
-  username, 
-  userFullName, 
-  phoneNumber,
-  onSubmitSuccess 
-}: { 
-  username: any, 
-  userFullName: any, 
-  phoneNumber: any,
-  onSubmitSuccess?: () => void 
-}) {
+interface ModifyReportProps {
+  id: string;
+  onSubmitSuccess?: () => void;
+}
+
+export function ModifyReport({ id, onSubmitSuccess }: ModifyReportProps ) {
+  console.log(id);
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(true);
+  const [originalImageUrl, setOriginalImageUrl] = useState<string[] | null>(null);
+  
+  const [feedbackItem, setFeedbackItem] = useState({
+      _id: "",
+      title: "",
+      location: "",
+      type: "",
+      severity: "",
+      description: "",
+      images: [],
+      author: "",
+      author_username: "",
+      phone_number: "",
+      email: "",
+      date: "",
+      time: "",
+  })
 
   const form = useForm<FeedbackFormValues>({
     resolver: zodResolver(feedbackSchema),
     defaultValues: {
-      fullName: `${userFullName}`,
+      fullName: "",
       email: "",
-      phone: `${phoneNumber}`,
+      phone: "",
       location: {
         lat: 0,
         lng: 0,
@@ -88,15 +105,59 @@ export function ReportForm({
       issueType: "",
       severity: "low",
       description: "",
+      attachments: [],
     },
   });
+
+  useEffect(() => {
+    const fetchFeedback = async () => {
+      try {
+        setIsLoading(true);
+
+        const data = await getFeedback(id);
+        if (data) {
+          setFeedbackItem(data.data);
+          setOriginalImageUrl(data.data.images);
+          form.reset({
+            fullName: data.data.author,
+            email: data.data.email,
+            phone: data.data.phone_number,
+            location: {
+              lat: Number(data.data.location.split(",")[0]),
+              lng: Number(data.data.location.split(",")[1]),
+            },
+            date: parse(data.data.date, "dd-MM-yyyy", new Date()),
+            time: data.data.time,
+            issueType: data.data.type,
+            severity: data.data.severity === "Nhẹ" ? "low" :
+                      data.data.severity === "Trung bình" ? "medium" : "high",
+            description: data.data.description,
+            // attachments: data.data.images,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching feedback:", error);
+        toast({
+          title: "Lỗi",
+          description: "Không thể tải phản ánh. Vui lòng thử lại sau.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchFeedback();
+  }, [id, form, toast]);
+
+  console.log("Feedback data:", feedbackItem);
 
   async function onSubmit(values: FeedbackFormValues) {
     setIsSubmitting(true);
     console.log("Form values on submit:", values);
 
     // Array to store uploaded file URLs
-    let uploadedFileUrls: string[] = [];
+    let uploadedFileUrls = originalImageUrl || [];
 
     // Process files if present
     if (values.attachments && values.attachments.length > 0) {
@@ -163,29 +224,24 @@ export function ReportForm({
                 values.issueType === 'traffic_light' ? 'đèn tín hiệu hỏng' :
                 values.issueType === 'flooding' ? 'ngập nước' : 'vấn đề khác'}`,
         location: `${values.location.lat}, ${values.location.lng}`, // Convert location object to string format
-        type: values.issueType === 'traffic_jam' ? 'Ùn tắc giao thông' : 
-              values.issueType === 'accident' ? 'Tai nạn' : 
-              values.issueType === 'construction' ? 'Công trình đang thi công' :
-              values.issueType === 'road_damage' ? 'Hư hỏng đường' :
-              values.issueType === 'traffic_light' ? 'Đèn tín hiệu hỏng' :
-              values.issueType === 'flooding' ? 'Ngập nước' : 'Khác',
+        type: values.issueType,
         severity: values.severity === 'low' ? 'Nhẹ' : 
                   values.severity === 'medium' ? 'Trung bình' : 'Nghiêm trọng',
         description: values.description,
         images: uploadedFileUrls,
-        author: userFullName, 
-        author_username: username,
-        phone_number: phoneNumber,
+        author: values.fullName, 
+        author_username: feedbackItem.author_username,
+        phone_number: values.phone,
         email: values.email,
         date: format(values.date, "dd-MM-yyyy"),
         time: values.time,
       };
 
-      const response = await sendFeedback(feedbackData);      
+      const response = await updateFeedback(feedbackItem._id, feedbackData);      
       if (response) {
         setIsSuccess(true);
         toast?.({
-          title: "Phản ánh đã được gửi",
+          title: "Phản ánh đã được cập nhật",
           description: "Cảm ơn bạn đã phản ánh về tình trạng giao thông.",
           variant: "default"
         });
@@ -224,7 +280,7 @@ export function ReportForm({
                 <FormItem>
                   <FormLabel>Họ tên</FormLabel>
                   <FormControl>
-                    <Input placeholder={userFullName} {...field}/>
+                    <Input placeholder="Họ và tên" {...field}/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -237,7 +293,7 @@ export function ReportForm({
                 <FormItem>
                   <FormLabel>Số điện thoại</FormLabel>
                   <FormControl>
-                    <Input placeholder={phoneNumber} {...field}/>
+                    <Input placeholder="Số điện thoại" {...field}/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -345,6 +401,7 @@ export function ReportForm({
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
+                    value={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -352,17 +409,17 @@ export function ReportForm({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="traffic_jam">Tắc đường</SelectItem>
-                      <SelectItem value="accident">Tai nạn giao thông</SelectItem>
-                      <SelectItem value="construction">
+                      <SelectItem value="Tắc đường">Tắc đường</SelectItem>
+                      <SelectItem value="Tai nạn giao thông">Tai nạn giao thông</SelectItem>
+                      <SelectItem value="Công trình đang thi công">
                         Công trình đang thi công
                       </SelectItem>
-                      <SelectItem value="road_damage">Hư hỏng đường</SelectItem>
-                      <SelectItem value="traffic_light">
+                      <SelectItem value="Hư hỏng đường">Hư hỏng đường</SelectItem>
+                      <SelectItem value="Đèn tín hiệu hỏng">
                         Đèn tín hiệu hỏng
                       </SelectItem>
-                      <SelectItem value="flooding">Ngập nước</SelectItem>
-                      <SelectItem value="other">Khác</SelectItem>
+                      <SelectItem value="Ngập nước">Ngập nước</SelectItem>
+                      <SelectItem value="Khác">Khác</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -380,6 +437,7 @@ export function ReportForm({
                     <RadioGroup
                       onValueChange={field.onChange}
                       defaultValue={field.value}
+                      value={field.value}
                       className="flex space-x-4"
                     >
                       <FormItem className="flex items-center space-x-2 space-y-0">

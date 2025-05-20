@@ -55,6 +55,11 @@ export const sendFeedback = async (feedbackData: FeedbackArticle) => {
     return response.data;
 }
 
+export const updateFeedback = async (id: string, feedbackData: FeedbackArticle) => {
+    const response = await api.put(`/feedback/${id}`, feedbackData);
+    return response.data;
+}
+
 // Upload multiple images/videos for feedback
 export const uploadFeedbackFiles = async (files: File[]) => {
   try {

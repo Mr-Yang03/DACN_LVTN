@@ -33,6 +33,14 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { deleteFeedback, getFeedbackByUsername } from "@/apis/feedbackApi";
 import { useRouter } from 'next/navigation';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { ModifyReport } from "./ModifyReport";
 
 export default function FeedbackTable( username: { username: string } ) {
     const [sortColumn, setSortColumn] = useState<string | null>(null);
@@ -51,6 +59,8 @@ export default function FeedbackTable( username: { username: string } ) {
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
     const [deleteId, setDeleteId] = useState<string | null>(null);
+    const [showFeedbackForm, setShowFeedbackForm] = useState(false)
+    const [selectedFeedback, setSelectedFeedback] = useState<any>(null);
 
     const itemsPerPage = 5 // Số lượng phản ánh hiển thị trên mỗi trang
 
@@ -421,9 +431,17 @@ export default function FeedbackTable( username: { username: string } ) {
                                             <DropdownMenuContent align="end">
                                                 <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
                                                 <DropdownMenuItem onClick={() => router.push(`/feedback/${feedback._id}`)}>
-                                                    <Edit className="mr-2 h-4 w-4" />
+                                                    <Eye className="mr-2 h-4 w-4" />
                                                     Xem chi tiết
                                                 </DropdownMenuItem>
+                                                <DropdownMenuItem onClick={() => {
+                                                    setShowFeedbackForm(true)
+                                                    setSelectedFeedback(feedback);
+                                                }}>
+                                                    <Edit className="mr-2 h-4 w-4" />
+                                                    Chỉnh sửa
+                                                </DropdownMenuItem>
+                                                
                                                 <AlertDialog open={deleteId === feedback._id} onOpenChange={(isOpen: boolean) => !isOpen && setDeleteId(null)}>
                                                     <AlertDialogTrigger asChild>
                                                         <DropdownMenuItem
@@ -467,6 +485,30 @@ export default function FeedbackTable( username: { username: string } ) {
                     </TableBody>
                 </Table>
             </div>
+
+            {/* Form phản ánh */}
+            {selectedFeedback && (
+                <Dialog open={showFeedbackForm} onOpenChange={setShowFeedbackForm}>
+                    <DialogContent className="bg-white border-gray-200 text-gray-800 max-w-4xl max-h-[90vh] overflow-y-auto">
+                        <VisuallyHidden>
+                            <DialogTitle>Hidden Title</DialogTitle>
+                        </VisuallyHidden>
+                        <DialogHeader>
+                            <div className="text-3xl font-bold text-center p-4">
+                                Phản ánh tình trạng giao thông
+                            </div>
+                            <div className="text-center text-gray-800">
+                                Gửi thông tin phản ánh về tình trạng giao thông để giúp chúng tôi cải thiện hệ thống giám sát
+                            </div>
+                        </DialogHeader>
+                        <div className="flex w-full my-4 items-center justify-center">
+                            <div className="px-4">
+                                <ModifyReport id={selectedFeedback._id} onSubmitSuccess={() => setShowFeedbackForm(false)}/>
+                            </div>
+                        </div>
+                    </DialogContent>
+                </Dialog>
+            )}                                    
 
             {/* Pagination */}
             {

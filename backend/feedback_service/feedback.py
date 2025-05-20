@@ -270,6 +270,30 @@ async def create_feedback(feedback: dict = Body(...)):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@feedback_router.put("/feedback/{item_id}")
+async def update_feedback(item_id: str, feedback: dict = Body(...)):
+    """
+    Cập nhật phản ánh theo ID
+    """
+    try:
+        # Tìm phản ánh theo ID
+        item = items_collection.find_one({"_id": ObjectId(item_id)})
+        
+        if not item:
+            raise HTTPException(status_code=404, detail="Item không tồn tại")
+        
+        # Cập nhật thông tin
+        feedback["updated_at"] = datetime.utcnow()
+        result = items_collection.update_one({"_id": ObjectId(item_id)}, {"$set": feedback})
+        
+        if result.modified_count == 1:
+            return {"status": "success", "message": "Phản ánh đã được cập nhật thành công"}
+        else:
+            return {"status": "error", "message": "Không có thay đổi nào được thực hiện"}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @feedback_router.post("/feedback/upload")
 async def upload_feedback_files(files: List[UploadFile] = File(...)):

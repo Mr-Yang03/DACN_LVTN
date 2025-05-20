@@ -473,6 +473,17 @@ async def upload_feedback_image(request: Request):
 
     return response.json()
 
+@app.put("/feedback/{feedback_id}")
+async def update_feedback(feedback_id: str, request: Request):
+    body = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.put(f"{FEEDBACK_SERVICE_URL}/feedback/{feedback_id}", json=body)
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=404, detail="Feedback not found or failed to update")
+
+    return response.json()
+
 @app.delete("/feedback/{feedback_id}")
 async def delete_feedback(feedback_id: str):
     async with httpx.AsyncClient() as client:
@@ -482,22 +493,6 @@ async def delete_feedback(feedback_id: str):
         raise HTTPException(status_code=404, detail="Feedback not found or failed to delete")
 
     return response.json()
-
-# count feedback
-# @app.post("/feedback/count-by")
-
-# async def proxy_feedback_count(payload: List[Dict[str, str]]):
-#     try:
-#         async with httpx.AsyncClient() as client:
-#             response = await client.post(f"{FEEDBACK_SERVICE_URL}/feedback/count-by", json=payload)
-
-#         if response.status_code != 200:
-#             raise HTTPException(status_code=response.status_code, detail="Service error")
-
-#         return response.json()
-#     except Exception as e:
-#         print("Gateway error forwarding to feedback:", e)
-#         raise HTTPException(status_code=500, detail="Gateway error")
 
 @app.post("/feedback/count-by")
 async def proxy_feedback_count(payload: List[Dict[str, str]]):
