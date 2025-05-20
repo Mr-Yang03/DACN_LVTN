@@ -199,7 +199,7 @@ export default function ReportPage() {
               className="flex flex-row flex-wrap gap-4 justify-between"
             >
               <div className="flex-1">
-                <Label htmlFor="severity">Mức độ nghiêm trọng</Label>
+                <Label htmlFor="severity" className="truncate max-w-[120px] md:max-w-none">Mức độ nghiêm trọng</Label>
                 <div
                   className="mt-2"
                 >

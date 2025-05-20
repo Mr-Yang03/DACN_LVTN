@@ -521,7 +521,7 @@ export function ModifyReport({ id, onSubmitSuccess }: ModifyReportProps ) {
 
         <div className="flex justify-end ">
           <Button type="submit" disabled={isSubmitting} className="shadow-lg">
-            {isSubmitting ? "Đang gửi..." : "Gửi phản ánh"}
+            {isSubmitting ? "Đang gửi..." : "Cập nhật"}
           </Button>
         </div>
       </form>

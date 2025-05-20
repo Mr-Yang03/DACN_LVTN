@@ -109,13 +109,13 @@ export function SiteHeader() {
           </Link>
           {isAuthenticated ? (
             <Link
-              href="/"
+              href="/user"
               className="text-white hover:text-gray-400 py-2 px-4 block"
-              onClick={() => {
-                setToken(null);
-              }}
+              // onClick={() => {
+              //   setToken(null);
+              // }}
             >
-              Đăng xuất
+              {/* Đăng xuất */}Hồ sơ
             </Link>
           ) : (
             <Link

@@ -69,7 +69,7 @@ export default function ProfilePage() {
     return userData
   };
 
-  const [user, setUser] = useState<UserInfo>({
+   const [user, setUser] = useState<UserInfo>({
     account_id: userData()._id || userData().account_id || "", // Handle missing account_id
     username: userData().username || "",
     full_name: userData().full_name || "",

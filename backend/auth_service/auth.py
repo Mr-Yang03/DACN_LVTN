@@ -39,6 +39,12 @@ class UserInfo(BaseModel):
     phone_number: str
     license_number: str | None = None
 
+class AdminInfo(BaseModel):
+    full_name: str
+    date_of_birth: str
+    phone_number: str
+    citizen_id: str
+
 class RegisterInfo(BaseModel):
     username: str
     password: str
@@ -152,25 +158,26 @@ async def admin_login(login_info: LoginInfo) -> dict:
     if account["status"] != "active":
         raise HTTPException(status_code=401, detail="Tài khoản đã bị khóa")
     
-    # Xác minh đây là tài khoản admin
-    if account["account_type"] != "admin":
-        raise HTTPException(status_code=403, detail="Không có quyền truy cập. Chỉ admin mới được phép đăng nhập.")
-    
     # Lấy thông tin admin
     admin_data = {
         "username": account["username"],
+        "account_id": account["_id"],
+        "status": account["status"],
         "account_type": account["account_type"],
-        "status": account["status"]
+        "avatar": account["avatar"]
     }
     
-    admin = admins_collection.find_one({"account_id": account["_id"]})
-    if admin:
-        admin_data.update({
-            "full_name": admin["full_name"],
-            "date_of_birth": admin["date_of_birth"],
-            "phone_number": admin["phone_number"],
-            "citizen_id": admin.get("citizen_id")
-        })
+    if account["account_type"] == "admin":
+        admin = admins_collection.find_one({"account_id": account["_id"]})
+        if admin:
+            admin_data.update({
+                "full_name": admin["full_name"],
+                "date_of_birth": admin["date_of_birth"],
+                "phone_number": admin["phone_number"],
+                "citizen_id": admin["citizen_id"]
+            })
+
+    admin_data = objectid_to_str(admin_data)
     
     return admin_data
 
@@ -186,7 +193,8 @@ async def register_admin(register_info: AdminRegisterInfo) -> dict:
         "username": register_info.username,
         "password": hashed_pw,
         "account_type": "admin",
-        "status": "active"
+        "status": "active", 
+        "avatar": ""
     }
     
     account_result = accounts_collection.insert_one(new_account)
@@ -209,7 +217,7 @@ async def register_admin(register_info: AdminRegisterInfo) -> dict:
         "account_type": "admin"
     }
 
-@auth_router.put("/update") 
+@auth_router.put("/user/update") 
 async def update_user_info(
     account_id: str = Query(...),
     user_info: UserInfo = Body(...)
@@ -233,6 +241,9 @@ async def update_user_info(
     updated_user = {
         "account_id": str(account["_id"]),
         "username": account["username"],
+        "account_type": account["account_type"],
+        "status": account["status"],
+        "avatar": account["avatar"],
         "full_name": user_info.full_name,
         "date_of_birth": user_info.date_of_birth,
         "phone_number": user_info.phone_number,
@@ -240,6 +251,41 @@ async def update_user_info(
     }
     
     return {"status": "success", "message": "Thông tin đã được cập nhật", "data": updated_user}
+
+@auth_router.put("/admin/update")
+async def update_admin_info(
+    account_id: str = Query(...),
+    admin_info: AdminInfo = Body(...)
+) -> dict:
+    account = accounts_collection.find_one({"_id": ObjectId(account_id)})
+    
+    if not account:
+        raise HTTPException(status_code=404, detail="Tài khoản không tồn tại")
+    
+    # Cập nhật thông tin admin
+    admins_collection.update_one(
+        {"account_id": account["_id"]},
+        {"$set": {
+            "full_name": admin_info.full_name,
+            "date_of_birth": admin_info.date_of_birth,
+            "phone_number": admin_info.phone_number,
+            "citizen_id": admin_info.citizen_id
+        }}
+    )
+
+    updated_admin = {
+        "account_id": str(account["_id"]),
+        "username": account["username"],
+        "account_type": account["account_type"],
+        "status": account["status"],
+        "avatar": account["avatar"],
+        "full_name": admin_info.full_name,
+        "date_of_birth": admin_info.date_of_birth,
+        "phone_number": admin_info.phone_number,
+        "citizen_id": admin_info.citizen_id
+    }
+    
+    return {"status": "success", "message": "Thông tin đã được cập nhật", "data": updated_admin}
 
 @auth_router.post("/avatar/upload")
 async def upload_avatar(file: UploadFile = File(...)):

@@ -51,7 +51,7 @@ export default function LoginForm({
     try {
       const data = await login(values.username, values.password);
       setToken(data.access_token);
-      localStorage.setItem("user_data", JSON.stringify(data.user));
+      localStorage.setItem("admin_data", JSON.stringify(data.admin));
 
       if (values.remember) {
         localStorage.setItem("token", data.access_token);
