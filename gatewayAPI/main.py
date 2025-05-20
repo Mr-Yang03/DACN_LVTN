@@ -84,7 +84,11 @@ async def register(request: Request):
             },
         )
     if response.status_code != 200:
-        raise HTTPException(status_code=400, detail="Register failed")
+        try:
+            error_detail = response.json().get("detail", "An error occurred")
+            raise HTTPException(status_code=response.status_code, detail=error_detail)
+        except ValueError:  # In case the response is not valid JSON
+            raise HTTPException(status_code=response.status_code, detail=f"Error: {response.text}")
     return {"message": "Register success!"}
 
 @app.put("/users/update")
@@ -736,6 +740,48 @@ async def proxy_reset_password(account_id: str, request: Request):
     if response.status_code != 200:
         raise HTTPException(status_code=response.status_code, detail="Failed to reset password")
     return {"status": "success", "message": "Password reset successfully"}
+
+
+@app.post("/admin/login")
+async def admin_login(request: Request):
+    body = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            f"{USER_SERVICE_URL}/admin/login",
+            json={"username": body.get("username"), "password": body.get("password")},
+        )
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    user_data = response.json()
+    access_token = create_access_token(
+        data={
+            "sub": user_data["username"],
+            "account_type": user_data["account_type"]
+        }, 
+        expires_delta=timedelta(minutes=60)
+    )
+    return {"access_token": access_token, "token_type": "bearer", "user": user_data}
+
+@app.post("/admin/register")
+async def admin_register(request: Request):
+    body = await request.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            f"{USER_SERVICE_URL}/admin/register",
+            json={
+                "username": body.get("username"),
+                "password": body.get("password"),
+                "full_name": body.get("full_name"),
+                "date_of_birth": body.get("date_of_birth"),
+                "phone_number": body.get("phone_number"),
+                "citizen_id": body.get("citizen_id"),
+            },
+        )
+    if response.status_code != 200:
+        raise HTTPException(status_code=400, detail="Register failed")
+    return {"message": "Admin registration successful!"}
 
 if __name__ == "__main__":
     import uvicorn

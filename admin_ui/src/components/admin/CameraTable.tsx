@@ -139,7 +139,7 @@ const CameraTable: React.FC<CameraTableProps> = ({ cameras, onEditCamera, onDele
               ) : (
                 <TableRow>
                   <TableCell colSpan={4} className="text-center text-sm text-muted-foreground">
-                    Không tìm thấy camera phù hợp.
+                    {/* Không tìm thấy camera phù hợp. */}
                   </TableCell>
                 </TableRow>
               )}

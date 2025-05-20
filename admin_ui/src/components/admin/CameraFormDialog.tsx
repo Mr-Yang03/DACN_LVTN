@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -30,21 +29,25 @@ const CameraFormDialog: React.FC<CameraFormDialogProps> = ({
 }) => {
   const { isLoaded } = useGoogleMapsScript();
 
+  // Default coordinates for District 10, Ho Chi Minh City
+  const defaultLat = 10.7747;
+  const defaultLng = 106.6676;
+
   const [title, setTitle] = useState("");
   const [code, setCode] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [camStatus, setCamStatus] = useState("UP");
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(defaultLat);
+  const [longitude, setLongitude] = useState(defaultLng);
   const [angle, setAngle] = useState(0);
   const [managementUnit, setManagementUnit] = useState("");
-  const [district, setDistrict] = useState("");
+  const [district, setDistrict] = useState("Quận 10");
   const [snapshotUrl, setSnapshotUrl] = useState("");
   const [ptz, setPtz] = useState(false);
   const [camType, setCamType] = useState("");
   const [position, setPosition] = useState<{ lat: number; lng: number }>({
-    lat: 0,
-    lng: 0,
+    lat: defaultLat,
+    lng: defaultLng,
   });
 
   useEffect(() => {
@@ -66,11 +69,11 @@ const CameraFormDialog: React.FC<CameraFormDialogProps> = ({
       setCode("");
       setDisplayName("");
       setCamStatus("UP");
-      setLatitude(0);
-      setLongitude(0);
+      setLatitude(defaultLat);
+      setLongitude(defaultLng);
       setAngle(0);
       setManagementUnit("");
-      setDistrict("");
+      setDistrict("Quận 10");
       setSnapshotUrl("");
       setPtz(false);
       setCamType("");
@@ -135,7 +138,6 @@ const CameraFormDialog: React.FC<CameraFormDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
-
         <DialogHeader>
           <DialogTitle>{initialData ? "Chỉnh sửa Camera" : "Thêm Camera"}</DialogTitle>
         </DialogHeader>
@@ -144,7 +146,6 @@ const CameraFormDialog: React.FC<CameraFormDialogProps> = ({
           {/* Map bên trái */}
           {/* <div className="w-full md:w-3/5 min-h-[400px] aspect-[4/3] rounded-lg overflow-hidden"> */}
           <div className="w-full md:w-3/5 aspect-[4/3] min-h-[300px] md:min-h-[500px] rounded-lg overflow-hidden">
-
             {isLoaded && (
               <GoogleMap
                 mapContainerStyle={{ width: "100%", height: "100%" }}

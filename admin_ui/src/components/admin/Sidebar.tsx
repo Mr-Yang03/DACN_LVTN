@@ -39,8 +39,8 @@ export function Sidebar() {
       label: "Phản ánh",
       href: "/admin/feedback",
     },
-    { icon: <Activity size={20} />, label: "Giám sát", href: "/admin/monitor" },
     { icon: <Video size={20} />, label: "Camera", href: "/admin/cameras" },
+    { icon: <Activity size={20} />, label: "Giám sát", href: "/admin/monitor" },
     { icon: <Bot size={20} />, label: "Chatbot", href: "/admin/chatbot" },
     { icon: <User size={20} />, label: "Hồ sơ", href: "/admin/profile" },
   ];

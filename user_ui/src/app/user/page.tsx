@@ -68,16 +68,17 @@ export default function ProfilePage() {
     );
     return userData
   };
-  console.log(userData())
-  const [user, setUser] = useState<UserInfo>({
-    account_id: userData().account_id,
-    username: userData().username,
-    full_name: userData().full_name,
-    date_of_birth: userData().date_of_birth,
-    phone_number: userData().phone_number,
-    license_number: userData().license_number,
-    avatar: userData().avatar
+
+   const [user, setUser] = useState<UserInfo>({
+    account_id: userData()._id || userData().account_id || "", // Handle missing account_id
+    username: userData().username || "",
+    full_name: userData().full_name || "",
+    date_of_birth: userData().date_of_birth || "",
+    phone_number: userData().phone_number || "",
+    license_number: userData().license_number || "",
+    avatar: userData().avatar || ""
   })
+
 
   const handleSignOut = () => {
     // Handle sign out logic here
@@ -85,22 +86,23 @@ export default function ProfilePage() {
     // Redirect to login page after sign out
     router.push("/auth")
   }
-
   const onSubmit = async () => {
-    console.log(user)
+
     try {
       // Call your API to update user information
       setIsSubmitting(true)
       const userInfo = user
-      if (!user.full_name || !user.date_of_birth || !user.phone_number || !user.license_number) {
+      if (!user.full_name || !user.date_of_birth || !user.phone_number) {
         toast?.({
           title: "Có lỗi xảy ra",
-          description: "Vui lòng điền đầy đủ thông tin",
+          description: "Vui lòng điền họ tên, ngày sinh và số điện thoại",
           variant: "destructive"
         });
         return
       }
-      const response = await updateUserInfo(userInfo.account_id, userInfo.full_name, userInfo.date_of_birth, userInfo.phone_number, userInfo.license_number);
+      // Số GPLX có thể để trống
+      const license = user.license_number || "";
+      const response = await updateUserInfo(userInfo.account_id, userInfo.full_name, userInfo.date_of_birth, userInfo.phone_number, license);
       if (response && response.data) {
         setIsSuccess(true);
         setUser(response.data);
@@ -136,9 +138,11 @@ export default function ProfilePage() {
   const handleAvatarClick = () => {
     fileInputRef.current?.click()
   }
-
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
+      // Set loading state
+      setIsUploading(true);
+      
       // Process featured image if present
       let imageUrl = "";
       if (e.target.files && e.target.files.length > 0) {
@@ -243,17 +247,24 @@ export default function ProfilePage() {
                       <AvatarFallback>
                         <User className="h-16 w-16" />
                       </AvatarFallback>
-                    </Avatar>
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                      {/* <Button 
+                    </Avatar>                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button 
                         variant="ghost" 
                         size="sm" 
                         className="text-white"
                         onClick={handleAvatarClick}
                         disabled={isUploading}
                       >
-                        {isUploading ? "Đang tải..." : "Thay đổi"}
-                      </Button> */}
+                        {isUploading ? (
+                          <span className="flex items-center">
+                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Đang tải...
+                          </span>
+                        ) : "Thay đổi ảnh"}
+                      </Button>
                       <input
                         type="file"
                         ref={fileInputRef}
@@ -275,15 +286,13 @@ export default function ProfilePage() {
                 </Button>
               </div>
 
-              <Separator />
-
-              {/* Personal information form */}
+              <Separator />              {/* Personal information form */}
               <div>
-                <h3 className="text-xl font-semibold mb-6">Thông tin cá nhân</h3>
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div className="space-y-2">
+                <h3 className="text-xl font-semibold mb-2">Thông tin cá nhân</h3>
+                <p className="text-sm text-muted-foreground mb-4">Các trường đánh dấu <span className="text-red-500">*</span> là bắt buộc</p>
+                <div className="grid gap-6 md:grid-cols-2">                  <div className="space-y-2">
                     <Label htmlFor="name" className="text-base">
-                      Họ và tên
+                      Họ và tên <span className="text-sm text-red-500">*</span>
                     </Label>
                     <div className="flex">
                       <User className="mr-2 h-4 w-4 opacity-70 my-auto" />
@@ -292,12 +301,12 @@ export default function ProfilePage() {
                         defaultValue={userData().full_name}
                         onChange={(e) => setUser({ ...user, full_name: e.target.value })}
                         className="bg-background"
+                        required
                       />
                     </div>
-                  </div>
-                  <div className="space-y-2">
+                  </div>                  <div className="space-y-2">
                     <Label htmlFor="date" className="text-base">
-                      Ngày sinh
+                      Ngày sinh <span className="text-sm text-red-500">*</span>
                     </Label>
                     <div className="flex">
                       <Calendar className="mr-2 h-4 w-4 opacity-70 my-auto" />
@@ -307,12 +316,12 @@ export default function ProfilePage() {
                         defaultValue={formatDateForInput(userData().date_of_birth)}
                         onChange={(e) => setUser({ ...user, date_of_birth: e.target.value })}
                         className="bg-background"
+                        required
                       />
                     </div>
-                  </div>
-                  <div className="space-y-2">
+                  </div>                  <div className="space-y-2">
                     <Label htmlFor="phone" className="text-base">
-                      Số điện thoại
+                      Số điện thoại <span className="text-sm text-red-500">*</span>
                     </Label>
                     <div className="flex">
                       <Phone className="mr-2 h-4 w-4 opacity-70 my-auto" />
@@ -322,20 +331,21 @@ export default function ProfilePage() {
                         defaultValue={userData().phone_number}
                         onChange={(e) => setUser({ ...user, phone_number: e.target.value })}
                         className="bg-background"
+                        required
                       />
                     </div>
-                  </div>
-                  <div className="space-y-2">
+                  </div><div className="space-y-2">
                     <Label htmlFor="address" className="text-base">
-                      Số GPLX
+                      Số GPLX <span className="text-sm text-muted-foreground">(tùy chọn)</span>
                     </Label>
                     <div className="flex">
                       <IdCard className="mr-2 h-4 w-4 opacity-70 my-auto" />
                       <Input
                         id="license"
-                        defaultValue={userData().license_number}
+                        defaultValue={userData().license_number || ""}
                         onChange={(e) => setUser({ ...user, license_number: e.target.value })}
                         className="bg-background"
+                        placeholder="Để trống nếu không có"
                       />
                     </div>
                   </div>
@@ -343,10 +353,15 @@ export default function ProfilePage() {
               </div>
 
               {/* Action buttons */}
-              <div className="flex justify-end gap-4 pt-4">
-                <Button type="submit" onClick={onSubmit} disabled={isSubmitting} className="bg-blue-500 hover:bg-blue-600 text-white">
+              <div className="flex justify-end gap-4 pt-4">                <Button type="submit" onClick={onSubmit} disabled={isSubmitting} className="bg-blue-500 hover:bg-blue-600 text-white">
                   {isSubmitting ? (
-                    <span className="loader">Đang cập nhật</span>
+                    <span className="flex items-center">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Đang cập nhật...
+                    </span>
                   ) : (
                     <span className="flex items-center">
                       <User className="mr-2 h-4 w-4" />
