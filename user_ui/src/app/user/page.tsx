@@ -70,7 +70,7 @@ export default function ProfilePage() {
   };
   console.log(userData())
   const [user, setUser] = useState<UserInfo>({
-    account_id: userData()._id,
+    account_id: userData().account_id,
     username: userData().username,
     full_name: userData().full_name,
     date_of_birth: userData().date_of_birth,
