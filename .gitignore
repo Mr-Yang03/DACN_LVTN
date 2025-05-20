@@ -2,3 +2,4 @@
 .venv/
 gatewayAPI/gateway.log
 frame/
+RAG/

@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 import uuid, os, shutil
 from langchain_chroma import Chroma
 from app.agent import add_pdf_to_vectorstore, query_llm, embedding, VECTOR_STORE_DIR, COLLECTION_NAME
-from app.helper import VECTOR_STORE_DIR as TRAFFIC_VECTOR_STORE_DIR, COLLECTION_NAME as TRAFFIC_COLLECTION_NAME
 
 
 app = FastAPI()

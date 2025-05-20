@@ -13,16 +13,12 @@ from app.tools import (
     retrieve_news_tool,
     retrieve_feedbacks_tool
 )
-from pymongo import MongoClient
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
 # ========== Configuration ==========
 LLM_NAME = "qwen-qwq-32b"
-VECTOR_STORE_DIR = "./chroma_db"
-COLLECTION_NAME = "agent_collection"
 llm = init_chat_model(LLM_NAME, model_provider="groq")
 
 
@@ -32,12 +28,12 @@ search_tool = DuckDuckGoSearchRun()
 tools = [
     retrieve_cameras_tool,
     retrieve_news_tool,
-    retrieve_feedbacks_tool
-    # search_tool,
-    # geocode_address_tool,
-    # get_traffic_status_tool,
-    # get_weather_tool,
-    # get_current_time_tool,
+    retrieve_feedbacks_tool,
+    search_tool,
+    geocode_address_tool,
+    get_traffic_status_tool,
+    get_weather_tool,
+    get_current_time_tool,
 ]
 agent_model = create_react_agent(llm, tools)
 

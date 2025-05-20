@@ -9,7 +9,7 @@ export const chatbotApi = {
     const formData = new FormData();
     formData.append("prompt", prompt);
 
-    const response = await api.post("/chatbot/", formData, {
+    const response = await api.post("/admin/chatbot/", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
