@@ -11,7 +11,6 @@ import { LogOut, Calendar, IdCard, Phone, User } from "lucide-react"
 import { useAuth } from "@/context/auth-context";
 import { register, login, uploadAvatar, updateAvatar, updateAdminInfo } from "@/apis/authApi"
 import { toast } from "@/components/ui/use-toast";
-import { useToast } from '@/hooks/use-toast';
 
 interface AdminInfo {
   account_id: string;
@@ -59,24 +58,17 @@ export default function ProfilePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const { toast } = useToast();
 
-  const adminData = () => {
-    const adminData = JSON.parse(
-      localStorage.getItem("admin_data") || "{}"
-    );
-    return adminData
-  };
-  console.log(adminData())
-  const [admin, setAdmin] = useState<AdminInfo>({
-    account_id: adminData().account_id,
-    username: adminData().username,
-    full_name: adminData().full_name,
-    date_of_birth: adminData().date_of_birth,
-    phone_number: adminData().phone_number,
-    citizen_id: adminData().citizen_id,
-    avatar: adminData().avatar
-  })
+  const [admin, setAdmin] = useState<AdminInfo | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const data = localStorage.getItem("admin_data");
+      if (data) {
+        setAdmin(JSON.parse(data));
+      }
+    }
+  }, []);
 
   const handleSignOut = () => {
     // Handle sign out logic here
@@ -86,13 +78,16 @@ export default function ProfilePage() {
   }
 
   const onSubmit = async () => {
-    const adminInfo = admin
-    console.log(adminInfo)
 
     try {
       // Call your API to update user information
       setIsSubmitting(true)
       // const adminInfo = admin
+
+      if (!isAuthenticated || !admin) return null;
+
+      const adminInfo = admin
+
       if (!admin.full_name || !admin.date_of_birth || !admin.phone_number || !admin.citizen_id) {
         toast?.({
           title: "Có lỗi xảy ra",
@@ -133,6 +128,13 @@ export default function ProfilePage() {
       .split("T")[0];
     return localISODate; // yyyy-mm-dd
   };
+
+  const convertDateToISO = (ddmmyyyy: string): string => {
+    const [day, month, year] = ddmmyyyy.split("/");
+    if (!day || !month || !year) return "";
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  };
+
 
   const handleAvatarClick = () => {
     fileInputRef.current?.click()
@@ -206,11 +208,13 @@ export default function ProfilePage() {
           );
         });
       }
-      
-      const response = await updateAvatar(adminData()._id, imageUrl);
+
+      if (!isAuthenticated || !admin) return null;
+
+      const response = await updateAvatar(admin.account_id, imageUrl);
       if (response && response.data) {
         setAdmin({ ...admin, avatar: imageUrl });
-        localStorage.setItem("admin_data", JSON.stringify({ ...adminData(), avatar: imageUrl }));
+        localStorage.setItem("admin_data", JSON.stringify({ ...admin, avatar: imageUrl }));
         toast?.({
           title: "Cập nhật ảnh đại diện thành công",
           variant: "default"
@@ -229,7 +233,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      {isAuthenticated && (
+      {isAuthenticated && admin && (
         // Profile
         <div className="min-h-screen bg-background">
           {/* Main content */}
@@ -240,7 +244,7 @@ export default function ProfilePage() {
                 <div className="flex flex-col md:flex-row items-center gap-6">
                   <div className="relative group">
                     <Avatar className="h-32 w-32">
-                      <AvatarImage src={adminData().avatar != "" ? adminData().avatar : "/image/default_avatar.png"} alt={adminData().full_name} />
+                      <AvatarImage src={admin.avatar != "" ? admin.avatar : "/image/default_avatar.png"} alt={admin.full_name} />
                       <AvatarFallback>
                         <User className="h-16 w-16" />
                       </AvatarFallback>
@@ -266,7 +270,7 @@ export default function ProfilePage() {
                     </div>
                   </div>
                   <div className="space-y-2 text-center md:text-left">
-                    <h2 className="text-3xl font-bold">{adminData().full_name}</h2>
+                    <h2 className="text-3xl font-bold">{admin.full_name}</h2>
                     <p className="text-muted-foreground">Thành viên từ 01/01/2023</p>
                   </div>
                 </div>
@@ -290,7 +294,7 @@ export default function ProfilePage() {
                       <User className="mr-2 h-4 w-4 opacity-70 my-auto" />
                       <Input
                         id="name"
-                        defaultValue={adminData().full_name}
+                        defaultValue={admin.full_name}
                         onChange={(e) => setAdmin({ ...admin, full_name: e.target.value })}
                         className="bg-background"
                       />
@@ -305,7 +309,7 @@ export default function ProfilePage() {
                       <Input
                         id="birthdate"
                         type="date"
-                        defaultValue={formatDateForInput(adminData().date_of_birth)}
+                        defaultValue={convertDateToISO(admin.date_of_birth)}
                         onChange={(e) => setAdmin({ ...admin, date_of_birth: e.target.value })}
                         className="bg-background"
                       />
@@ -320,7 +324,7 @@ export default function ProfilePage() {
                       <Input
                         id="phone"
                         type="text"
-                        defaultValue={adminData().phone_number}
+                        defaultValue={admin.phone_number}
                         onChange={(e) => setAdmin({ ...admin, phone_number: e.target.value })}
                         className="bg-background"
                       />
@@ -334,7 +338,7 @@ export default function ProfilePage() {
                       <IdCard className="mr-2 h-4 w-4 opacity-70 my-auto" />
                       <Input
                         id="citizen_id"
-                        defaultValue={adminData().citizen_id}
+                        defaultValue={admin.citizen_id}
                         onChange={(e) => setAdmin({ ...admin, citizen_id: e.target.value })}
                         className="bg-background"
                       />

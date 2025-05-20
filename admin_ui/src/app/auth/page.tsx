@@ -27,7 +27,7 @@ export default function AuthPage() {
     if (isAuthenticated) {
       router.push('/admin');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, router]);
 
   const icons = [
     <Car
