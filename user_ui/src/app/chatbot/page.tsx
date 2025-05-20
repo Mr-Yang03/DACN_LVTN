@@ -125,7 +125,7 @@ export default function ChatbotPage() {
                           <Bot className="h-4 w-4" />
                         )}
                         <span className="text-xs font-medium">
-                          {message.sender === "user" ? "Admin" : "Chatbot"}
+                          {message.sender === "user" ? "User" : "Chatbot"}
                         </span>
                       </div>
 
