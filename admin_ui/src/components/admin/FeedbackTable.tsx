@@ -249,10 +249,10 @@ export default function FeedbackTable() {
                 className="flex flex-col gap-4 mx-6"
             >
                 <div
-                    className="flex flex-wrap gap-4"
+                    className="flex flex-row flex-wrap gap-4 justify-between"
                 >
-                    <div className="w-1/5">
-                        <Label htmlFor="severity">Mức độ nghiêm trọng</Label>
+                    <div className="flex-1">
+                        <Label htmlFor="severity" className="truncate max-w-[120px] md:max-w-none">Mức độ nghiêm trọng</Label>
                         <div
                             className="mt-2"
                         >
@@ -271,8 +271,8 @@ export default function FeedbackTable() {
                         </div>
                     </div>
                     
-                    <div className="w-1/5">
-                        <Label htmlFor="type">Loại vấn đề</Label>
+                    <div className="flex-1">
+                        <Label htmlFor="issueType">Loại vấn đề</Label>
                         <div
                             className="mt-2"
                         >
@@ -294,43 +294,34 @@ export default function FeedbackTable() {
                             </Select>
                         </div>
                     </div>
-        
-                    <div className="w-1/5">
+
+                    <div className="flex-1">
                         <div className="space-y-2">
                             <Label htmlFor="startDate">Ngày bắt đầu</Label>
                             <Input
                                 id="startDate"
                                 type="date"
                                 className="w-full bg-white border-gray-200 text-black rounded-full"
-                                defaultValue={startDate}
+                                defaultValue=""
                                 onChange={(e) => setStartDate(e.target.value)}
                             />
                         </div>
                     </div>
-        
-                    <div className="w-1/5">
+
+                    <div className="flex-1">
                         <div className="space-y-2">
                             <Label htmlFor="endDate">Ngày kết thúc</Label>
                             <Input
                                 id="endDate"
                                 type="date"
                                 className="w-full bg-white border-gray-200 text-black rounded-full"
-                                defaultValue={endDate}
+                                defaultValue=""
                                 onChange={(e) => setEndDate(e.target.value)}
                             />
                         </div>
                     </div>
-        
-                    <div className="relative flex-1">
-                        <Button className="w-full absolute bottom-0 left-0 bg-black rounded-full hover:bg-gray-800 mt-2">
-                            Lọc phản ánh
-                        </Button>
-                    </div>
                 </div>
             </div>
-            <br />
-            <hr className="border-gray-300"/>
-            <br />
 
             {/* Feedback list */}
             <div className="rounded-md border bg-white">

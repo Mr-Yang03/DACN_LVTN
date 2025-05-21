@@ -1,10 +1,12 @@
-"use client";
-
 import type React from "react";
-
 import { SiteHeader } from "@/components/sections/site-header";
-import { SiteFooter } from "@/components/sections/site-footer";
 import { Toaster } from "@/components/ui/toaster"
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Trợ lý ảo",
+  description: "Trợ lý ảo giao thông",
+};
 
 export default function RootLayout({
   children,

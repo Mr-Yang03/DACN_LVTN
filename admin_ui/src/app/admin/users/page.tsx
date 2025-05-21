@@ -1,13 +1,13 @@
 // ✅ page.tsx (đơn giản hóa sau khi UserTable tự quản lý refetch và modal)
-"use client";
-
-import { useState } from "react";
 import UserTable from "@/components/admin/UserTable";
-import { User } from "@/types/userboard";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Quản lý người dùng | Traffic Monitor",
+  description: "Quản lý danh sách người dùng hệ thống",
+};
 
 export default function UserboardPage() {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-
   return (
     <div className="p-6 space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white dark:bg-slate-950 p-6 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800">
