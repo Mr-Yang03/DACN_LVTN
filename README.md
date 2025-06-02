@@ -10,6 +10,8 @@ This Traffic Management System is a comprehensive microservice-based platform fo
 
 The platform is designed to help city authorities, traffic management departments, and citizens make informed decisions based on accurate traffic data, facilitating smoother traffic flow and enhanced urban mobility.
 
+Video demo: [Click here](https://youtu.be/njkgTVFNObo)
+
 ## 🏗️ System Architecture
 ![image](https://github.com/user-attachments/assets/ac48b191-8b10-4f4d-97de-5ac4c5936416)
 
