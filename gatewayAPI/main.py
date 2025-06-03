@@ -444,7 +444,7 @@ async def upload_news_image(request: Request):
 
 # Feedback Service Routes
 @app.get("/feedback/all_items")
-async def get_all_feedback():
+async def get_all_feedback(user_data=Depends(verify_token)):
     async with httpx.AsyncClient() as client:
         response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/all")
 
@@ -454,7 +454,7 @@ async def get_all_feedback():
     return response.json()
 
 @app.get("/feedback/{feedback_id}")
-async def get_feedback_by_id(feedback_id: str):
+async def get_feedback_by_id(feedback_id: str, user_data=Depends(verify_token)):
     async with httpx.AsyncClient() as client:
         response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/item/{feedback_id}")
 
@@ -464,7 +464,7 @@ async def get_feedback_by_id(feedback_id: str):
     return response.json()
 
 @app.get("/feedback/user/{username}")
-async def get_feedback_by_username(username: str):
+async def get_feedback_by_username(username: str, user_data=Depends(verify_token)):
     async with httpx.AsyncClient() as client:
         response = await client.get(f"{FEEDBACK_SERVICE_URL}/feedback/{username}")
 
@@ -499,7 +499,7 @@ async def filter_feedback(
     return response.json()
 
 @app.post("/feedback/item")
-async def create_feedback(request: Request):
+async def create_feedback(request: Request, user_data=Depends(verify_token)):
     body = await request.json()
     async with httpx.AsyncClient() as client:
         response = await client.post(f"{FEEDBACK_SERVICE_URL}/feedback/items", json=body)
@@ -510,7 +510,7 @@ async def create_feedback(request: Request):
     return response.json()
 
 @app.post("/feedback/upload")
-async def upload_feedback_image(request: Request):
+async def upload_feedback_image(request: Request, user_data=Depends(verify_token)):
     form_data = await request.form()
     
     # Check if any files were provided
@@ -543,7 +543,7 @@ async def upload_feedback_image(request: Request):
     return response.json()
 
 @app.put("/feedback/{feedback_id}")
-async def update_feedback(feedback_id: str, request: Request):
+async def update_feedback(feedback_id: str, request: Request, user_data=Depends(verify_token)):
     body = await request.json()
     async with httpx.AsyncClient() as client:
         response = await client.put(f"{FEEDBACK_SERVICE_URL}/feedback/{feedback_id}", json=body)
@@ -554,7 +554,7 @@ async def update_feedback(feedback_id: str, request: Request):
     return response.json()
 
 @app.delete("/feedback/{feedback_id}")
-async def delete_feedback(feedback_id: str):
+async def delete_feedback(feedback_id: str, user_data=Depends(verify_token)):
     async with httpx.AsyncClient() as client:
         response = await client.delete(f"{FEEDBACK_SERVICE_URL}/feedback/{feedback_id}")
 

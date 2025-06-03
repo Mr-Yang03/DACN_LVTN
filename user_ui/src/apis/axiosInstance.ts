@@ -10,7 +10,7 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token") || localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -18,26 +18,3 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
-// Add response interceptor to handle errors globally
-// api.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     // Handle session expiration
-//     if (error.response && error.response.status === 401) {
-//       // Token is invalid or expired
-//       localStorage.removeItem("token");
-//       if (typeof window !== 'undefined') {
-//         // Redirect to login page only in browser context
-//         window.location.href = "/auth/login";
-//       }
-//     }
-    
-//     // Handle server errors
-//     if (error.response && error.response.status >= 500) {
-//       console.error("Server error:", error.response.data);
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );
