@@ -53,6 +53,9 @@ This application follows a microservice architecture pattern, with the following
 ### Home page
 ![image](https://github.com/user-attachments/assets/410db7bb-bb3a-4d13-981c-4e1a7187b30c)
 
+### News page
+![image](https://github.com/user-attachments/assets/2b1d09de-ceba-4cdc-a0ec-4b20b719769e)
+
 ###  Velocity Estimation
 ![gif_estimation_speed](https://github.com/user-attachments/assets/12d9bc09-c0c8-4438-920c-167bffbbac97)
 
@@ -82,6 +85,9 @@ https://github.com/user-attachments/assets/f62b384d-872f-4852-b904-6f8c00a2175b
 - **YOLOv8** – Real-time vehicle detection and tracking for speed estimation
 - **DeepLabV3** – Semantic segmentation model used for lane detection
 - **LangChain** – Framework powering RAG-based chatbot assistants for user and admin support
+
+### Authentication
+- **JWT (JSON Web Token)** - Authentication and API security for user verification and access control
 
 ### DevOps
 - **Docker Compose** - Multi-container orchestration
