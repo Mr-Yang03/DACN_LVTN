@@ -40,7 +40,6 @@ import { LocationPicker } from "@/app/feedback/location-picker";
 import { feedbackSchema } from "@/validations/feedbackSchema";
 import { toast } from "@/components/ui/use-toast";
 import { updateFeedback, uploadFeedbackFiles, getFeedback } from "@/apis/feedbackApi";
-import { useToast } from "@/hooks/use-toast";
 import { parse } from "date-fns";
 
 type FeedbackFormValues = z.infer<typeof feedbackSchema>;
@@ -70,7 +69,6 @@ export function ModifyReport({ id, onSubmitSuccess }: ModifyReportProps ) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [originalImageUrl, setOriginalImageUrl] = useState<string[] | null>(null);
   

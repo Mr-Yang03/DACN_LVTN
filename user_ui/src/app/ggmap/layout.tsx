@@ -1,7 +1,10 @@
-"use client";
-
 import type React from "react";
-// import { SiteHeader } from "@/components/sections/site-header";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Bản đồ giao thông",
+  description: "Xem bản đồ, tình trạng và camera giao thông",
+};
 
 export default function RootLayout({
   children,

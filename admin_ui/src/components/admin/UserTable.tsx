@@ -147,7 +147,6 @@ const UserTable: React.FC = () => {
           </div>
 
           <Table>
-            {" "}
             <TableHeader>
               <TableRow>
                 <TableHead

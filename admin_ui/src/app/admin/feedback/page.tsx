@@ -1,6 +1,10 @@
-"use client";
-
 import FeedbackTable from "@/components/admin/FeedbackTable";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Quản lý phản ánh | Traffic Monitor",
+  description: "Quản lý phản ánh của người dùng về giao thông thành phố",
+};
 
 export default function NewsAdminPage() {
   return (
@@ -17,7 +21,7 @@ export default function NewsAdminPage() {
           </div>
         </div>
       </div>
-      <div className="px-6">
+      <div className="max-w-5xl mx-auto space-y-8 p-4">
         <FeedbackTable />
       </div>
     </>

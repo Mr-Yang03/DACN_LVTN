@@ -345,12 +345,6 @@ export default function FeedbackTable( username: { username: string } ) {
                             />
                         </div>
                     </div>
-        
-                    <div className="relative flex-1">
-                        <Button className="w-full absolute bottom-0 left-0 bg-black rounded-full hover:bg-gray-800 mt-2">
-                            Lọc phản ánh
-                        </Button>
-                    </div>
                 </div>
             </div>
 
